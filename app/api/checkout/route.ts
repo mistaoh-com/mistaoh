@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia",
+const stripe = new Stripe(process.env.STRIPE_SECRET_API_KEY || process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-12-18.acacia" as any,
 })
 
 function getSubscriptionInterval(plan: string): "week" | "month" {
@@ -53,8 +53,9 @@ export async function POST(req: NextRequest) {
             },
             product_data: {
               name: item.title,
-              description: `${item.korean} - ${item.mealsPerWeek} meals per delivery`,
-              images: item.image.startsWith("http") ? [item.image] : [],
+              metadata: {
+                description: `${item.korean} - ${item.mealsPerWeek} meals per delivery`,
+              },
             },
           })
 
@@ -84,6 +85,8 @@ export async function POST(req: NextRequest) {
                 title: item.title,
                 plan: item.subscriptionPlan,
                 mealsPerWeek: item.mealsPerWeek,
+                price: item.price,
+                description: `${item.korean} - ${item.mealsPerWeek} meals/week`
               })),
             ),
           },
@@ -117,6 +120,16 @@ export async function POST(req: NextRequest) {
       },
       phone_number_collection: {
         enabled: true,
+      },
+      metadata: {
+        items: JSON.stringify(
+          oneTimeItems.map((item: any) => ({
+            title: item.title,
+            quantity: item.quantity,
+            price: item.price,
+            description: item.korean
+          })),
+        ),
       },
     })
 
