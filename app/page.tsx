@@ -50,7 +50,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/menu"
-              className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg shadow-lg"
+              className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-semibold transition-colors text-lg shadow-lg"
             >
               View Menu
             </Link>
@@ -58,7 +58,7 @@ export default function HomePage() {
               href="https://www.opentable.com/restref/client/?rid=1144366"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-100 text-secondary px-8 py-4 rounded-lg font-semibold transition-colors text-lg shadow-lg"
+              className="bg-white hover:bg-gray-100 text-secondary px-8 py-4 rounded-full font-semibold transition-colors text-lg shadow-lg"
             >
               Reservation
             </a>
@@ -70,7 +70,7 @@ export default function HomePage() {
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[500px] rounded-2xl overflow-hidden">
+            <div className="relative h-[500px] rounded-[2rem] overflow-hidden">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.51.13%20PM%20%281%29-VN6o0kqxjUYVnEkUQSzaNbvFVbzbJm.jpeg"
                 alt="Mista Oh and his wife outside their restaurant"
@@ -111,7 +111,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <div className="text-center">
-              <div className="relative h-64 mb-4 rounded-xl overflow-hidden">
+              <div className="relative h-64 mb-4 rounded-[2rem] overflow-hidden">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM%20%283%29-ubNJtkaxZ5ncOXNI86x1uQbgIiwjfn.jpeg"
                   alt="Mista Oh and his wife in their restaurant"
@@ -124,7 +124,7 @@ export default function HomePage() {
             </div>
 
             <div className="text-center">
-              <div className="relative h-64 mb-4 rounded-xl overflow-hidden">
+              <div className="relative h-64 mb-4 rounded-[2rem] overflow-hidden">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.44%20PM%20%281%29-VLTe43Oi4XBF5LXSZ3k1LF8fHXOWsM.jpeg"
                   alt="Dining at Mista Oh restaurant"
@@ -137,7 +137,7 @@ export default function HomePage() {
             </div>
 
             <div className="text-center">
-              <div className="relative h-64 mb-4 rounded-xl overflow-hidden">
+              <div className="relative h-64 mb-4 rounded-[2rem] overflow-hidden">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM-I2eRSekz4BiORzEyZhVTZMT0QUn7TH.jpeg"
                   alt="Beautiful entrance of Mista Oh"
@@ -167,7 +167,7 @@ export default function HomePage() {
               <p className="text-foreground mb-6">Enjoy our lunch specials featuring bibimbap, stews, and more</p>
               <Link
                 href="/menu"
-                className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-md"
+                className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-md"
               >
                 View Lunch Menu
               </Link>
@@ -179,7 +179,7 @@ export default function HomePage() {
               <p className="text-foreground mb-6">Experience our full menu with premium cuts and signature dishes</p>
               <Link
                 href="/menu"
-                className="inline-block bg-secondary hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-md"
+                className="inline-block bg-secondary hover:bg-gray-800 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-md"
               >
                 View Dinner Menu
               </Link>
@@ -283,7 +283,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/catering"
-            className="inline-block bg-white hover:bg-gray-100 text-primary px-8 py-4 rounded-lg font-semibold transition-colors text-lg shadow-md"
+            className="inline-block bg-white hover:bg-gray-100 text-primary px-8 py-4 rounded-full font-semibold transition-colors text-lg shadow-md"
           >
             Learn More About Catering
           </Link>
@@ -297,7 +297,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-12">
             {/* Map */}
-            <div className="h-[400px] rounded-2xl overflow-hidden">
+            <div className="h-[400px] rounded-[2rem] overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9476819253204!2d-73.99263492346658!3d40.74290097138747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a7e3b6c5a7%3A0x1234567890abcdef!2s41%20W%2024th%20St%2C%20New%20York%2C%20NY%2010010!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
                 width="100%"
@@ -353,7 +353,7 @@ export default function HomePage() {
                   href="https://www.opentable.com/restref/client/?rid=1144366"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg mt-4 shadow-md"
+                  className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-semibold transition-colors text-lg mt-4 shadow-md"
                 >
                   Reservation
                 </a>
