@@ -145,14 +145,42 @@
 @layer base {
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-weight: 400;
   }
 
+  /* Headlines - Bold (700) like the reference */
   h1,
   h2,
-  h3,
+  h3 {
+    @apply font-sans;
+    font-weight: 700;
+  }
+
+  /* Subheadings - Medium (500) */
   h4,
   h5,
   h6 {
-    @apply font-serif;
+    @apply font-sans;
+    font-weight: 500;
+  }
+
+  /* Body text inherits regular (400) from body */
+  p {
+    font-weight: 400;
+  }
+
+  /* Navigation and labels - Regular (400) */
+  nav,
+  label {
+    @apply font-sans;
+    font-weight: 400;
+  }
+
+  /* Buttons - Bold for primary emphasis */
+  button,
+  .btn,
+  [role="button"] {
+    @apply font-sans;
+    font-weight: 600;
   }
 }

@@ -5,69 +5,75 @@ import { Footer } from "@/components/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { Star, MapPin, Phone } from "lucide-react"
-import { useEffect, useRef } from "react"
 
 export default function HomePage() {
-  const heroRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current) {
-        const scrolled = window.scrollY
-        const parallaxSpeed = 0.5
-        heroRef.current.style.transform = `translateY(${scrolled * parallaxSpeed}px)`
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero Section with Parallax */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div ref={heroRef} className="absolute inset-0 scale-110">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/family-msXrKaIcg3q09vxpPGfw3nBHFSsoiB.jpeg"
-              alt="Mista Oh Family - Authentic Korean Restaurant"
-              fill
-              className="object-cover"
-              priority
-            />
+      {/* Hero Section - Single Unified Composition */}
+      <section className="bg-[#FAF9F6] min-h-screen relative overflow-hidden">
+        {/* Orange Background Block - 35% right accent */}
+        <div className="absolute top-0 right-0 w-[35%] h-full bg-[#FF813D] hidden md:block"></div>
+
+        {/* Content Container */}
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-28 md:pt-32 lg:pt-40 pb-16">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[70vh]">
+            {/* Left Column - Text Content */}
+            <div className="max-w-[520px]">
+              <h1 className="text-[38px] md:text-[46px] lg:text-[54px] font-bold leading-[1.1] tracking-tight text-[#161412] mb-6">
+                One of the Best Korean Restaurants in{" "}
+                <span className="text-[#FF813D]">NYC.</span>
+              </h1>
+              <p className="text-[15px] md:text-[16px] text-[#696969] leading-[1.75] mb-8">
+                From rich, comforting stews to grilled favorites and shareable classics, Mista Oh brings together the many flavors of Korean cuisine, prepared fresh and meant to be enjoyed any day of the week.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="https://www.opentable.com/restref/client/?rid=1144366"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#FF813D] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#e67335] transition-colors text-base"
+                >
+                  Reservation
+                </a>
+                <Link
+                  href="/menu"
+                  className="bg-[#F0F0F0] text-[#161412] px-8 py-4 rounded-full font-semibold hover:bg-[#e5e5e5] transition-colors text-base"
+                >
+                  Order online
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column - Hero Image */}
+            <div className="flex justify-center md:justify-end">
+              <div className="relative w-[480px] md:w-[540px] lg:w-[600px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+                <Image
+                  src="/dolsot-bibimbap-korean-food.jpg"
+                  alt="Korean food spread"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
+              </div>
+            </div>
           </div>
-          <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-balance">Welcome to Mista Oh</h1>
-          <p className="text-xl md:text-2xl mb-8 text-pretty leading-relaxed">
-            Authentic Korean Cuisine in the Heart of Flatiron
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/menu"
-              className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-semibold transition-colors text-lg shadow-lg"
-            >
-              View Menu
-            </Link>
-            <a
-              href="https://www.opentable.com/restref/client/?rid=1144366"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white hover:bg-gray-100 text-secondary px-8 py-4 rounded-full font-semibold transition-colors text-lg shadow-lg"
-            >
-              Reservation
-            </a>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-8 hidden md:flex items-center justify-center z-20">
+          <div className="w-12 h-12 rounded-full border-2 border-[#161412] flex items-center justify-center cursor-pointer hover:bg-[#161412] hover:text-white transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </div>
         </div>
       </section>
 
       {/* Story Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-[#FAF9F6]">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[500px] rounded-[2rem] overflow-hidden">

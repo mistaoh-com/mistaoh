@@ -74,44 +74,27 @@ export default function CateringPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.44%20PM%20%281%29-VLTe43Oi4XBF5LXSZ3k1LF8fHXOWsM.jpeg"
-            alt="Mista Oh Catering Services"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
-
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-balance">Catering Services</h1>
-          <p className="text-xl md:text-2xl text-pretty leading-relaxed">
-            Bring authentic Korean flavors to your next event
-          </p>
-        </div>
-      </section>
-
-
-      {/* Introduction */}
-      <section className="py-12 px-4 bg-white">
+      {/* Hero Section - Clean, minimal design */}
+      <section className="pt-40 pb-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-4xl mb-6">Elevate Your Event with Mista Oh</h2>
-          <p className="text-lg text-muted leading-relaxed">
-            Whether you're hosting a corporate event, family celebration, or special occasion, Mista Oh brings the
-            authentic taste of Korea to your gathering. Our catering services feature the same quality and care that
-            have made us a Flatiron favorite.
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#161412]">Catering</h1>
+          <p className="text-lg text-[#696969] mb-10">
+            Authentic Korean cuisine for your next event
           </p>
+          <a
+            href="#request-form"
+            className="inline-block bg-[#FF813D] hover:bg-[#e67335] text-white px-10 py-4 rounded-full font-semibold transition-colors text-lg"
+          >
+            Request Catering
+          </a>
         </div>
       </section>
 
       {/* Contact Form */}
-      <section className="py-16 px-4">
+      <section id="request-form" className="py-16 px-4 bg-[#FAF9F6]">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-serif text-4xl mb-6 text-center">Request a Catering Quote</h2>
           <p className="text-center text-muted mb-8">
@@ -320,74 +303,7 @@ export default function CateringPage() {
         </div>
       </section>
 
-      {/* Catering Options */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-serif text-4xl md:text-5xl mb-12 text-center">Catering Packages</h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Package 1 */}
-            <div className="bg-surface p-8 rounded-2xl border-2 border-primary">
-              <h3 className="font-serif text-3xl mb-4 text-primary">Classic Package</h3>
-              <p className="text-muted mb-6">Perfect for corporate lunches and casual gatherings</p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <span>Choice of 3 main dishes</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <span>2 appetizers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <span>Rice and banchan (side dishes)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <span>Disposable plates and utensils</span>
-                </li>
-              </ul>
-              <p className="text-2xl font-bold text-primary">Starting at $25/person</p>
-            </div>
-
-            {/* Package 2 */}
-            <div className="bg-surface p-8 rounded-2xl border-2 border-premium shadow-lg">
-              <h3 className="font-serif text-3xl mb-4 text-premium">Premium Package</h3>
-              <p className="text-muted mb-6">Ideal for special celebrations and formal events</p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-premium mt-1 flex-shrink-0" />
-                  <span>Choice of 5 main dishes including premium cuts</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-premium mt-1 flex-shrink-0" />
-                  <span>4 appetizers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-premium mt-1 flex-shrink-0" />
-                  <span>Rice, banchan, and Korean desserts</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-premium mt-1 flex-shrink-0" />
-                  <span>Full service staff and setup</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-premium mt-1 flex-shrink-0" />
-                  <span>Elegant serving ware</span>
-                </li>
-              </ul>
-              <p className="text-2xl font-bold text-premium">Starting at $45/person</p>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="text-muted">
-              Custom packages available. Minimum order of 10 people. Contact us for detailed menu options.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Popular Catering Items */}
       <section className="py-16 px-4 bg-surface">

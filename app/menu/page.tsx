@@ -17,71 +17,60 @@ import { menuData } from "@/lib/menu-data"
 
 export default function MenuPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF9F6]">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Food%20pic-AV3xRmPZhqXeBLRXbwbiXc8t73W19i.jpg"
-            alt="Mista Oh Menu - Authentic Korean Cuisine"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
-
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-balance">Our Menu</h1>
-          <p className="text-xl md:text-2xl text-pretty leading-relaxed max-w-2xl mx-auto">
-            Authentic Korean flavors crafted with love and tradition
+      {/* Hero Section - Clean centered design like reference */}
+      <section className="pt-40 pb-16 px-4 bg-[#FAF9F6]">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#161412]">Our Menu</h1>
+          <p className="text-lg text-[#696969] leading-relaxed max-w-xl mx-auto">
+            Authentic Korean flavors crafted with love and tradition. Fresh ingredients, time-honored recipes.
           </p>
         </div>
       </section>
 
-      {/* Legend */}
-      <section className="py-8 px-4 bg-accent border-b border-border">
-        <div className="max-w-6xl mx-auto flex items-center justify-center gap-8 flex-wrap">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-              <WheatOff className="w-4 h-4 text-amber-700" />
-            </div>
-            <span className="text-sm font-medium text-foreground">Gluten-Free Option</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-              <Leaf className="w-4 h-4 text-green-600" />
-            </div>
-            <span className="text-sm font-medium text-foreground">Vegetarian Option</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4">
+      {/* Category Tabs - Pill style like reference */}
+      <section className="pb-12 px-4 bg-[#FAF9F6]">
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="lunch" className="w-full">
-            <div className="sticky top-20 z-40 bg-background pb-6 -mx-4 px-4 border-b border-border">
-              <TabsList className="grid w-full grid-cols-3 mb-8 h-auto p-2 gap-3 bg-transparent">
+            <div className="flex justify-center mb-12">
+              <TabsList className="inline-flex gap-3 p-0 bg-transparent h-auto">
                 <TabsTrigger
                   value="lunch"
-                  className="text-lg py-4 data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg bg-primary-light hover:bg-primary/20 transition-all duration-300 rounded-full font-semibold"
+                  className="px-8 py-3 text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
                 >
                   Lunch
                 </TabsTrigger>
                 <TabsTrigger
                   value="dinner"
-                  className="text-lg py-4 data-[state=active]:bg-secondary data-[state=active]:text-white data-[state=active]:shadow-lg bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full font-semibold"
+                  className="px-8 py-3 text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
                 >
                   Dinner
                 </TabsTrigger>
                 <TabsTrigger
                   value="drinks"
-                  className="text-lg py-4 data-[state=active]:bg-cyan-600 data-[state=active]:text-white data-[state=active]:shadow-lg bg-cyan-50 hover:bg-cyan-100 transition-all duration-300 rounded-full font-semibold"
+                  className="px-8 py-3 text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
                 >
                   Drinks
                 </TabsTrigger>
               </TabsList>
+            </div>
+
+            {/* Legend */}
+            <div className="flex items-center justify-center gap-8 flex-wrap mb-12 pb-8 border-b border-[#e5e5e5]">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                  <WheatOff className="w-4 h-4 text-amber-700" />
+                </div>
+                <span className="text-sm font-medium text-[#161412]">Gluten-Free Option</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <Leaf className="w-4 h-4 text-green-600" />
+                </div>
+                <span className="text-sm font-medium text-[#161412]">Vegetarian Option</span>
+              </div>
             </div>
 
             <TabsContent value="lunch">
