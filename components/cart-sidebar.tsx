@@ -129,7 +129,21 @@ export function CartSidebar() {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-sm truncate">{item.title}</h3>
                         <p className="text-xs text-muted-foreground">{item.korean}</p>
-                        <p className="text-sm font-semibold text-primary mt-1">${item.price.toFixed(2)}</p>
+
+                        {item.selectedAddOns && item.selectedAddOns.length > 0 && (
+                          <div className="mt-1 space-y-0.5">
+                            {item.selectedAddOns.map(addon => (
+                              <p key={addon.id} className="text-xs text-muted-foreground flex justify-between">
+                                <span>+ {addon.name}</span>
+                                <span>${addon.price.toFixed(2)}</span>
+                              </p>
+                            ))}
+                          </div>
+                        )}
+
+                        <p className="text-sm font-semibold text-primary mt-1">${(
+                          (item.price + (item.selectedAddOns?.reduce((s, a) => s + a.price, 0) || 0)) * item.quantity
+                        ).toFixed(2)}</p>
 
                         <div className="flex items-center gap-2 mt-2">
                           <button

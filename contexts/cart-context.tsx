@@ -15,6 +15,7 @@ export interface CartItem {
   subscriptionPlan?: "weekly" | "biweekly" | "monthly"
   mealsPerWeek?: number
   subscriptionItems?: Array<{ id: string; name: string; quantity: number }>
+  selectedAddOns?: Array<{ id: string; name: string; price: number }>
 }
 
 interface CartContextType {
@@ -54,7 +55,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         return [...prevCart, { ...item, quantity: 1 }]
       }
 
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id)
+      // Generate a unique ID that includes add-ons if present
+      // For items with add-ons, we use the provided ID which should already be unique
+      // or we can append sorted add-on IDs to ensure uniqueness
+      const existingItem = prevCart.find((cartItem) => {
+        // If IDs match directly
+        if (cartItem.id === item.id) return true
+
+        // If it's the same base item (same title/category) check if add-ons match
+        // This is a backup if the ID generation logic happens outside
+        return false
+      })
+
       if (existingItem) {
         return prevCart.map((cartItem) =>
           cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
@@ -86,7 +98,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    return cart.reduce((total, item) => {
+      const addOnsPrice = item.selectedAddOns?.reduce((sum, addon) => sum + addon.price, 0) || 0
+      return total + (item.price + addOnsPrice) * item.quantity
+    }, 0)
   }
 
   return (

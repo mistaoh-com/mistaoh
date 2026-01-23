@@ -1,24 +1,17 @@
 "use client"
 
+import Link from "next/link"
 import Image from "next/image"
 import { Leaf, WheatOff, Plus, Minus } from "lucide-react"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { useCart } from "@/contexts/cart-context"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { AddOnSelector } from "@/components/add-on-selector"
+import type { MenuItem, AddOnOption } from "@/lib/menu-data"
 
 interface MenuItemCardProps {
-    item: {
-        title: string
-        korean: string
-        price: number
-        vegetarian?: boolean
-        glutenFree?: boolean
-        spicyLevel?: 'mild' | 'medium'
-        description?: string
-        image?: string
-        notOrderable?: boolean
-    }
+    item: MenuItem
     category: string
     variant?: "default" | "compact"
     accentColor?: string
@@ -34,11 +27,36 @@ export function MenuItemCard({
 }: MenuItemCardProps) {
     const { addToCart, cart, updateQuantity } = useCart()
     const [isAdding, setIsAdding] = useState(false)
+    const [isAddOnSelectorOpen, setIsAddOnSelectorOpen] = useState(false)
 
-    const cartItem = cart.find((c) => c.id === `${category}-${item.title}`)
+    // Helper to generate a consistent ID for checking quantity of specific item configuration
+    // For the card display, we primarily check the base item quantity if no add-ons are involved
+    // But if add-ons exist, we might treat it differently. 
+    // For simplicity in the card view, we just check if ANY variant of this item is in the cart?
+    // Or we just rely on the base ID?
+    // Actually, "Add" button usually adds a NEW item or increments. 
+    // If it has add-ons, clicking Add always opens the modal.
+    // If it doesn't have add-ons, it behaves as before.
+
+    // If item has add-ons, we don't show the quantity control on the card face for simplicity
+    // because which variant's quantity would we be controlling?
+    // We'll just always show "Add" for items with add-ons. 
+
+    // Check if item has add-ons
+    const hasAddOns = (item.addOns && item.addOns.length > 0)
+
+    const cartItem = !hasAddOns
+        ? cart.find((c) => c.id === `${category}-${item.title}`)
+        : null // Don't match existing cart items if it has add-ons, to force "Add" flow
+
     const quantity = cartItem?.quantity || 0
 
     const handleAddToCart = () => {
+        if (hasAddOns) {
+            setIsAddOnSelectorOpen(true)
+            return
+        }
+
         setIsAdding(true)
         addToCart({
             id: `${category}-${item.title}`,
@@ -47,6 +65,27 @@ export function MenuItemCard({
             price: item.price,
             image: item.image || "/placeholder.svg",
             category,
+        })
+        setTimeout(() => setIsAdding(false), 300)
+    }
+
+    const handleAddOnConfirm = (selectedAddOns: AddOnOption[]) => {
+        setIsAddOnSelectorOpen(false)
+        setIsAdding(true)
+
+        // Generate a unique ID suffix based on sorted add-on IDs
+        const addOnSuffix = selectedAddOns.length > 0
+            ? '-' + selectedAddOns.map(a => a.id).sort().join('-')
+            : ''
+
+        addToCart({
+            id: `${category}-${item.title}${addOnSuffix}`,
+            title: item.title,
+            korean: item.korean,
+            price: item.price,
+            image: item.image || "/placeholder.svg",
+            category,
+            selectedAddOns
         })
         setTimeout(() => setIsAdding(false), 300)
     }
@@ -219,6 +258,14 @@ export function MenuItemCard({
                     </div>
                 </div>
             </div>
+
+            <AddOnSelector
+                item={item}
+                isOpen={isAddOnSelectorOpen}
+                onClose={() => setIsAddOnSelectorOpen(false)}
+                onConfirm={handleAddOnConfirm}
+                accentColor={accentColor}
+            />
         </div>
     )
 }
