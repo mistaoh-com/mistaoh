@@ -1,9 +1,10 @@
 import nodemailer from "nodemailer"
+import { MailItem } from "./types"
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,
+    user: process.env.MAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 })
@@ -11,7 +12,7 @@ const transporter = nodemailer.createTransport({
 export async function sendOrderConfirmationEmail(
   to: string,
   customerName: string,
-  items: any[],
+  items: MailItem[],
   total: number,
   orderId: string,
   isSubscription: boolean = false
@@ -62,9 +63,240 @@ export async function sendOrderConfirmationEmail(
   `
 
   await transporter.sendMail({
-    from: `"Mista Oh" <${process.env.EMAIL_USER}>`,
+    from: `"Mista Oh" <${process.env.MAIL_USER}>`,
     to,
     subject,
+    html,
+  })
+}
+
+export async function sendVerificationEmail(to: string, token: string) {
+  const subject = "Verify your Mista Oh Account"
+  const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/verify-email?token=${token}`
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #333;">Welcome to Mista Oh!</h1>
+      <p>Please verify your email address to complete your registration based on the email provided.</p>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${verificationUrl}" style="background-color: #FF813D; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">Verify Email</a>
+      </div>
+
+      <p>Or click this link: <a href="${verificationUrl}">${verificationUrl}</a></p>
+      
+      <p>If you didn't create an account, please ignore this email.</p>
+      
+      <p>Best regards,<br/>Mista Oh Team</p>
+    </div>
+  `
+
+  await transporter.sendMail({
+    from: `"Mista Oh" <${process.env.MAIL_USER}>`,
+    to,
+    subject,
+    html,
+  })
+}
+
+export async function sendOrderStatusEmail(to: string, customerName: string, orderId: string, status: string) {
+  const subject = `Order Update - Order #${orderId.slice(-8)} is ${status}`
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #333;">Order Update</h1>
+      <p>Hi ${customerName},</p>
+      <p>Your order <strong>#${orderId.slice(-8)}</strong> has been updated to:</p>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <span style="background-color: #FF813D; color: white; padding: 12px 24px; border-radius: 4px; font-weight: bold; font-size: 18px;">
+          ${status}
+        </span>
+      </div>
+
+      <p>You can view your order status in your dashboard.</p>
+      
+      <p>If you have any questions, please contact us at (646) 559-8858.</p>
+      
+      <p>Best regards,<br/>Mista Oh Team</p>
+    </div>
+  `
+
+  await transporter.sendMail({
+    from: `"Mista Oh" <${process.env.MAIL_USER}>`,
+    to,
+    subject,
+    html,
+  })
+}
+
+export async function sendAdminNewOrderEmail(
+  customerName: string,
+  customerEmail: string,
+  customerPhone: string,
+  orderId: string,
+  items: MailItem[],
+  total: number,
+  specialInstructions?: string
+) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.MAIL_USER
+  const subject = `[NEW ORDER] #${orderId.slice(-8)} - ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(total)}`
+
+  const itemsList = items
+    .map(
+      (item) =>
+        `<tr>
+          <td style="padding: 10px; border-bottom: 1px solid #eee;">
+            <strong>${item.title}</strong> x ${item.quantity}<br/>
+          </td>
+          <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">
+            ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(item.price * (item.quantity || 1))}
+          </td>
+        </tr>`
+    )
+    .join("")
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px;">
+      <h1 style="color: #D32F2F;">New Order Received!</h1>
+      <p style="font-size: 16px;"><strong>Order ID:</strong> #${orderId.slice(-8)}</p>
+      
+      <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <h3 style="margin-top: 0; color: #333;">Customer Details</h3>
+        <p style="margin: 5px 0;"><strong>Name:</strong> ${customerName}</p>
+        <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${customerEmail}">${customerEmail}</a></p>
+        <p style="margin: 5px 0;"><strong>Phone:</strong> <a href="tel:${customerPhone}">${customerPhone || "N/A"}</a></p>
+      </div>
+
+      <h3 style="color: #333;">Order Items</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        ${itemsList}
+        <tr>
+          <td style="padding: 10px; text-align: right; font-weight: bold; border-top: 2px solid #333;">Total Amount</td>
+          <td style="padding: 10px; text-align: right; font-weight: bold; border-top: 2px solid #333;">
+            ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(total)}
+          </td>
+        </tr>
+      </table>
+
+      ${specialInstructions ? `
+      <div style="background-color: #fff3e0; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #ff9800;">
+        <h3 style="margin-top: 0; color: #e65100;">Special Instructions</h3>
+        <p style="margin: 0;">${specialInstructions}</p>
+      </div>
+      ` : ""}
+
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="${process.env.NEXT_PUBLIC_APP_URL}/admin" style="background-color: #333; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">View in Dashboard</a>
+      </div>
+    </div>
+  `
+
+  if (adminEmail) {
+    await transporter.sendMail({
+      from: `"Mista Oh System" <${process.env.MAIL_USER}>`,
+      to: adminEmail,
+      subject,
+      html,
+    })
+  }
+}
+
+export async function sendContactEmail(data: {
+  name: string
+  email: string
+  phone?: string
+  subject: string
+  message: string
+}) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.MAIL_USER
+  if (!adminEmail) return
+
+  const subjectLabels: Record<string, string> = {
+    reservation: "Reservation Inquiry",
+    catering: "Catering Inquiry",
+    menu: "Menu Question",
+    feedback: "Feedback",
+    other: "Other",
+  }
+
+  const html = `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px;">
+      <h2 style="color: #FF813D; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Contact Message</h2>
+      <p><strong>Name:</strong> ${data.name}</p>
+      <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+      <p><strong>Phone:</strong> ${data.phone || "Not provided"}</p>
+      <p><strong>Subject:</strong> ${subjectLabels[data.subject] || data.subject}</p>
+      <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 20px;">
+        <p style="margin-top: 0; font-weight: bold;">Message:</p>
+        <p style="white-space: pre-wrap;">${data.message}</p>
+      </div>
+    </div>
+  `
+
+  await transporter.sendMail({
+    from: `"Mista Oh Website" <${process.env.MAIL_USER}>`,
+    to: adminEmail,
+    replyTo: data.email,
+    subject: `[Contact Form] ${subjectLabels[data.subject] || data.subject} - ${data.name}`,
+    html,
+  })
+}
+
+export async function sendCateringEmail(data: {
+  name: string
+  email: string
+  phone: string
+  eventDate: string
+  guestCount: string
+  eventType: string
+  message?: string
+}) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.MAIL_USER
+  if (!adminEmail) return
+
+  const eventTypeLabels: Record<string, string> = {
+    corporate: "Corporate Event",
+    wedding: "Wedding",
+    birthday: "Birthday Party",
+    family: "Family Gathering",
+    other: "Other",
+  }
+
+  const formattedDate = new Date(data.eventDate).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+
+  const html = `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px;">
+      <h2 style="color: #FF813D; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Catering Inquiry</h2>
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: #333;">Contact Info</h3>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+        <p><strong>Phone:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: #333;">Event Details</h3>
+        <p><strong>Type:</strong> ${eventTypeLabels[data.eventType] || data.eventType}</p>
+        <p><strong>Date:</strong> ${formattedDate}</p>
+        <p><strong>Guests:</strong> ${data.guestCount}</p>
+      </div>
+      <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+        <p style="margin-top: 0; font-weight: bold;">Additional Details:</p>
+        <p style="white-space: pre-wrap;">${data.message || "No additional details provided."}</p>
+      </div>
+    </div>
+  `
+
+  await transporter.sendMail({
+    from: `"Mista Oh Website" <${process.env.MAIL_USER}>`,
+    to: adminEmail,
+    replyTo: data.email,
+    subject: `[Catering Inquiry] ${eventTypeLabels[data.eventType] || data.eventType} - ${data.name}`,
     html,
   })
 }

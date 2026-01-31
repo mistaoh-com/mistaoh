@@ -1,6 +1,7 @@
 "use client"
 
 import { ShoppingBag } from "lucide-react"
+import Link from "next/link"
 import { useCart } from "@/contexts/cart-context"
 import { cn } from "@/lib/utils"
 
@@ -13,8 +14,8 @@ export function FloatingCart() {
     if (totalItems === 0) return null
 
     return (
-        <button
-            onClick={() => setIsCartOpen(true)}
+        <Link
+            href="/checkout"
             className={cn(
                 "fixed bottom-6 right-6 z-40 flex items-center gap-3 bg-primary text-white px-6 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105",
                 "animate-in fade-in slide-in-from-bottom-4"
@@ -30,6 +31,6 @@ export function FloatingCart() {
                 <span className="text-xs opacity-80">View Cart</span>
                 <span className="font-bold">${totalPrice.toFixed(2)}</span>
             </div>
-        </button>
+        </Link>
     )
 }

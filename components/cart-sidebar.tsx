@@ -4,14 +4,27 @@ import { X, Minus, Plus, ShoppingBag, Loader2, Calendar, Package } from "lucide-
 import { useCart } from "@/contexts/cart-context"
 import Image from "next/image"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export function CartSidebar() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, getTotalPrice } = useCart()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const router = useRouter()
 
   const handleCheckout = async () => {
     setIsCheckingOut(true)
     try {
+      // First, check if user is authenticated
+      const authRes = await fetch("/api/user/me")
+      if (authRes.status === 401) {
+        // User is not logged in, redirect to login with redirect back
+        setIsCartOpen(false)
+        router.push("/login?redirect=/menu&checkout=true")
+        setIsCheckingOut(false)
+        return
+      }
+
+      // User is authenticated, proceed to checkout
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
@@ -25,7 +38,7 @@ export function CartSidebar() {
       if (data.url) {
         window.location.href = data.url
       } else {
-        console.error("No checkout URL returned")
+        console.error("No checkout URL returned:", data.error || data)
         setIsCheckingOut(false)
       }
     } catch (error) {

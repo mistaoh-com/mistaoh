@@ -5,23 +5,31 @@ import { Footer } from "@/components/footer"
 import { CheckCircle, Calendar, Package } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import { CartItem } from "@/lib/types"
 
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id")
   const [isSubscription, setIsSubscription] = useState(false)
+  const hasVerified = useRef(false)
 
   useEffect(() => {
     // Identify if it's a subscription based on local cart
     const cart = localStorage.getItem("mistaoh-cart")
     if (cart) {
-      const items = JSON.parse(cart)
-      const hasSubscription = items.some((item: any) => item.isSubscription)
-      setIsSubscription(hasSubscription)
+      try {
+        const items: CartItem[] = JSON.parse(cart)
+        const hasSubscription = items.some((item) => item.isSubscription)
+        setIsSubscription(hasSubscription)
+      } catch (e) {
+        // ignore corrupted cart
+      }
     }
 
-    if (sessionId) {
+    if (sessionId && !hasVerified.current) {
+      hasVerified.current = true
+
       // Verify payment and send email
       fetch("/api/verify-payment", {
         method: "POST",
@@ -34,41 +42,45 @@ export default function CheckoutSuccessPage() {
         .then(data => {
           if (data.error) {
             console.error("Verification failed:", data.error)
-          } else {
-            console.log("Verification successful, email sent")
           }
+          // success silently
         })
         .catch(err => console.error("Verification error:", err))
 
       // Update local storage orders
       // Note: In a real app, orders should be fetched from backend
       if (cart) {
-        const items = JSON.parse(cart)
-        const hasSubscription = items.some((item: any) => item.isSubscription)
-        const orders = JSON.parse(localStorage.getItem("mistaoh-orders") || "[]")
+        try {
+          const items: CartItem[] = JSON.parse(cart)
+          const hasSubscription = items.some((item) => item.isSubscription)
+          const orders = JSON.parse(localStorage.getItem("mistaoh-orders") || "[]")
 
-        // Check if order already added to avoid duplicates on refresh
-        const exists = orders.some((o: any) => o.id === sessionId)
-        if (!exists) {
-          const newOrder = {
-            id: sessionId,
-            date: new Date().toLocaleDateString(),
-            status: hasSubscription ? "Active" : "Processing",
-            total: items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0),
-            items: items.map((item: any) => ({
-              title: item.title,
-              quantity: item.quantity,
-              price: item.price,
-            })),
-            isSubscription: hasSubscription,
-            subscriptionPlan: hasSubscription ? items[0].subscriptionPlan : undefined,
-            nextDelivery: hasSubscription ? getNextDeliveryDate(items[0].subscriptionPlan) : undefined,
+          // Check if order already added to avoid duplicates on refresh
+          const exists = orders.some((o: any) => o.id === sessionId)
+          if (!exists) {
+            const newOrder = {
+              id: sessionId,
+              date: new Date().toLocaleDateString(),
+              status: hasSubscription ? "Active" : "Processing",
+              total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+              items: items.map((item) => ({
+                title: item.title,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+              isSubscription: hasSubscription,
+              subscriptionPlan: hasSubscription ? items[0].subscriptionPlan : undefined,
+              nextDelivery: hasSubscription ? getNextDeliveryDate(items[0].subscriptionPlan || "weekly") : undefined,
+
+            }
+            orders.unshift(newOrder)
+            localStorage.setItem("mistaoh-orders", JSON.stringify(orders))
+
+            // Clear cart ONLY if order processed successfully
+            localStorage.removeItem("mistaoh-cart")
           }
-          orders.unshift(newOrder)
-          localStorage.setItem("mistaoh-orders", JSON.stringify(orders))
-
-          // Clear cart ONLY if order processed successfully
-          localStorage.removeItem("mistaoh-cart")
+        } catch (e) {
+          console.error("Error updating local orders", e)
         }
       }
     }

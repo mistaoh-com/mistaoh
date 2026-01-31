@@ -13,12 +13,12 @@ export default function HomePage() {
       <Navigation />
 
       {/* Hero Section - Single Unified Composition */}
-      <section className="bg-[#FAF9F6] min-h-screen relative overflow-hidden">
+      <section className="bg-[#FAF9F6] min-h-[100dvh] relative overflow-hidden">
         {/* Orange Background Block - 35% right accent */}
         <div className="absolute top-0 right-0 w-[35%] h-full bg-[#FF813D] hidden md:block"></div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-28 md:pt-32 lg:pt-40 pb-16">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-20 md:pt-32 lg:pt-40 pb-16">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[70vh]">
             {/* Left Column - Text Content */}
             <div className="max-w-[520px]">
@@ -56,6 +56,7 @@ export default function HomePage() {
                   fill
                   className="object-cover object-center"
                   priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
             </div>
@@ -82,6 +83,7 @@ export default function HomePage() {
                 alt="Mista Oh and his wife outside their restaurant"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
 
@@ -123,6 +125,7 @@ export default function HomePage() {
                   alt="Mista Oh and his wife in their restaurant"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
               <h3 className="font-serif text-2xl mb-2 text-secondary">Family Owned</h3>
@@ -136,6 +139,7 @@ export default function HomePage() {
                   alt="Dining at Mista Oh restaurant"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
               <h3 className="font-serif text-2xl mb-2 text-secondary">Authentic Recipes</h3>
@@ -149,6 +153,7 @@ export default function HomePage() {
                   alt="Beautiful entrance of Mista Oh"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
               <h3 className="font-serif text-2xl mb-2 text-secondary">Warm Atmosphere</h3>

@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { Menu, X, ShoppingCart } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
+import { UserSidebar } from "@/components/user-sidebar"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -59,8 +60,9 @@ export function Navigation() {
               )
             )}
 
-            <button
-              onClick={() => setIsCartOpen(true)}
+            <UserSidebar />
+            <Link
+              href="/checkout"
               className="relative p-2.5 text-foreground hover:text-primary transition-colors rounded-full hover:bg-primary-light"
               aria-label="Shopping cart"
             >
@@ -70,13 +72,14 @@ export function Navigation() {
                   {totalItems}
                 </span>
               )}
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-3">
-            <button
-              onClick={() => setIsCartOpen(true)}
+            <UserSidebar />
+            <Link
+              href="/checkout"
               className="relative p-2.5 text-foreground hover:text-primary transition-colors rounded-full hover:bg-primary-light"
               aria-label="Shopping cart"
             >
@@ -86,7 +89,7 @@ export function Navigation() {
                   {totalItems}
                 </span>
               )}
-            </button>
+            </Link>
 
             <button
               onClick={() => setIsOpen(!isOpen)}

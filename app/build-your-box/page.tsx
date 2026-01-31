@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Plus, Check } from "lucide-react"
 import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
+import { FoodOption } from "@/lib/types"
 
 const boxOptions = {
   proteins: [
@@ -111,9 +112,9 @@ const readyToOrderBoxes = [
 ]
 
 export default function BuildYourBoxPage() {
-  const [selectedProtein, setSelectedProtein] = useState<any>(null)
-  const [selectedSides, setSelectedSides] = useState<any[]>([])
-  const [selectedExtras, setSelectedExtras] = useState<any[]>([])
+  const [selectedProtein, setSelectedProtein] = useState<FoodOption | null>(null)
+  const [selectedSides, setSelectedSides] = useState<FoodOption[]>([])
+  const [selectedExtras, setSelectedExtras] = useState<FoodOption[]>([])
   const { addToCart } = useCart()
 
   const totalPrice =
@@ -132,7 +133,7 @@ export default function BuildYourBoxPage() {
       title: `Custom Box: ${selectedProtein.title}`,
       korean: selectedProtein.korean,
       price: totalPrice,
-      image: selectedProtein.image,
+      image: selectedProtein.image || "",
       category: "Custom Box",
     })
 
@@ -143,13 +144,13 @@ export default function BuildYourBoxPage() {
     alert("Custom box added to cart!")
   }
 
-  const handleAddLunchBoxToCart = (box: any) => {
+  const handleAddLunchBoxToCart = (box: FoodOption) => {
     addToCart({
       id: `lunch-box-${Date.now()}`,
       title: box.title,
       korean: box.korean,
       price: box.price,
-      image: box.image,
+      image: box.image || "",
       category: "Lunch Box",
     })
     alert(`${box.title} added to cart!`)
@@ -241,11 +242,10 @@ export default function BuildYourBoxPage() {
                 <div
                   key={idx}
                   onClick={() => setSelectedProtein(protein)}
-                  className={`relative cursor-pointer rounded-xl overflow-hidden border-4 transition-all ${
-                    selectedProtein?.title === protein.title
-                      ? "border-primary shadow-xl scale-105"
-                      : "border-transparent hover:border-primary/50"
-                  }`}
+                  className={`relative cursor-pointer rounded-xl overflow-hidden border-4 transition-all ${selectedProtein?.title === protein.title
+                    ? "border-primary shadow-xl scale-105"
+                    : "border-transparent hover:border-primary/50"
+                    }`}
                 >
                   <div className="relative h-48">
                     <Image
@@ -286,9 +286,8 @@ export default function BuildYourBoxPage() {
                         setSelectedSides([...selectedSides, side])
                       }
                     }}
-                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                      isSelected ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
-                    }`}
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isSelected ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <div>
@@ -322,9 +321,8 @@ export default function BuildYourBoxPage() {
                         setSelectedExtras([...selectedExtras, extra])
                       }
                     }}
-                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                      isSelected ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
-                    }`}
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isSelected ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <div>

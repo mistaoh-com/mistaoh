@@ -3,20 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 
-export interface CartItem {
-  id: string
-  title: string
-  korean: string
-  price: number
-  quantity: number
-  image: string
-  category: string
-  isSubscription?: boolean
-  subscriptionPlan?: "weekly" | "biweekly" | "monthly"
-  mealsPerWeek?: number
-  subscriptionItems?: Array<{ id: string; name: string; quantity: number }>
-  selectedAddOns?: Array<{ id: string; name: string; price: number }>
-}
+import { CartItem } from "@/lib/types"
 
 interface CartContextType {
   cart: CartItem[]
@@ -74,7 +61,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prevCart, { ...item, quantity: 1 }]
     })
-    setIsCartOpen(true)
+    // setIsCartOpen(true) - User requested to not open sidebar on add
   }
 
   const removeFromCart = (id: string) => {
