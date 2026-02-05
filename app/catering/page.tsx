@@ -257,9 +257,9 @@ export default function CateringPage() {
           <div className="mt-8 text-center">
             <p className="text-muted mb-4">Or contact us directly:</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="tel:+12019258419" className="flex items-center gap-2 text-primary hover:underline">
+              <a href="tel:+16465598858" className="flex items-center gap-2 text-primary hover:underline">
                 <Phone className="w-5 h-5" />
-                +1-201-925-8419
+                +1-646-559-8858
               </a>
               <a href="mailto:mistaohnyc@gmail.com" className="flex items-center gap-2 text-primary hover:underline">
                 <Mail className="w-5 h-5" />

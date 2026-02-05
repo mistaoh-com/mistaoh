@@ -2,21 +2,22 @@
 
 import { X, Minus, Plus, ShoppingBag, Loader2, Calendar, Package } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
+import { useAuth } from "@/contexts/auth-context"
 import Image from "next/image"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 export function CartSidebar() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, getTotalPrice } = useCart()
+  const { user } = useAuth()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const router = useRouter()
 
   const handleCheckout = async () => {
     setIsCheckingOut(true)
     try {
-      // First, check if user is authenticated
-      const authRes = await fetch("/api/user/me")
-      if (authRes.status === 401) {
+      // Check if user is authenticated via Context
+      if (!user) {
         // User is not logged in, redirect to login with redirect back
         setIsCartOpen(false)
         router.push("/login?redirect=/menu&checkout=true")

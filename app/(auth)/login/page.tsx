@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
+import { useAuth } from "@/contexts/auth-context"
 
 const loginSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -28,6 +29,7 @@ function LoginForm() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const { toast } = useToast()
+    const { refreshUser } = useAuth()
     const router = useRouter()
     const searchParams = useSearchParams()
     const verified = searchParams.get("verified")
@@ -61,6 +63,9 @@ function LoginForm() {
                 title: "Login Successful",
                 description: "Welcome back!",
             })
+
+            // Refresh the AuthContext state BEFORE redirecting
+            await refreshUser()
 
             // Redirect based on role or to the redirect param
             if (data.role === "admin") {

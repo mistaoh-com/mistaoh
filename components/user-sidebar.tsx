@@ -54,8 +54,8 @@ export function UserSidebar() {
     if (!user) {
         return (
             <Button
-                variant="ghost"
-                className="font-medium text-foreground hover:text-primary transition-colors"
+                variant="secondary"
+                className="font-semibold text-primary bg-primary/5 hover:bg-primary/10 transition-all rounded-full px-6"
                 onClick={() => router.push("/login")}
             >
                 Login
@@ -66,8 +66,14 @@ export function UserSidebar() {
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative group">
-                    <UserIcon className="h-5 w-5 group-hover:text-primary transition-colors" />
+                <Button
+                    variant="secondary"
+                    className="relative group flex items-center gap-2 px-4 py-2 bg-primary/5 hover:bg-primary/10 transition-all rounded-full border border-transparent hover:border-primary/20"
+                >
+                    <UserIcon className="h-4 w-4 text-primary" />
+                    <span className="font-semibold text-sm hidden sm:inline-block text-primary">
+                        Hi {user.name.split(' ')[0]}
+                    </span>
                     <span className="sr-only">Toggle user menu</span>
                 </Button>
             </SheetTrigger>

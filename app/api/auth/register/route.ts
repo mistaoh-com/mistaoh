@@ -46,9 +46,31 @@ export async function POST(req: Request) {
         // Check if user exists
         const existingUser = await User.findOne({ email })
         if (existingUser) {
+            if (existingUser.isVerified) {
+                return NextResponse.json(
+                    { message: "An account with this email already exists. Please sign in." },
+                    { status: 409 }
+                )
+            }
+
+            // User exists but is unverified - allow re-registration
+            const hashedPassword = await hashPassword(password)
+            const verificationToken = generateVerificationToken()
+            const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24h
+
+            existingUser.name = name
+            existingUser.phone = phone
+            existingUser.password = hashedPassword
+            existingUser.verificationToken = verificationToken
+            existingUser.verificationTokenExpiry = verificationTokenExpiry
+            await existingUser.save()
+
+            // Send Email
+            await sendVerificationEmail(email, verificationToken)
+
             return NextResponse.json(
-                { message: "User already exists" },
-                { status: 409 }
+                { message: "Registration re-initiated. Please check your email to verify your account." },
+                { status: 200 }
             )
         }
 
