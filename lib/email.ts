@@ -1,13 +1,26 @@
 import nodemailer from "nodemailer"
 import { MailItem } from "./types"
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-})
+let transporter: any = null
+
+function getTransporter() {
+  if (transporter) return transporter
+
+  const user = process.env.MAIL_USER
+  const pass = process.env.EMAIL_PASS
+
+  if (!user || !pass) {
+    console.error("❌ EMAIL ERROR: MAIL_USER or EMAIL_PASS environment variables are missing.")
+    throw new Error("Missing email credentials. Please ensure MAIL_USER and EMAIL_PASS are set in Vercel environment variables.")
+  }
+
+  transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: { user, pass },
+  })
+
+  return transporter
+}
 
 export async function sendOrderConfirmationEmail(
   to: string,
@@ -62,7 +75,7 @@ export async function sendOrderConfirmationEmail(
     </div>
   `
 
-  await transporter.sendMail({
+  await getTransporter().sendMail({
     from: `"Mista Oh" <${process.env.MAIL_USER}>`,
     to,
     subject,
@@ -91,7 +104,7 @@ export async function sendVerificationEmail(to: string, token: string) {
     </div>
   `
 
-  await transporter.sendMail({
+  await getTransporter().sendMail({
     from: `"Mista Oh" <${process.env.MAIL_USER}>`,
     to,
     subject,
@@ -122,7 +135,7 @@ export async function sendOrderStatusEmail(to: string, customerName: string, ord
     </div>
   `
 
-  await transporter.sendMail({
+  await getTransporter().sendMail({
     from: `"Mista Oh" <${process.env.MAIL_USER}>`,
     to,
     subject,
@@ -193,7 +206,7 @@ export async function sendAdminNewOrderEmail(
   `
 
   if (adminEmail) {
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: `"Mista Oh System" <${process.env.MAIL_USER}>`,
       to: adminEmail,
       subject,
@@ -234,7 +247,7 @@ export async function sendContactEmail(data: {
     </div>
   `
 
-  await transporter.sendMail({
+  await getTransporter().sendMail({
     from: `"Mista Oh Website" <${process.env.MAIL_USER}>`,
     to: adminEmail,
     replyTo: data.email,
@@ -381,7 +394,7 @@ export async function sendContactAcknowledgementEmail(data: {
     </html>
   `
 
-  await transporter.sendMail({
+  await getTransporter().sendMail({
     from: `"Mista Oh" <${process.env.MAIL_USER}>`,
     to: data.email,
     subject: `Thank you for contacting Mista Oh`,
@@ -438,7 +451,7 @@ export async function sendCateringEmail(data: {
     </div>
   `
 
-  await transporter.sendMail({
+  await getTransporter().sendMail({
     from: `"Mista Oh Website" <${process.env.MAIL_USER}>`,
     to: adminEmail,
     replyTo: data.email,
