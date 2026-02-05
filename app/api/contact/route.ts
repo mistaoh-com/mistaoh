@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sendContactEmail } from "@/lib/email"
+import { sendContactEmail, sendContactAcknowledgementEmail } from "@/lib/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +15,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Use centralized email helper
-    await sendContactEmail({ name, email, phone, subject, message })
+    await Promise.all([
+      sendContactEmail({ name, email, phone, subject, message }),
+      sendContactAcknowledgementEmail({ name, email, subject, message })
+    ])
 
     return NextResponse.json(
       { success: true, message: "Message sent successfully" },

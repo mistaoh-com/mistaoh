@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sendCateringEmail } from "@/lib/email"
+import { sendCateringEmail, sendCateringAcknowledgementEmail } from "@/lib/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,15 +15,26 @@ export async function POST(request: NextRequest) {
     }
 
     // Use centralized email helper
-    await sendCateringEmail({
-      name,
-      email,
-      phone,
-      eventDate,
-      guestCount,
-      eventType,
-      message
-    })
+    await Promise.all([
+      sendCateringEmail({
+        name,
+        email,
+        phone,
+        eventDate,
+        guestCount,
+        eventType,
+        message
+      }),
+      sendCateringAcknowledgementEmail({
+        name,
+        email,
+        phone,
+        eventDate,
+        guestCount,
+        eventType,
+        message
+      })
+    ])
 
     return NextResponse.json(
       { success: true, message: "Inquiry sent successfully" },

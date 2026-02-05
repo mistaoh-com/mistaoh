@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { DM_Sans } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/contexts/cart-context"
+import { AuthProvider } from "@/contexts/auth-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import { ScrollToTop } from "@/components/scroll-to-top"
 
@@ -28,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <body>
-        <CartProvider>
-          <ScrollToTop />
-          {children}
-          <CartSidebar />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <ScrollToTop />
+            {children}
+            <CartSidebar />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   )

@@ -243,6 +243,152 @@ export async function sendContactEmail(data: {
   })
 }
 
+export async function sendContactAcknowledgementEmail(data: {
+  name: string
+  email: string
+  subject: string
+  message: string
+}) {
+  const subjectLabels: Record<string, string> = {
+    reservation: "Reservation Inquiry",
+    catering: "Catering Inquiry",
+    menu: "Menu Question",
+    feedback: "Feedback",
+    other: "Other",
+  }
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          background-color: #f5f5f7;
+          margin: 0;
+          padding: 0;
+          -webkit-font-smoothing: antialiased;
+        }
+        .container {
+          max-width: 600px;
+          margin: 40px auto;
+          background-color: #ffffff;
+          border-radius: 18px;
+          overflow: hidden;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+        .content {
+          padding: 48px;
+        }
+        .header {
+          margin-bottom: 32px;
+        }
+        .logo {
+          font-size: 24px;
+          font-weight: 600;
+          color: #1d1d1f;
+          letter-spacing: -0.02em;
+        }
+        h1 {
+          font-size: 28px;
+          font-weight: 600;
+          color: #1d1d1f;
+          margin: 0 0 16px 0;
+          letter-spacing: -0.01em;
+        }
+        p {
+          font-size: 17px;
+          line-height: 1.5;
+          color: #424245;
+          margin: 0 0 24px 0;
+        }
+        .details-box {
+          background-color: #fbfbfd;
+          border: 1px solid #d2d2d7;
+          border-radius: 12px;
+          padding: 24px;
+          margin-top: 32px;
+        }
+        .details-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #86868b;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 16px;
+        }
+        .detail-item {
+          margin-bottom: 12px;
+          font-size: 15px;
+        }
+        .detail-label {
+          color: #86868b;
+          width: 80px;
+          display: inline-block;
+        }
+        .detail-value {
+          color: #1d1d1f;
+          font-weight: 500;
+        }
+        .message-content {
+          margin-top: 12px;
+          padding-top: 12px;
+          border-top: 1px solid #e5e5e5;
+          font-style: italic;
+          color: #424245;
+        }
+        .footer {
+          padding: 32px 48px;
+          background-color: #f5f5f7;
+          text-align: center;
+          font-size: 12px;
+          color: #86868b;
+        }
+        .footer a {
+          color: #0066cc;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="content">
+          <div class="header">
+            <span class="logo">Mista Oh</span>
+          </div>
+          <h1>Thank you for reaching out.</h1>
+          <p>Hi ${data.name},</p>
+          <p>We've received your message and will get back to you as soon as possible. Our team usually responds within 24 hours.</p>
+          
+          <div class="details-box">
+            <div class="details-title">Your Inquiry Details</div>
+            <div class="detail-item">
+              <span class="detail-label">Subject:</span>
+              <span class="detail-value">${subjectLabels[data.subject] || data.subject}</span>
+            </div>
+            <div class="message-content">
+              "${data.message}"
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          41 W 24 St, New York, NY 10010<br>
+          <a href="tel:6465598858">(646) 559-8858</a> &nbsp;•&nbsp; <a href="https://mistaoh.com">mistaoh.com</a>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+
+  await transporter.sendMail({
+    from: `"Mista Oh" <${process.env.MAIL_USER}>`,
+    to: data.email,
+    subject: `Thank you for contacting Mista Oh`,
+    html,
+  })
+}
+
 export async function sendCateringEmail(data: {
   name: string
   email: string
@@ -297,6 +443,175 @@ export async function sendCateringEmail(data: {
     to: adminEmail,
     replyTo: data.email,
     subject: `[Catering Inquiry] ${eventTypeLabels[data.eventType] || data.eventType} - ${data.name}`,
+    html,
+  })
+}
+
+export async function sendCateringAcknowledgementEmail(data: {
+  name: string
+  email: string
+  phone: string
+  eventDate: string
+  guestCount: string
+  eventType: string
+  message?: string
+}) {
+  const eventTypeLabels: Record<string, string> = {
+    corporate: "Corporate Event",
+    wedding: "Wedding",
+    birthday: "Birthday Party",
+    family: "Family Gathering",
+    other: "Other",
+  }
+
+  const formattedDate = new Date(data.eventDate).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          background-color: #f5f5f7;
+          margin: 0;
+          padding: 0;
+          -webkit-font-smoothing: antialiased;
+        }
+        .container {
+          max-width: 600px;
+          margin: 40px auto;
+          background-color: #ffffff;
+          border-radius: 18px;
+          overflow: hidden;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+        .content {
+          padding: 48px;
+        }
+        .header {
+          margin-bottom: 32px;
+        }
+        .logo {
+          font-size: 24px;
+          font-weight: 600;
+          color: #1d1d1f;
+          letter-spacing: -0.02em;
+        }
+        h1 {
+          font-size: 28px;
+          font-weight: 600;
+          color: #1d1d1f;
+          margin: 0 0 16px 0;
+          letter-spacing: -0.01em;
+        }
+        p {
+          font-size: 17px;
+          line-height: 1.5;
+          color: #424245;
+          margin: 0 0 24px 0;
+        }
+        .details-box {
+          background-color: #fbfbfd;
+          border: 1px solid #d2d2d7;
+          border-radius: 12px;
+          padding: 24px;
+          margin-top: 32px;
+        }
+        .details-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #86868b;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 16px;
+        }
+        .detail-item {
+          margin-bottom: 12px;
+          font-size: 15px;
+          display: flex;
+          align-items: flex-start;
+        }
+        .detail-label {
+          color: #86868b;
+          width: 100px;
+          flex-shrink: 0;
+          display: inline-block;
+        }
+        .detail-value {
+          color: #1d1d1f;
+          font-weight: 500;
+        }
+        .message-content {
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px solid #e5e5e5;
+          font-style: italic;
+          color: #424245;
+        }
+        .footer {
+          padding: 32px 48px;
+          background-color: #f5f5f7;
+          text-align: center;
+          font-size: 12px;
+          color: #86868b;
+        }
+        .footer a {
+          color: #0066cc;
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="content">
+          <div class="header">
+            <span class="logo">Mista Oh</span>
+          </div>
+          <h1>Catering request received.</h1>
+          <p>Hi ${data.name},</p>
+          <p>Thank you for your interest in catering with Mista Oh. We've received your request and our events team will review the details and get back to you with a quote within 24 hours.</p>
+          
+          <div class="details-box">
+            <div class="details-title">Event Details</div>
+            <div class="detail-item">
+              <span class="detail-label">Type:</span>
+              <span class="detail-value">${eventTypeLabels[data.eventType] || data.eventType}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Date:</span>
+              <span class="detail-value">${formattedDate}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Guests:</span>
+              <span class="detail-value">${data.guestCount}</span>
+            </div>
+            ${data.message ? `
+            <div class="message-content">
+              "${data.message}"
+            </div>
+            ` : ""}
+          </div>
+        </div>
+        <div class="footer">
+          41 W 24 St, New York, NY 10010<br>
+          <a href="tel:6465598858">(646) 559-8858</a> &nbsp;•&nbsp; <a href="https://mistaoh.com/catering">mistaoh.com/catering</a>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+
+  await transporter.sendMail({
+    from: `"Mista Oh" <${process.env.MAIL_USER}>`,
+    to: data.email,
+    subject: `We've received your catering request`,
     html,
   })
 }

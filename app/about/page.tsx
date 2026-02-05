@@ -15,7 +15,7 @@ export default function AboutPage() {
           <div className="space-y-8">
             <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
               Our story started <br />
-              <span className="text-[#FF813D]">in Seoul.</span>
+              <span className="text-[#FF813D]">in Busan.</span>
             </h1>
             <p className="text-lg md:text-xl text-[#696969] leading-relaxed max-w-lg">
               A family's journey from Korea to the heart of New York City, bringing authentic flavors and warmth to every plate.

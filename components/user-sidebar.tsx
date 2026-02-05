@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
 import {
     Sheet,
@@ -14,53 +15,13 @@ import { User as UserIcon, LogOut, Package, RefreshCw } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 
-interface Order {
-    _id: string
-    totalAmount: number
-    status: string
-    createdAt: string
-    items: Array<{ title: string; quantity: number }>
-}
-
-interface User {
-    name: string
-    email: string
-    phone: string
-}
-
 export function UserSidebar() {
     const [open, setOpen] = useState(false)
-    const [user, setUser] = useState<User | null>(null)
-    const [orders, setOrders] = useState<Order[]>([])
-    const [isLoading, setIsLoading] = useState(false)
+    const { user, orders, isLoading, refreshUser, logout } = useAuth()
     const router = useRouter()
 
-    const fetchUserData = async () => {
-        setIsLoading(true)
-        try {
-            const res = await fetch("/api/user/me")
-            if (res.ok) {
-                const data = await res.json()
-                setUser(data.user)
-                setOrders(data.orders)
-            } else {
-                // Handle unauth or error by clearing user
-                setUser(null)
-            }
-        } catch (error) {
-            console.error("Failed to fetch user data")
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        fetchUserData()
-    }, [])
-
     const handleLogout = async () => {
-        await fetch("/api/auth/logout", { method: "POST" })
-        setUser(null)
+        await logout()
         setOpen(false)
         router.push("/")
         router.refresh()
@@ -130,7 +91,7 @@ export function UserSidebar() {
                                 <h3 className="font-semibold text-lg flex items-center gap-2">
                                     <Package className="w-5 h-5" /> Order History
                                 </h3>
-                                <Button variant="ghost" size="sm" onClick={fetchUserData} disabled={isLoading}>
+                                <Button variant="ghost" size="sm" onClick={refreshUser} disabled={isLoading}>
                                     <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                                 </Button>
                             </div>
