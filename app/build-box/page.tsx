@@ -102,7 +102,7 @@ const popularItems = [
     id: "japchae",
     name: "Japchae",
     korean: "잡채",
-    price: 13.99,
+    price: 1.00,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg",
   },
   {
@@ -653,11 +653,10 @@ export default function BuildBoxPage() {
                     <button
                       key={plan.id}
                       onClick={() => setSelectedPlan(plan.id)}
-                      className={`p-6 rounded-lg border-2 transition-all ${
-                        selectedPlan === plan.id
+                      className={`p-6 rounded-lg border-2 transition-all ${selectedPlan === plan.id
                           ? "border-primary bg-primary/10 shadow-lg"
                           : "border-border hover:border-primary/50"
-                      }`}
+                        }`}
                     >
                       <Calendar className="w-8 h-8 mx-auto mb-3 text-primary" />
                       <h4 className="font-semibold text-xl mb-2">{plan.name}</h4>
@@ -737,11 +736,10 @@ export default function BuildBoxPage() {
                           {items.map((item) => (
                             <div
                               key={item.id}
-                              className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${
-                                selectedItems[item.id]
+                              className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${selectedItems[item.id]
                                   ? "border-primary bg-primary/5"
                                   : "border-gray-200 bg-white hover:border-gray-300"
-                              }`}
+                                }`}
                             >
                               {/* Image */}
                               <div className="relative w-32 h-32 flex-shrink-0 rounded-md overflow-hidden">
@@ -859,11 +857,10 @@ export default function BuildBoxPage() {
                                 <button
                                   key={plan.id}
                                   onClick={() => setSelectedPlan(plan.id)}
-                                  className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
-                                    selectedPlan === plan.id
+                                  className={`w-full p-4 rounded-lg border-2 text-left transition-all ${selectedPlan === plan.id
                                       ? "border-primary bg-primary/10"
                                       : "border-border hover:border-primary/50"
-                                  }`}
+                                    }`}
                                 >
                                   <div className="flex items-center justify-between mb-1">
                                     <span className="font-semibold">{plan.name}</span>
