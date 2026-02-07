@@ -46,28 +46,61 @@ export async function POST(req: NextRequest) {
     const minute = nyTime.getMinutes()
 
     let isOpen = false
+    let dayName = ""
+    let hoursMessage = ""
 
-    // Sunday (0): Closed
-    if (day === 0) {
-      isOpen = false
-    }
-    // Mon (1) - Thu (4): 11:00 AM - 11:00 PM
-    else if (day >= 1 && day <= 4) {
-      if (hour >= 11 && hour < 23) isOpen = true
-    }
-    // Fri (5) - Sat (6): 11:00 AM - 10:00 PM
-    else if (day === 5 || day === 6) {
-      if (hour >= 11 && hour < 22) isOpen = true
+    // Get day name and hours
+    switch (day) {
+      case 0: // Sunday
+        dayName = "Sunday"
+        hoursMessage = "We are closed on Sundays"
+        isOpen = false
+        break
+      case 1: // Monday
+        dayName = "Monday"
+        hoursMessage = "Monday: 11:00 AM - 11:00 PM"
+        if (hour >= 11 && hour < 23) isOpen = true
+        break
+      case 2: // Tuesday
+        dayName = "Tuesday"
+        hoursMessage = "Tuesday: 11:00 AM - 11:00 PM"
+        if (hour >= 11 && hour < 23) isOpen = true
+        break
+      case 3: // Wednesday
+        dayName = "Wednesday"
+        hoursMessage = "Wednesday: 11:00 AM - 11:00 PM"
+        if (hour >= 11 && hour < 23) isOpen = true
+        break
+      case 4: // Thursday
+        dayName = "Thursday"
+        hoursMessage = "Thursday: 11:00 AM - 11:00 PM"
+        if (hour >= 11 && hour < 23) isOpen = true
+        break
+      case 5: // Friday
+        dayName = "Friday"
+        hoursMessage = "Friday: 11:00 AM - 10:00 PM"
+        if (hour >= 11 && hour < 22) isOpen = true
+        break
+      case 6: // Saturday
+        dayName = "Saturday"
+        hoursMessage = "Saturday: 11:00 AM - 10:00 PM"
+        if (hour >= 11 && hour < 22) isOpen = true
+        break
     }
 
-    // Use environment variable for bypass (dev/testing only)
+    // Use environment variable for bypass
     const bypassHours = process.env.BYPASS_HOURS === 'true'
-    if (bypassHours && process.env.NODE_ENV !== 'production') {
+    if (bypassHours) {
       isOpen = true
     }
 
-    if (!isOpen && !bypassHours) {
-      return createErrorResponse(ErrorCode.RESTAURANT_CLOSED, 400)
+    if (!isOpen) {
+      return NextResponse.json({
+        error: `We're currently closed. ${hoursMessage}. Please visit us during our business hours!`,
+        code: "RESTAURANT_CLOSED",
+        dayName,
+        hours: hoursMessage
+      }, { status: 400 })
     }
 
     const { items, guestInfo }: { items: CartItem[], guestInfo?: GuestInfo } = await req.json()

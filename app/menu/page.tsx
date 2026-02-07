@@ -21,36 +21,36 @@ export default function MenuPage() {
       <Navigation />
 
       {/* Hero Section - Clean centered design like reference */}
-      <section id="main-content" className="pt-40 pb-16 px-4 bg-[#FAF9F6]">
+      <section id="main-content" className="pt-28 sm:pt-32 md:pt-40 pb-12 sm:pb-14 md:pb-16 px-4 bg-[#FAF9F6]">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#161412]">Our Menu</h1>
-          <p className="text-lg text-[#696969] leading-relaxed max-w-xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-5 md:mb-6 text-[#161412]">Our Menu</h1>
+          <p className="text-base sm:text-lg text-[#696969] leading-relaxed max-w-xl mx-auto px-2">
             Authentic Korean flavors crafted with love and tradition. Fresh ingredients, time-honored recipes.
           </p>
         </div>
       </section>
 
       {/* Category Tabs - Pill style like reference */}
-      <section className="pb-12 px-4 bg-[#FAF9F6]">
+      <section className="pb-8 sm:pb-10 md:pb-12 px-4 bg-[#FAF9F6]">
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="lunch" className="w-full">
-            <div className="flex justify-center mb-12">
-              <TabsList className="inline-flex gap-3 p-0 bg-transparent h-auto">
+            <div className="flex justify-center mb-8 sm:mb-10 md:mb-12">
+              <TabsList className="inline-flex gap-2 sm:gap-3 p-0 bg-transparent h-auto flex-wrap justify-center">
                 <TabsTrigger
                   value="lunch"
-                  className="px-8 py-3 text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
+                  className="px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
                 >
                   Lunch
                 </TabsTrigger>
                 <TabsTrigger
                   value="dinner"
-                  className="px-8 py-3 text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
+                  className="px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
                 >
                   Dinner
                 </TabsTrigger>
                 <TabsTrigger
                   value="drinks"
-                  className="px-8 py-3 text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
+                  className="px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base font-medium rounded-full border border-[#e5e5e5] bg-white text-[#161412] data-[state=active]:bg-[#FF813D] data-[state=active]:text-white data-[state=active]:border-[#FF813D] hover:border-[#FF813D] transition-all duration-200"
                 >
                   Drinks
                 </TabsTrigger>
@@ -58,31 +58,31 @@ export default function MenuPage() {
             </div>
 
             {/* Legend */}
-            <div className="flex items-center justify-center gap-8 flex-wrap mb-12 pb-8 border-b border-[#e5e5e5]">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                  <WheatOff className="w-4 h-4 text-amber-700" />
+            <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap mb-8 sm:mb-10 md:mb-12 pb-6 sm:pb-7 md:pb-8 border-b border-[#e5e5e5]">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                  <WheatOff className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-amber-700" />
                 </div>
-                <span className="text-sm font-medium text-[#161412]">Gluten-Free Option</span>
+                <span className="text-xs sm:text-sm font-medium text-[#161412]">Gluten-Free</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <Leaf className="w-4 h-4 text-green-600" />
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <Leaf className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-green-600" />
                 </div>
-                <span className="text-sm font-medium text-[#161412]">Vegetarian Option</span>
+                <span className="text-xs sm:text-sm font-medium text-[#161412]">Vegetarian</span>
               </div>
             </div>
 
             <TabsContent value="lunch">
-              <div className="text-center mb-14">
-                <h2 className="font-serif text-4xl md:text-5xl mb-4 text-primary">Lunch Menu</h2>
-                <p className="text-lg text-muted-foreground font-medium">Monday - Saturday: 11 AM - 3 PM</p>
+              <div className="text-center mb-10 sm:mb-12 md:mb-14">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 text-primary">Lunch Menu</h2>
+                <p className="text-base sm:text-lg text-muted-foreground font-medium px-4">Monday - Saturday: 11 AM - 3 PM</p>
               </div>
 
               {menuData.lunch.map((category, idx) => (
-                <div key={idx} className="mb-20">
-                  <h3 className="font-serif text-3xl mb-10 pb-4 border-b-2 border-primary text-foreground">{category.category}</h3>
-                  <div className="grid gap-6">
+                <div key={idx} className="mb-12 sm:mb-16 md:mb-20">
+                  <h3 className="font-serif text-2xl sm:text-3xl mb-6 sm:mb-8 md:mb-10 pb-3 sm:pb-4 border-b-2 border-primary text-foreground">{category.category}</h3>
+                  <div className="grid gap-4 sm:gap-5 md:gap-6">
                     {category.items.map((item, itemIdx) => (
                       <MenuItemCard key={itemIdx} item={item} category={`lunch-${category.category}`} accentColor="amber" />
                     ))}
@@ -92,17 +92,17 @@ export default function MenuPage() {
             </TabsContent>
 
             <TabsContent value="dinner">
-              <div className="text-center mb-14">
-                <h2 className="font-serif text-4xl md:text-5xl mb-4 text-secondary">Dinner Menu</h2>
-                <p className="text-lg text-muted-foreground font-medium">
+              <div className="text-center mb-10 sm:mb-12 md:mb-14">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 text-secondary">Dinner Menu</h2>
+                <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-medium px-4">
                   Monday - Thursday: 3 PM - 10 PM | Friday & Saturday: 3 PM - 11 PM
                 </p>
               </div>
 
               {menuData.dinner.map((category, idx) => (
-                <div key={idx} className="mb-20">
-                  <h3 className="font-serif text-3xl mb-10 pb-4 border-b-2 border-secondary text-foreground">{category.category}</h3>
-                  <div className="grid gap-6">
+                <div key={idx} className="mb-12 sm:mb-16 md:mb-20">
+                  <h3 className="font-serif text-2xl sm:text-3xl mb-6 sm:mb-8 md:mb-10 pb-3 sm:pb-4 border-b-2 border-secondary text-foreground">{category.category}</h3>
+                  <div className="grid gap-4 sm:gap-5 md:gap-6">
                     {category.items.map((item, itemIdx) => (
                       <MenuItemCard key={itemIdx} item={item} category={`dinner-${category.category}`} accentColor="rose" />
                     ))}
@@ -112,15 +112,15 @@ export default function MenuPage() {
             </TabsContent>
 
             <TabsContent value="drinks">
-              <div className="text-center mb-14">
-                <h2 className="font-serif text-4xl md:text-5xl mb-4 text-cyan-700">Drink Menu</h2>
-                <p className="text-lg text-muted-foreground">Korean spirits, beer, non-alcoholic beverages, and more</p>
+              <div className="text-center mb-10 sm:mb-12 md:mb-14">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 text-cyan-700">Drink Menu</h2>
+                <p className="text-base sm:text-lg text-muted-foreground px-4">Korean spirits, beer, non-alcoholic beverages, and more</p>
               </div>
 
               {menuData.drinks.map((category, idx) => (
-                <div key={idx} className="mb-16">
-                  <div className="flex items-center gap-3 mb-8 pb-3 border-b-2 border-cyan-600">
-                    <h3 className="font-serif text-3xl">{category.category}</h3>
+                <div key={idx} className="mb-10 sm:mb-12 md:mb-16">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-7 md:mb-8 pb-2 sm:pb-3 border-b-2 border-cyan-600 flex-wrap">
+                    <h3 className="font-serif text-2xl sm:text-3xl">{category.category}</h3>
                     {category.isAlcoholic ? (
                       <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-medium">21+</span>
                     ) : (

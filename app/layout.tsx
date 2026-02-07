@@ -28,7 +28,19 @@ export const metadata: Metadata = {
   title: "Mista Oh - Authentic Korean Restaurant in Flatiron, NYC",
   description:
     "Experience authentic Korean cuisine at Mista Oh in Flatiron, New York. Family-owned restaurant serving traditional Korean dishes with love.",
-  generator: 'v0.app'
+  generator: 'v0.app',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  themeColor: '#FF813D',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Mista Oh',
+  },
 }
 
 export default function RootLayout({

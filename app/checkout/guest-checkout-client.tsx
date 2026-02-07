@@ -86,12 +86,22 @@ export function GuestCheckoutClient() {
                 window.location.href = data.url
             } else {
                 console.error("No checkout URL returned:", data.error || data)
-                toast({
-                    variant: "destructive",
-                    title: "Checkout Failed",
-                    description:
-                        data.error || "An error occurred during checkout.",
-                })
+
+                // Show more prominent error for closed hours
+                if (data.code === "RESTAURANT_CLOSED") {
+                    toast({
+                        variant: "destructive",
+                        title: "🕒 Restaurant Closed",
+                        description: data.error || "We're currently closed. Please check our business hours.",
+                        duration: 8000, // Show for 8 seconds
+                    })
+                } else {
+                    toast({
+                        variant: "destructive",
+                        title: "Checkout Failed",
+                        description: data.error || "An error occurred during checkout.",
+                    })
+                }
                 setIsCheckingOut(false)
             }
         } catch (error) {
