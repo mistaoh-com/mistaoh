@@ -26,6 +26,15 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { getPickupTimeMessage, getPickupAddress } from "@/lib/delivery-time"
 
 const guestSchema = z.object({
@@ -43,6 +52,8 @@ export function GuestCheckoutClient() {
     const { cart, getTotalPrice } = useCart()
     const [isCheckingOut, setIsCheckingOut] = useState(false)
     const [showGuestForm, setShowGuestForm] = useState(false)
+    const [showClosedDialog, setShowClosedDialog] = useState(false)
+    const [closedMessage, setClosedMessage] = useState("")
     const router = useRouter()
     const { toast } = useToast()
 
@@ -74,22 +85,19 @@ export function GuestCheckoutClient() {
             } else {
                 console.error("No checkout URL returned:", data.error || data)
 
-                // Show more prominent error for closed hours
+                // Show prominent dialog for closed hours
                 if (data.code === "RESTAURANT_CLOSED") {
-                    toast({
-                        variant: "destructive",
-                        title: "🕒 Restaurant Closed",
-                        description: data.error || "We're currently closed. Please check our business hours.",
-                        duration: 8000, // Show for 8 seconds
-                    })
+                    setClosedMessage(data.error || "We're currently closed. Please check our business hours and visit us during open hours.")
+                    setShowClosedDialog(true)
+                    setIsCheckingOut(false)
                 } else {
                     toast({
                         variant: "destructive",
                         title: "Checkout Failed",
                         description: data.error || "An error occurred during checkout.",
                     })
+                    setIsCheckingOut(false)
                 }
-                setIsCheckingOut(false)
             }
         } catch (error) {
             console.error("Checkout error:", error)
@@ -360,6 +368,37 @@ export function GuestCheckoutClient() {
                     </Form>
                 </CardContent>
             </Card>
+
+            {/* Restaurant Closed Dialog */}
+            <AlertDialog open={showClosedDialog} onOpenChange={setShowClosedDialog}>
+                <AlertDialogContent className="max-w-md">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-xl flex items-center gap-2">
+                            <Clock className="w-6 h-6 text-[#FF813D]" />
+                            Restaurant Closed
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-base pt-2">
+                            {closedMessage}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 my-4">
+                        <p className="font-semibold text-sm mb-2">Our Business Hours:</p>
+                        <div className="text-sm space-y-1">
+                            <p><span className="font-medium">Monday - Thursday:</span> 11:00 AM - 11:00 PM</p>
+                            <p><span className="font-medium">Friday & Saturday:</span> 11:00 AM - 10:00 PM</p>
+                            <p><span className="font-medium">Sunday:</span> Closed</p>
+                        </div>
+                    </div>
+                    <AlertDialogFooter>
+                        <AlertDialogAction
+                            onClick={() => router.push("/menu")}
+                            className="bg-[#FF813D] hover:bg-[#e67335] w-full"
+                        >
+                            Back to Menu
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }
