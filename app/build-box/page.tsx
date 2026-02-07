@@ -102,7 +102,7 @@ const popularItems = [
     id: "japchae",
     name: "Japchae",
     korean: "잡채",
-    price: 1.00,
+    price: 13.99,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg",
   },
   {
