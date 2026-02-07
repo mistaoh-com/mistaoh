@@ -22,8 +22,8 @@ export default function CartPage() {
   return (
     <main id="main-content" className="min-h-screen bg-gray-50">
       <Navigation />
-      <div className="container mx-auto px-4 py-8 pt-24">
-        <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 pt-20 sm:pt-24">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Your Cart</h1>
 
         {isEmpty ? (
           <div className="flex flex-col items-center justify-center py-16">

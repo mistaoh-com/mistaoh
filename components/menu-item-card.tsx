@@ -151,9 +151,9 @@ export function MenuItemCard({
 
     if (variant === "compact") {
         return (
-            <div className="flex items-center gap-4 py-4 px-5 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all">
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4 py-3 sm:py-4 px-3 sm:px-4 md:px-5 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all w-full max-w-full">
                 {item.image && (
-                    <div className="relative w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0 rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
                         <Image
                             src={item.image}
                             alt={item.title}
@@ -166,30 +166,30 @@ export function MenuItemCard({
                     </div>
                 )}
                 <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
-                        <h4 className="font-sans font-bold text-base truncate text-foreground">{item.title}</h4>
-                        {item.glutenFree && <WheatOff className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />}
-                        {item.vegetarian && <Leaf className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />}
+                    <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                        <h4 className="font-sans font-bold text-xs sm:text-sm md:text-base truncate text-foreground">{item.title}</h4>
+                        {item.glutenFree && <WheatOff className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-700 flex-shrink-0" />}
+                        {item.vegetarian && <Leaf className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-600 flex-shrink-0" />}
                         {item.spicyLevel && (
                             <div className="flex gap-0.5 shrink-0" aria-label={`Spice level: ${item.spicyLevel}`}>
-                                <Flame className="w-3.5 h-3.5 text-red-600 fill-red-600" />
-                                {item.spicyLevel === 'medium' && <Flame className="w-3.5 h-3.5 text-red-600 fill-red-600" />}
+                                <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-600 fill-red-600" />
+                                {item.spicyLevel === 'medium' && <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-600 fill-red-600" />}
                             </div>
                         )}
                     </div>
-                    <p className="text-xs text-muted-foreground">{item.korean}</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground truncate">{item.korean}</p>
                 </div>
-                <span className="font-bold text-primary">${item.price.toFixed(2)}</span>
+                <span className="font-bold text-sm sm:text-base md:text-lg text-primary whitespace-nowrap shrink-0">${item.price.toFixed(2)}</span>
                 {!isAlcoholic && !item.notOrderable && (
                     <button
                         onClick={handleAddToCart}
                         className={cn(
-                            "p-2.5 rounded-full text-white transition-all shadow-md",
+                            "p-1.5 sm:p-2 md:p-2.5 rounded-full text-white transition-all shadow-md shrink-0",
                             getAccentClasses(),
                             isAdding && "scale-110"
                         )}
                     >
-                        <Plus className="w-4 h-4" />
+                        <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />
                     </button>
                 )}
             </div>
@@ -197,11 +197,11 @@ export function MenuItemCard({
     }
 
     return (
-        <div className="flex items-start gap-3 sm:gap-4 md:gap-5 py-4 sm:py-5 md:py-6 px-3 sm:px-4 md:px-6 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 group">
+        <div className="flex items-start gap-2 sm:gap-3 md:gap-4 lg:gap-5 py-3 sm:py-4 md:py-5 lg:py-6 px-2 sm:px-3 md:px-4 lg:px-6 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 group w-full max-w-full overflow-hidden">
             {item.image && (
                 <Dialog>
                     <DialogTrigger asChild>
-                        <div className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 flex-shrink-0 rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 cursor-pointer hover:opacity-90 transition-opacity shadow-md hover:shadow-lg">
+                        <div className="relative w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex-shrink-0 rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden bg-gray-100 cursor-pointer hover:opacity-90 transition-opacity shadow-md hover:shadow-lg">
                             <Image
                                 src={item.image}
                                 alt={item.title}
@@ -235,10 +235,10 @@ export function MenuItemCard({
             )}
 
             <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex-1">
-                        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                            <h4 className="font-sans font-bold text-base sm:text-lg md:text-xl tracking-tight text-foreground">{item.title}</h4>
+                <div className="flex items-start justify-between gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 flex-wrap">
+                            <h4 className="font-sans font-bold text-sm sm:text-base md:text-lg lg:text-xl tracking-tight text-foreground break-words">{item.title}</h4>
                             {item.glutenFree && (
                                 <span className="flex items-center gap-1 text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
                                     <WheatOff className="w-3 h-3" />
@@ -261,50 +261,50 @@ export function MenuItemCard({
                                 </span>
                             )}
                         </div>
-                        <p className="text-sm sm:text-base font-medium text-muted-foreground mt-0.5 sm:mt-1">{item.korean}</p>
+                        <p className="text-xs sm:text-sm md:text-base font-medium text-muted-foreground mt-0.5">{item.korean}</p>
                         {item.description && (
-                            <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2 leading-relaxed line-clamp-2">
+                            <p className="text-xs sm:text-sm md:text-base text-muted-foreground mt-1 leading-relaxed line-clamp-2 hidden sm:block">
                                 {item.description}
                             </p>
                         )}
                     </div>
 
-                    <div className="flex flex-col items-end gap-2 sm:gap-3">
-                        <span className="font-bold text-lg sm:text-xl md:text-2xl text-primary whitespace-nowrap">
+                    <div className="flex flex-col items-end gap-1.5 sm:gap-2 md:gap-3 shrink-0">
+                        <span className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-primary whitespace-nowrap">
                             ${item.price.toFixed(2)}
                         </span>
 
                         {!isAlcoholic && !item.notOrderable ? (
                             quantity > 0 ? (
-                                <div className="flex items-center gap-0.5 sm:gap-1 bg-gray-100 rounded-full p-0.5 sm:p-1">
+                                <div className="flex items-center gap-0.5 bg-gray-100 rounded-full p-0.5">
                                     <button
                                         onClick={() => handleUpdateQuantity(quantity - 1)}
-                                        className="p-1.5 sm:p-2 hover:bg-white rounded-full transition-colors"
+                                        className="p-1 sm:p-1.5 md:p-2 hover:bg-white rounded-full transition-colors"
                                         aria-label="Decrease quantity"
                                     >
-                                        <Minus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                        <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />
                                     </button>
-                                    <span className="w-6 sm:w-8 text-center text-sm sm:text-base font-semibold text-foreground">{quantity}</span>
+                                    <span className="w-5 sm:w-6 md:w-8 text-center text-xs sm:text-sm md:text-base font-semibold text-foreground">{quantity}</span>
                                     <button
                                         onClick={() => handleUpdateQuantity(quantity + 1)}
-                                        className="p-1.5 sm:p-2 hover:bg-white rounded-full transition-colors"
+                                        className="p-1 sm:p-1.5 md:p-2 hover:bg-white rounded-full transition-colors"
                                         aria-label="Increase quantity"
                                     >
-                                        <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                        <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />
                                     </button>
                                 </div>
                             ) : (
                                 <button
                                     onClick={handleAddToCart}
                                     className={cn(
-                                        "flex items-center gap-1.5 sm:gap-2 text-white px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full text-sm sm:text-base font-semibold transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap",
+                                        "flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 text-white px-2.5 sm:px-4 md:px-5 lg:px-6 py-1.5 sm:py-2 md:py-2.5 lg:py-3 rounded-full text-xs sm:text-sm md:text-base font-semibold transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap",
                                         getAccentClasses(),
                                         isAdding && "scale-105"
                                     )}
                                 >
-                                    <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-                                    <span className="hidden sm:inline">{hasAddOns ? "Customize & Add" : "Add"}</span>
-                                    <span className="sm:hidden">+</span>
+                                    <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                                    <span className="hidden md:inline">{hasAddOns ? "Customize & Add" : "Add"}</span>
+                                    <span className="md:hidden">Add</span>
                                 </button>
                             )
                         ) : item.notOrderable ? (

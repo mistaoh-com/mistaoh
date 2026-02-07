@@ -37,15 +37,6 @@ const guestSchema = z.object({
             /^\+?1?\s*\(?(\d{3})\)?[\s\-]*(\d{3})[\s\-]*(\d{4})$/,
             "Please provide a valid 10-digit US phone number"
         ),
-    address: z.string().min(5, "Please enter your street address"),
-    city: z.string().min(2, "Please enter your city"),
-    state: z
-        .string()
-        .length(2, "Please use 2-letter state code (e.g., NY, CA)")
-        .regex(/^[A-Z]{2}$/, "State code must be uppercase letters"),
-    zip: z
-        .string()
-        .regex(/^\d{5}(-\d{4})?$/, "Please provide a valid ZIP code (e.g., 12345 or 12345-6789)"),
 })
 
 export function GuestCheckoutClient() {
@@ -61,10 +52,6 @@ export function GuestCheckoutClient() {
             name: "",
             email: "",
             phone: "",
-            address: "",
-            city: "",
-            state: "",
-            zip: "",
         },
     })
 
@@ -321,86 +308,6 @@ export function GuestCheckoutClient() {
                                     </FormItem>
                                 )}
                             />
-
-                            <div className="space-y-6">
-                                <h3 className="text-lg font-semibold">
-                                    Billing Address
-                                </h3>
-
-                                <FormField
-                                    control={form.control}
-                                    name="address"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Street Address *</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="123 Main St"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <FormField
-                                        control={form.control}
-                                        name="city"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>City *</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="New York"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    <FormField
-                                        control={form.control}
-                                        name="state"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>State *</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="NY"
-                                                        maxLength={2}
-                                                        {...field}
-                                                        onChange={(e) => {
-                                                            field.onChange(e.target.value.toUpperCase())
-                                                        }}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-
-                                <FormField
-                                    control={form.control}
-                                    name="zip"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>ZIP Code *</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="12345"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
 
                             <div className="pt-4 border-t">
                                 <div className="space-y-2 mb-6">

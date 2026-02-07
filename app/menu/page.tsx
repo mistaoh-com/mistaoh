@@ -31,8 +31,8 @@ export default function MenuPage() {
       </section>
 
       {/* Category Tabs - Pill style like reference */}
-      <section className="pb-8 sm:pb-10 md:pb-12 px-4 bg-[#FAF9F6]">
-        <div className="max-w-6xl mx-auto">
+      <section className="pb-8 sm:pb-10 md:pb-12 px-3 sm:px-4 bg-[#FAF9F6]">
+        <div className="max-w-6xl mx-auto w-full">
           <Tabs defaultValue="lunch" className="w-full">
             <div className="flex justify-center mb-8 sm:mb-10 md:mb-12">
               <TabsList className="inline-flex gap-2 sm:gap-3 p-0 bg-transparent h-auto flex-wrap justify-center">
@@ -82,7 +82,7 @@ export default function MenuPage() {
               {menuData.lunch.map((category, idx) => (
                 <div key={idx} className="mb-12 sm:mb-16 md:mb-20">
                   <h3 className="font-serif text-2xl sm:text-3xl mb-6 sm:mb-8 md:mb-10 pb-3 sm:pb-4 border-b-2 border-primary text-foreground">{category.category}</h3>
-                  <div className="grid gap-4 sm:gap-5 md:gap-6">
+                  <div className="grid gap-3 sm:gap-4 md:gap-5 lg:gap-6 w-full">
                     {category.items.map((item, itemIdx) => (
                       <MenuItemCard key={itemIdx} item={item} category={`lunch-${category.category}`} accentColor="amber" />
                     ))}
@@ -102,7 +102,7 @@ export default function MenuPage() {
               {menuData.dinner.map((category, idx) => (
                 <div key={idx} className="mb-12 sm:mb-16 md:mb-20">
                   <h3 className="font-serif text-2xl sm:text-3xl mb-6 sm:mb-8 md:mb-10 pb-3 sm:pb-4 border-b-2 border-secondary text-foreground">{category.category}</h3>
-                  <div className="grid gap-4 sm:gap-5 md:gap-6">
+                  <div className="grid gap-3 sm:gap-4 md:gap-5 lg:gap-6 w-full">
                     {category.items.map((item, itemIdx) => (
                       <MenuItemCard key={itemIdx} item={item} category={`dinner-${category.category}`} accentColor="rose" />
                     ))}
@@ -127,7 +127,7 @@ export default function MenuPage() {
                       <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Non-Alcoholic</span>
                     )}
                   </div>
-                  <div className="grid gap-6">
+                  <div className="grid gap-3 sm:gap-4 md:gap-5 lg:gap-6 w-full">
                     {category.items.map((item, itemIdx) => (
                       <MenuItemCard key={itemIdx} item={item} category={`drinks-${category.category}`} accentColor="cyan" isAlcoholic={category.isAlcoholic} />
                     ))}

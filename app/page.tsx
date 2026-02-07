@@ -19,15 +19,15 @@ export default function HomePage() {
         <div className="absolute top-0 right-0 w-[35%] h-full bg-[#FF813D] hidden md:block"></div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-12 sm:pb-16">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-12 sm:pb-16 overflow-hidden">
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center min-h-[70vh]">
             {/* Left Column - Text Content */}
-            <div className="max-w-[520px]">
-              <h1 className="text-[28px] sm:text-[34px] md:text-[46px] lg:text-[54px] font-bold leading-[1.15] sm:leading-[1.1] tracking-tight text-[#161412] mb-4 sm:mb-6">
+            <div className="max-w-full md:max-w-[520px] w-full">
+              <h1 className="text-[26px] sm:text-[32px] md:text-[46px] lg:text-[54px] font-bold leading-[1.2] sm:leading-[1.15] md:leading-[1.1] text-[#161412] mb-4 sm:mb-6 break-words hyphens-auto">
                 One of the Best Korean Restaurants in{" "}
                 <span className="text-[#FF813D]">NYC.</span>
               </h1>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] text-[#696969] leading-[1.6] sm:leading-[1.75] mb-6 sm:mb-8">
+              <p className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-[#696969] leading-[1.5] sm:leading-[1.6] md:leading-[1.75] mb-6 sm:mb-8">
                 From rich, comforting stews to grilled favorites and shareable classics, Mista Oh brings together the many flavors of Korean cuisine, prepared fresh and meant to be enjoyed any day of the week.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -49,15 +49,15 @@ export default function HomePage() {
             </div>
 
             {/* Right Column - Hero Image */}
-            <div className="flex justify-center md:justify-end mt-6 md:mt-0">
-              <div className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-[540px] lg:max-w-[600px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+            <div className="flex justify-center md:justify-end mt-6 md:mt-0 w-full overflow-hidden">
+              <div className="relative w-full max-w-[280px] sm:max-w-[360px] md:max-w-[540px] lg:max-w-[600px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform md:-rotate-3 md:hover:rotate-0 transition-transform duration-500">
                 <Image
                   src="/dolsot-bibimbap-korean-food.jpg"
                   alt="Korean food spread"
                   fill
                   className="object-cover object-center"
                   priority
-                  sizes="(max-width: 640px) 90vw, (max-width: 768px) 80vw, 50vw"
+                  sizes="(max-width: 640px) 85vw, (max-width: 768px) 75vw, 50vw"
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />
