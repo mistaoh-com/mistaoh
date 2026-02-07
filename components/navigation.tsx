@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 import { Menu, X, ShoppingCart } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import { UserSidebar } from "@/components/user-sidebar"
@@ -11,6 +12,8 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const { getTotalItems, setIsCartOpen } = useCart()
   const totalItems = getTotalItems()
+  const pathname = usePathname()
+  const isLandingPage = pathname === "/"
 
   // Close mobile menu on Escape key press
   useEffect(() => {
@@ -96,7 +99,7 @@ export function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-3">
-            <UserSidebar />
+            {!isLandingPage && <UserSidebar />}
             <Link
               href="/checkout"
               className="relative p-2.5 text-foreground hover:text-primary transition-colors rounded-full hover:bg-primary-light"

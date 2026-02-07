@@ -19,29 +19,29 @@ export default function HomePage() {
         <div className="absolute top-0 right-0 w-[35%] h-full bg-[#FF813D] hidden md:block"></div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-12 sm:pb-16 overflow-hidden">
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center min-h-[70vh]">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-16 pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-16 sm:pb-20 overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center min-h-[70vh]">
             {/* Left Column - Text Content */}
             <div className="max-w-full md:max-w-[520px] w-full">
-              <h1 className="text-[26px] sm:text-[32px] md:text-[46px] lg:text-[54px] font-bold leading-[1.2] sm:leading-[1.15] md:leading-[1.1] text-[#161412] mb-4 sm:mb-6 break-words hyphens-auto">
+              <h1 className="text-[32px] sm:text-[36px] md:text-[46px] lg:text-[54px] font-bold leading-[1.15] sm:leading-[1.12] md:leading-[1.1] text-[#161412] mb-5 sm:mb-6 break-words hyphens-auto">
                 One of the Best Korean Restaurants in{" "}
                 <span className="text-[#FF813D]">NYC.</span>
               </h1>
-              <p className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-[#696969] leading-[1.5] sm:leading-[1.6] md:leading-[1.75] mb-6 sm:mb-8">
+              <p className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] text-[#696969] leading-[1.6] sm:leading-[1.65] md:leading-[1.75] mb-7 sm:mb-8">
                 From rich, comforting stews to grilled favorites and shareable classics, Mista Oh brings together the many flavors of Korean cuisine, prepared fresh and meant to be enjoyed any day of the week.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-4">
                 <a
                   href="https://www.opentable.com/restref/client/?rid=1144366"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#FF813D] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-[#e67335] transition-colors text-sm sm:text-base text-center"
+                  className="bg-[#FF813D] text-white px-7 sm:px-8 py-4 rounded-full font-semibold hover:bg-[#e67335] transition-colors text-base sm:text-base text-center shadow-lg active:scale-95"
                 >
                   Reservation
                 </a>
                 <Link
                   href="/menu"
-                  className="bg-[#F0F0F0] text-[#161412] px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-[#e5e5e5] transition-colors text-sm sm:text-base text-center"
+                  className="bg-[#F0F0F0] text-[#161412] px-7 sm:px-8 py-4 rounded-full font-semibold hover:bg-[#e5e5e5] transition-colors text-base sm:text-base text-center shadow-md active:scale-95"
                 >
                   Order online
                 </Link>
@@ -49,15 +49,15 @@ export default function HomePage() {
             </div>
 
             {/* Right Column - Hero Image */}
-            <div className="flex justify-center md:justify-end mt-6 md:mt-0 w-full overflow-hidden">
-              <div className="relative w-full max-w-[280px] sm:max-w-[360px] md:max-w-[540px] lg:max-w-[600px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform md:-rotate-3 md:hover:rotate-0 transition-transform duration-500">
+            <div className="flex justify-center md:justify-end mt-8 md:mt-0 w-full overflow-hidden">
+              <div className="relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-[540px] lg:max-w-[600px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform md:-rotate-3 md:hover:rotate-0 transition-transform duration-500">
                 <Image
                   src="/dolsot-bibimbap-korean-food.jpg"
                   alt="Korean food spread"
                   fill
                   className="object-cover object-center"
                   priority
-                  sizes="(max-width: 640px) 85vw, (max-width: 768px) 75vw, 50vw"
+                  sizes="(max-width: 640px) 90vw, (max-width: 768px) 75vw, 50vw"
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />
@@ -77,10 +77,10 @@ export default function HomePage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-12 sm:py-16 md:py-20 px-4 bg-[#FAF9F6]">
+      <section className="py-14 sm:py-18 md:py-20 px-5 bg-[#FAF9F6]">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
-            <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-10 sm:gap-12 md:gap-14 items-center">
+            <div className="relative h-[360px] sm:h-[420px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-xl">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.51.13%20PM%20%281%29-VN6o0kqxjUYVnEkUQSzaNbvFVbzbJm.jpeg"
                 alt="Mista Oh and his wife outside their restaurant"
@@ -93,8 +93,8 @@ export default function HomePage() {
             </div>
 
             <div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6 text-balance text-secondary">Our Story</h2>
-              <div className="space-y-3 sm:space-y-4 text-base sm:text-lg leading-relaxed text-foreground">
+              <h2 className="font-serif text-[32px] sm:text-4xl md:text-5xl mb-5 sm:mb-6 text-balance text-secondary">Our Story</h2>
+              <div className="space-y-4 sm:space-y-5 text-[16px] sm:text-lg leading-[1.7] text-foreground">
                 <p>
                   Meet Mista Oh, the heart and soul behind our restaurant. With a successful kimchi business in Korea,
                   Mista Oh brought his passion for authentic Korean flavors to New York City.
@@ -113,18 +113,69 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Video Section */}
+      <section className="py-14 sm:py-18 md:py-20 px-5 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12 md:mb-14">
+            <h2 className="font-serif text-[32px] sm:text-4xl md:text-5xl mb-5 sm:mb-6 text-secondary">
+              Experience Mista Oh
+            </h2>
+            <p className="text-[16px] sm:text-lg md:text-xl text-foreground max-w-3xl mx-auto leading-[1.7]">
+              Step inside our restaurant and discover the authentic Korean dining experience that has made Mista Oh a beloved destination in NYC's Flatiron district.
+            </p>
+          </div>
+
+          {/* Video Container with 16:9 Aspect Ratio */}
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
+            <div className="relative pb-[56.25%] h-0">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/10rq8dm-bvk"
+                title="Mista Oh Restaurant Experience"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Optional CTA below video */}
+          <div className="text-center mt-10 sm:mt-12">
+            <p className="text-[16px] sm:text-lg text-foreground mb-5 sm:mb-6">
+              Ready to taste authentic Korean cuisine?
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 justify-center">
+              <a
+                href="https://www.opentable.com/restref/client/?rid=1144366"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#FF813D] text-white px-7 sm:px-8 py-4 rounded-full font-semibold hover:bg-[#e67335] transition-colors text-base text-center shadow-lg active:scale-95"
+              >
+                Make a Reservation
+              </a>
+              <Link
+                href="/menu"
+                className="bg-[#F0F0F0] text-[#161412] px-7 sm:px-8 py-4 rounded-full font-semibold hover:bg-[#e5e5e5] transition-colors text-base text-center shadow-md active:scale-95"
+              >
+                View Our Menu
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About Section - Family Authentic Korean Food */}
-      <section className="py-12 sm:py-16 md:py-20 px-4 bg-surface">
+      <section className="py-14 sm:py-18 md:py-20 px-5 bg-surface">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6 text-secondary">Family. Authentic. Korean.</h2>
-          <p className="text-base sm:text-lg md:text-xl text-foreground max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed">
+          <h2 className="font-serif text-[32px] sm:text-4xl md:text-5xl mb-5 sm:mb-6 text-secondary">Family. Authentic. Korean.</h2>
+          <p className="text-[16px] sm:text-lg md:text-xl text-foreground max-w-3xl mx-auto mb-10 sm:mb-12 md:mb-14 leading-[1.7]">
             At Mista Oh, we believe that the best food comes from the heart. Our family recipes have been passed down
             through generations, bringing you the true taste of Korea.
           </p>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-10 md:mt-12">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 mt-10 sm:mt-12 md:mt-14">
             <div className="text-center">
-              <div className="relative h-48 sm:h-56 md:h-64 mb-3 sm:mb-4 rounded-[2rem] overflow-hidden">
+              <div className="relative h-56 sm:h-60 md:h-64 mb-4 sm:mb-5 rounded-[2rem] overflow-hidden shadow-lg">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM%20%283%29-ubNJtkaxZ5ncOXNI86x1uQbgIiwjfn.jpeg"
                   alt="Mista Oh and his wife in their restaurant"
@@ -135,12 +186,12 @@ export default function HomePage() {
                   blurDataURL={BLUR_DATA_URL}
                 />
               </div>
-              <h3 className="font-serif text-2xl mb-2 text-secondary">Family Owned</h3>
-              <p className="text-foreground">A husband and wife team bringing authentic Korean hospitality to NYC</p>
+              <h3 className="font-serif text-[24px] mb-3 text-secondary">Family Owned</h3>
+              <p className="text-foreground text-[15px] leading-[1.6]">A husband and wife team bringing authentic Korean hospitality to NYC</p>
             </div>
 
             <div className="text-center">
-              <div className="relative h-64 mb-4 rounded-[2rem] overflow-hidden">
+              <div className="relative h-56 sm:h-60 md:h-64 mb-4 sm:mb-5 rounded-[2rem] overflow-hidden shadow-lg">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.44%20PM%20%281%29-VLTe43Oi4XBF5LXSZ3k1LF8fHXOWsM.jpeg"
                   alt="Dining at Mista Oh restaurant"
@@ -151,12 +202,12 @@ export default function HomePage() {
                   blurDataURL={BLUR_DATA_URL}
                 />
               </div>
-              <h3 className="font-serif text-2xl mb-2 text-secondary">Authentic Recipes</h3>
-              <p className="text-foreground">Traditional Korean dishes made with time-honored techniques</p>
+              <h3 className="font-serif text-[24px] mb-3 text-secondary">Authentic Recipes</h3>
+              <p className="text-foreground text-[15px] leading-[1.6]">Traditional Korean dishes made with time-honored techniques</p>
             </div>
 
             <div className="text-center">
-              <div className="relative h-64 mb-4 rounded-[2rem] overflow-hidden">
+              <div className="relative h-56 sm:h-60 md:h-64 mb-4 sm:mb-5 rounded-[2rem] overflow-hidden shadow-lg">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM-I2eRSekz4BiORzEyZhVTZMT0QUn7TH.jpeg"
                   alt="Beautiful entrance of Mista Oh"
@@ -167,8 +218,8 @@ export default function HomePage() {
                   blurDataURL={BLUR_DATA_URL}
                 />
               </div>
-              <h3 className="font-serif text-2xl mb-2 text-secondary">Warm Atmosphere</h3>
-              <p className="text-foreground">A cozy space that feels like home, right in Flatiron</p>
+              <h3 className="font-serif text-[24px] mb-3 text-secondary">Warm Atmosphere</h3>
+              <p className="text-foreground text-[15px] leading-[1.6]">A cozy space that feels like home, right in Flatiron</p>
             </div>
           </div>
         </div>

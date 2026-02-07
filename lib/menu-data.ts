@@ -707,7 +707,7 @@ export const menuData: MenuData = {
                 {
                     title: "Japchae",
                     korean: "잡채",
-                    price: 13.99,
+                    price: 15.99,
                     vegetarian: true,
                     glutenFree: true,
                     description: "Stir-fried sweet potato glass noodles with vegetables",
@@ -1035,7 +1035,7 @@ export const menuData: MenuData = {
                 {
                     title: "Budae Jjigae",
                     korean: "부대찌개",
-                    price: 24.99,
+                    price: 21.99,
                     vegetarian: false,
                     glutenFree: false,
                     spicyLevel: "mild",
@@ -1045,7 +1045,7 @@ export const menuData: MenuData = {
                 {
                     title: "Yukgaejang",
                     korean: "육개장",
-                    price: 20.99,
+                    price: 22.99,
                     vegetarian: false,
                     glutenFree: false,
                     spicyLevel: "medium",
@@ -1056,7 +1056,7 @@ export const menuData: MenuData = {
                 {
                     title: "Galbitang",
                     korean: "갈비탕",
-                    price: 21.99,
+                    price: 22.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "Beef short rib soup in clear with glass noodles, savory broth",
@@ -1065,7 +1065,7 @@ export const menuData: MenuData = {
                 {
                     title: "Maeun Tang",
                     korean: "매운탕",
-                    price: 29.99,
+                    price: 26.99,
                     vegetarian: false,
                     glutenFree: false,
                     spicyLevel: "mild",
@@ -1076,7 +1076,7 @@ export const menuData: MenuData = {
                 {
                     title: "Korean Kalguksu",
                     korean: "칼국수",
-                    price: 18.99,
+                    price: 16.99,
                     vegetarian: true,
                     glutenFree: false,
                     description: "Light broth with hand-cut wheat noodles and vegetables. Add Seafood (+$3)",
@@ -1142,7 +1142,7 @@ export const menuData: MenuData = {
                 {
                     title: "Tteokbokki",
                     korean: "떡볶이",
-                    price: 21.99,
+                    price: 20.99,
                     vegetarian: false,
                     glutenFree: false,
                     spicyLevel: "medium",
@@ -1163,7 +1163,7 @@ export const menuData: MenuData = {
                 {
                     title: "Galbi Jjim",
                     korean: "갈비찜",
-                    price: 49.99,
+                    price: 39.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "Braised beef short ribs with vegetables in savory-sweet sauce",
@@ -1172,7 +1172,7 @@ export const menuData: MenuData = {
                 {
                     title: "Mukeunji Samgyupsal Jjim",
                     korean: "묵은지삼겹살찜",
-                    price: 34.99,
+                    price: 32.99,
                     vegetarian: false,
                     glutenFree: false,
                     spicyLevel: "mild",
@@ -1188,7 +1188,7 @@ export const menuData: MenuData = {
                 {
                     title: "Bulgogi",
                     korean: "불고기",
-                    price: 36.99,
+                    price: 37.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "Thinly sliced ribeye marinated in sweet soy sauce",
@@ -1197,7 +1197,7 @@ export const menuData: MenuData = {
                 {
                     title: "Samgyupsal",
                     korean: "삼겹살",
-                    price: 31.99,
+                    price: 34.99,
                     vegetarian: false,
                     glutenFree: true,
                     description: "Grilled pork belly slices, served with lettuce",
@@ -1207,7 +1207,7 @@ export const menuData: MenuData = {
                 {
                     title: "Daeji Galbi",
                     korean: "돼지갈비",
-                    price: 34.99,
+                    price: 36.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "Marinated pork shoulders",
@@ -1217,7 +1217,7 @@ export const menuData: MenuData = {
                 {
                     title: "Spicy Pork",
                     korean: "제육",
-                    price: 33.99,
+                    price: 35.99,
                     vegetarian: false,
                     glutenFree: false,
                     spicyLevel: "mild",
@@ -1228,7 +1228,7 @@ export const menuData: MenuData = {
                 {
                     title: "Dakgui",
                     korean: "닭구이",
-                    price: 29.99,
+                    price: 32.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "Grilled marinated boneless chicken with Korean spices",
@@ -1237,7 +1237,7 @@ export const menuData: MenuData = {
                 {
                     title: "Galbi",
                     korean: "양념갈비",
-                    price: 49.99,
+                    price: 39.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "Korean marinated beef short ribs grilled",
@@ -1246,7 +1246,7 @@ export const menuData: MenuData = {
                 {
                     title: "LA Galbi",
                     korean: "LA 갈비",
-                    price: 45.99,
+                    price: 37.99,
                     vegetarian: false,
                     glutenFree: false,
                     description: "LA-style marinated beef short ribs",
@@ -1255,7 +1255,7 @@ export const menuData: MenuData = {
                 {
                     title: "Ribeye Steak",
                     korean: "꽃등심스테이크",
-                    price: 49.99,
+                    price: 43.99,
                     vegetarian: false,
                     glutenFree: true,
                     description: "Premium Korean ribeye steak grilled to order",
@@ -1270,7 +1270,7 @@ export const menuData: MenuData = {
                 {
                     title: "Grilled Mackerel",
                     korean: "고등어구이",
-                    price: 25.99,
+                    price: 27.99,
                     vegetarian: false,
                     glutenFree: true,
                     description: "Whole mackerel grilled with sea salt and lemon",
@@ -1280,7 +1280,7 @@ export const menuData: MenuData = {
                 {
                     title: "Grilled Salmon",
                     korean: "연어구이",
-                    price: 27.99,
+                    price: 29.99,
                     vegetarian: false,
                     glutenFree: true,
                     description: "Fresh salmon fillet grilled with sea salt and lemon",
