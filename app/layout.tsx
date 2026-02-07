@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { DM_Sans, Crimson_Text } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/contexts/cart-context"
@@ -24,18 +24,19 @@ const crimsonText = Crimson_Text({
   style: ["normal", "italic"],
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: '#FF813D',
+}
+
 export const metadata: Metadata = {
   title: "Mista Oh - Authentic Korean Restaurant in Flatiron, NYC",
   description:
     "Experience authentic Korean cuisine at Mista Oh in Flatiron, New York. Family-owned restaurant serving traditional Korean dishes with love.",
   generator: 'v0.app',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
-  themeColor: '#FF813D',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',

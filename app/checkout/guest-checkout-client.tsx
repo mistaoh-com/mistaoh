@@ -242,6 +242,7 @@ export function GuestCheckoutClient() {
 
     // Guest form view
     return (
+        <>
         <div className="max-w-2xl mx-auto px-4 py-8">
             <button
                 onClick={() => setShowGuestForm(false)}
@@ -368,9 +369,10 @@ export function GuestCheckoutClient() {
                     </Form>
                 </CardContent>
             </Card>
+        </div>
 
-            {/* Restaurant Closed Dialog */}
-            <AlertDialog open={showClosedDialog} onOpenChange={setShowClosedDialog}>
+        {/* Restaurant Closed Dialog */}
+        <AlertDialog open={showClosedDialog} onOpenChange={setShowClosedDialog}>
                 <AlertDialogContent className="max-w-md">
                     <AlertDialogHeader>
                         <AlertDialogTitle className="text-xl flex items-center gap-2">
@@ -399,6 +401,6 @@ export function GuestCheckoutClient() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-        </div>
+        </>
     )
 }

@@ -99,6 +99,7 @@ export function CheckoutClient() {
     }
 
     return (
+        <>
         <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
             <div className="mb-8">
                 <Link href="/menu" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-4 transition-colors">
@@ -300,5 +301,6 @@ export function CheckoutClient() {
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
+        </>
     )
 }
