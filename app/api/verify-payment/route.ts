@@ -20,7 +20,19 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Session ID is required" }, { status: 400 })
         }
 
-        const session = await stripe.checkout.sessions.retrieve(sessionId)
+        const session = await stripe.checkout.sessions.retrieve(sessionId, {
+            expand: ['total_details']
+        })
+
+        // Extract tax information from Stripe session
+        const amountTotal = session.amount_total || 0       // in cents
+        const amountTax = session.total_details?.amount_tax || 0  // in cents
+        const amountSubtotal = amountTotal - amountTax
+
+        // Convert to dollars
+        const totalInDollars = amountTotal / 100
+        const taxInDollars = amountTax / 100
+        const subtotalInDollars = amountSubtotal / 100
 
         if (session.payment_status !== "paid") {
             return NextResponse.json({ error: "Payment not completed" }, { status: 400 })
@@ -44,13 +56,23 @@ export async function POST(req: NextRequest) {
             if (dbOrder && dbOrder.status === "PENDING") {
                 dbOrder.status = "PAID"
                 dbOrder.paymentStatus = session.payment_status
+                // Store tax breakdown
+                dbOrder.subtotal = subtotalInDollars
+                dbOrder.taxAmount = taxInDollars
+                dbOrder.taxRate = 8.75
                 await dbOrder.save()
 
-                // Log Payment Success
+                // Log Payment Success with tax details
                 await Log.create({
                     action: "PAYMENT_SUCCESS",
                     userId: (dbOrder.user as any)?._id || dbOrder.user,
-                    metadata: { orderId: dbOrder._id, stripeSessionId: sessionId },
+                    metadata: {
+                        orderId: dbOrder._id,
+                        stripeSessionId: sessionId,
+                        subtotal: subtotalInDollars,
+                        tax: taxInDollars,
+                        total: totalInDollars
+                    },
                     ip: req.headers.get("x-forwarded-for") || "unknown",
                     userAgent: req.headers.get("user-agent") || "unknown"
                 })
@@ -91,9 +113,11 @@ export async function POST(req: NextRequest) {
             customerEmail!,
             customerName,
             items,
-            session.amount_total ? session.amount_total / 100 : 0,
+            totalInDollars,
             orderId || session.id, // Fallback to session ID for email display if orderId missing
-            isSubscription
+            isSubscription,
+            subtotalInDollars,
+            taxInDollars
         )
 
         // 2. Send Admin Notification Email
@@ -105,7 +129,10 @@ export async function POST(req: NextRequest) {
                 customerPhone,
                 dbOrder._id.toString(),
                 items,
-                session.amount_total ? session.amount_total / 100 : 0
+                totalInDollars,
+                undefined,
+                subtotalInDollars,
+                taxInDollars
             )
         } else {
             // Fallback admin email even if DB order was missing but payment succeeded (Critical)
@@ -115,8 +142,10 @@ export async function POST(req: NextRequest) {
                 customerPhone,
                 "STRIPE-" + session.id.slice(-8), // Temporary ID
                 items,
-                session.amount_total ? session.amount_total / 100 : 0,
-                "WARNING: Database Order not found for this payment."
+                totalInDollars,
+                "WARNING: Database Order not found for this payment.",
+                subtotalInDollars,
+                taxInDollars
             )
         }
 

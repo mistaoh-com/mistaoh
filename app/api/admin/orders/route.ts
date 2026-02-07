@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import dbConnect from "@/lib/db"
 import Order from "@/models/Order"
+import { verifyAdminToken } from "@/lib/auth"
 
 export const dynamic = 'force-dynamic'
 
@@ -10,8 +11,13 @@ export async function GET() {
         const cookieStore = cookies()
         const adminToken = cookieStore.get("admin_token")
 
-        if (!adminToken || adminToken.value !== "true") {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+        if (!adminToken) {
+            return NextResponse.json({ message: "Unauthorized - No token provided" }, { status: 401 })
+        }
+
+        const isAdmin = await verifyAdminToken(adminToken.value)
+        if (!isAdmin) {
+            return NextResponse.json({ message: "Unauthorized - Invalid or expired token" }, { status: 401 })
         }
 
         await dbConnect()

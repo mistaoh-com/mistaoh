@@ -21,7 +21,7 @@ export default function MenuPage() {
       <Navigation />
 
       {/* Hero Section - Clean centered design like reference */}
-      <section className="pt-40 pb-16 px-4 bg-[#FAF9F6]">
+      <section id="main-content" className="pt-40 pb-16 px-4 bg-[#FAF9F6]">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#161412]">Our Menu</h1>
           <p className="text-lg text-[#696969] leading-relaxed max-w-xl mx-auto">

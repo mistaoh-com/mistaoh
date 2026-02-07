@@ -1,39 +1,35 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import dbConnect from "@/lib/db"
 import User from "@/models/User"
 import Log from "@/models/Log"
 import { hashPassword } from "@/lib/auth"
 import { generateVerificationToken } from "@/lib/tokens"
 import { sendVerificationEmail } from "@/lib/email"
+import { checkRateLimit, getRateLimitResponse } from "@/lib/rate-limit"
+import { validateEmail, validatePhone } from "@/lib/validation"
+import { ErrorCode, createErrorResponse } from "@/lib/errors"
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+    // Rate limiting check
+    if (!checkRateLimit(req)) {
+        return getRateLimitResponse()
+    }
+
     try {
         await dbConnect()
         const { name, email, password, phone } = await req.json()
 
         // Validation
         if (!name || !email || !password || !phone) {
-            return NextResponse.json(
-                { message: "Missing required fields" },
-                { status: 400 }
-            )
+            return createErrorResponse(ErrorCode.MISSING_FIELDS, 400)
         }
 
-        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-        if (!emailRegex.test(email)) {
-            return NextResponse.json(
-                { message: "Please provide a valid email address" },
-                { status: 400 }
-            )
+        if (!validateEmail(email)) {
+            return createErrorResponse(ErrorCode.INVALID_EMAIL, 400)
         }
 
-        // Basic phone validation (at least 10 digits)
-        const phoneRegex = /^\+?[\d\s\-()]{10,}$/
-        if (!phoneRegex.test(phone)) {
-            return NextResponse.json(
-                { message: "Please provide a valid phone number (at least 10 digits)" },
-                { status: 400 }
-            )
+        if (!validatePhone(phone)) {
+            return createErrorResponse(ErrorCode.INVALID_PHONE, 400)
         }
 
         if (password.length < 8) {

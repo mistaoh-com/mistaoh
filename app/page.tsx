@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { Star, MapPin, Phone } from "lucide-react"
+import { BLUR_DATA_URL } from "@/lib/image-utils"
 
 export default function HomePage() {
 
@@ -13,7 +14,7 @@ export default function HomePage() {
       <Navigation />
 
       {/* Hero Section - Single Unified Composition */}
-      <section className="bg-[#FAF9F6] min-h-[100dvh] relative overflow-hidden">
+      <section id="main-content" className="bg-[#FAF9F6] min-h-[100dvh] relative overflow-hidden">
         {/* Orange Background Block - 35% right accent */}
         <div className="absolute top-0 right-0 w-[35%] h-full bg-[#FF813D] hidden md:block"></div>
 
@@ -57,6 +58,8 @@ export default function HomePage() {
                   className="object-cover object-center"
                   priority
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               </div>
             </div>
@@ -84,6 +87,8 @@ export default function HomePage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
               />
             </div>
 
@@ -126,6 +131,8 @@ export default function HomePage() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               </div>
               <h3 className="font-serif text-2xl mb-2 text-secondary">Family Owned</h3>
@@ -140,6 +147,8 @@ export default function HomePage() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               </div>
               <h3 className="font-serif text-2xl mb-2 text-secondary">Authentic Recipes</h3>
@@ -154,6 +163,8 @@ export default function HomePage() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               </div>
               <h3 className="font-serif text-2xl mb-2 text-secondary">Warm Atmosphere</h3>

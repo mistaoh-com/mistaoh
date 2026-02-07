@@ -34,3 +34,12 @@ export async function verifyJWT(token: string) {
         return null
     }
 }
+
+export async function verifyAdminToken(token: string): Promise<boolean> {
+    try {
+        const payload = await verifyJWT(token)
+        return payload?.role === "admin"
+    } catch {
+        return false
+    }
+}

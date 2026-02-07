@@ -13,39 +13,9 @@ export function CartSidebar() {
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const router = useRouter()
 
-  const handleCheckout = async () => {
-    setIsCheckingOut(true)
-    try {
-      // Check if user is authenticated via Context
-      if (!user) {
-        // User is not logged in, redirect to login with redirect back
-        setIsCartOpen(false)
-        router.push("/login?redirect=/menu&checkout=true")
-        setIsCheckingOut(false)
-        return
-      }
-
-      // User is authenticated, proceed to checkout
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ items: cart }),
-      })
-
-      const data = await response.json()
-
-      if (data.url) {
-        window.location.href = data.url
-      } else {
-        console.error("No checkout URL returned:", data.error || data)
-        setIsCheckingOut(false)
-      }
-    } catch (error) {
-      console.error("Checkout error:", error)
-      setIsCheckingOut(false)
-    }
+  const handleCheckout = () => {
+    setIsCartOpen(false)
+    router.push("/checkout")
   }
 
   const getPlanLabel = (plan?: string) => {

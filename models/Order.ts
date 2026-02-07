@@ -12,19 +12,35 @@ export interface IOrder extends Document {
         quantity: number
         price: number
         id?: string
+        selectedAddOns?: Array<{
+            id: string
+            name: string
+            price: number
+        }>
     }>
     totalAmount: number
+    subtotal?: number
+    taxAmount?: number
+    taxRate?: number
     status: "PENDING" | "PAID" | "PREPARING" | "READY" | "COMPLETED" | "CANCELLED"
     stripeSessionId?: string
     paymentStatus?: string
+    guestToken?: string
     createdAt: Date
 }
+
+const AddOnSchema = new Schema({
+    id: { type: String, required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true }
+}, { _id: false })
 
 const ItemSchema = new Schema({
     title: { type: String, required: true },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
-    id: String
+    id: String,
+    selectedAddOns: [AddOnSchema]
 }, { _id: false })
 
 const OrderSchema: Schema<IOrder> = new Schema(
@@ -43,6 +59,15 @@ const OrderSchema: Schema<IOrder> = new Schema(
             type: Number,
             required: true,
         },
+        subtotal: {
+            type: Number,
+        },
+        taxAmount: {
+            type: Number,
+        },
+        taxRate: {
+            type: Number,
+        },
         status: {
             type: String,
             enum: ["PENDING", "PAID", "PREPARING", "READY", "COMPLETED", "CANCELLED"],
@@ -50,6 +75,7 @@ const OrderSchema: Schema<IOrder> = new Schema(
         },
         stripeSessionId: String,
         paymentStatus: String,
+        guestToken: String,
     },
     {
         timestamps: true,

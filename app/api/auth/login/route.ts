@@ -1,9 +1,11 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import dbConnect from "@/lib/db"
 import User from "@/models/User"
 import Log from "@/models/Log"
 import { verifyPassword, signJWT } from "@/lib/auth"
 import { headers } from "next/headers"
+import { checkRateLimit, getRateLimitResponse } from "@/lib/rate-limit"
+import { ErrorCode, createErrorResponse } from "@/lib/errors"
 
 const ADMIN_USER = process.env.ADMIN_USER
 const ADMIN_PASS = process.env.ADMIN_PASS
@@ -12,7 +14,12 @@ if (!ADMIN_USER || !ADMIN_PASS) {
     console.warn("ADMIN_USER or ADMIN_PASS not defined in environment. Admin login will be disabled.")
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+    // Rate limiting check
+    if (!checkRateLimit(req)) {
+        return getRateLimitResponse()
+    }
+
     try {
         await dbConnect()
         const { email, password } = await req.json()
@@ -45,25 +52,16 @@ export async function POST(req: Request) {
         // 2. Check User Login
         const user = await User.findOne({ email })
         if (!user) {
-            return NextResponse.json(
-                { message: "Invalid credentials" },
-                { status: 401 }
-            )
+            return createErrorResponse(ErrorCode.INVALID_CREDENTIALS, 401)
         }
 
         const isValid = await verifyPassword(password, user.password)
         if (!isValid) {
-            return NextResponse.json(
-                { message: "Invalid credentials" },
-                { status: 401 }
-            )
+            return createErrorResponse(ErrorCode.INVALID_CREDENTIALS, 401)
         }
 
         if (!user.isVerified) {
-            return NextResponse.json(
-                { message: "Please verify your email first" },
-                { status: 403 }
-            )
+            return createErrorResponse(ErrorCode.EMAIL_NOT_VERIFIED, 403)
         }
 
         // Generate JWT

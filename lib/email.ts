@@ -28,7 +28,9 @@ export async function sendOrderConfirmationEmail(
   items: MailItem[],
   total: number,
   orderId: string,
-  isSubscription: boolean = false
+  isSubscription: boolean = false,
+  subtotal?: number,
+  taxAmount?: number
 ) {
   const subject = isSubscription
     ? `Subscription Confirmation - Order #${orderId.slice(-8)}`
@@ -60,18 +62,48 @@ export async function sendOrderConfirmationEmail(
         <p>Order ID: ${orderId}</p>
         <table style="width: 100%; border-collapse: collapse;">
           ${itemsList}
+          ${subtotal !== undefined && taxAmount !== undefined ? `
           <tr>
-            <td style="padding: 10px; text-align: right; font-weight: bold;">Total</td>
-            <td style="padding: 10px; text-align: right; font-weight: bold;">
+            <td style="padding: 10px; text-align: right; color: #666;">Subtotal</td>
+            <td style="padding: 10px; text-align: right; color: #666;">
+              ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; text-align: right; color: #666;">Tax (8.75%)</td>
+            <td style="padding: 10px; text-align: right; color: #666;">
+              ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(taxAmount)}
+            </td>
+          </tr>
+          ` : ''}
+          <tr>
+            <td style="padding: 10px; text-align: right; font-weight: bold; border-top: 2px solid #333;">Total</td>
+            <td style="padding: 10px; text-align: right; font-weight: bold; border-top: 2px solid #333;">
               ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(total)}
             </td>
           </tr>
         </table>
       </div>
 
-      <p>If you have any questions, please contact us at (646) 559-8858 or reply to this email.</p>
-      
-      <p>Best regards,<br/>Mista Oh Team</p>
+      <p>If you have any questions, please contact us or reply to this email.</p>
+
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #666; font-size: 14px; margin-bottom: 8px;">
+          <strong>Pickup Location:</strong>
+        </p>
+        <p style="color: #666; font-size: 14px; margin: 0;">
+          <a href="https://maps.app.goo.gl/C8AwBiLr3xCwp6Lp9"
+             style="color: #FF813D; text-decoration: none;">
+            41 West 24th Street, New York, NY 10010<br>
+            (between 5th and 6th Ave)
+          </a>
+        </p>
+        <p style="color: #666; font-size: 14px; margin-top: 8px;">
+          Phone: <a href="tel:6465598858" style="color: #FF813D; text-decoration: none;">(646) 559-8858</a>
+        </p>
+      </div>
+
+      <p style="margin-top: 20px;">Best regards,<br/>Mista Oh Team</p>
     </div>
   `
 
@@ -99,8 +131,24 @@ export async function sendVerificationEmail(to: string, token: string) {
       <p>Or click this link: <a href="${verificationUrl}">${verificationUrl}</a></p>
       
       <p>If you didn't create an account, please ignore this email.</p>
-      
-      <p>Best regards,<br/>Mista Oh Team</p>
+
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #666; font-size: 14px; margin-bottom: 8px;">
+          <strong>Visit Us:</strong>
+        </p>
+        <p style="color: #666; font-size: 14px; margin: 0;">
+          <a href="https://maps.app.goo.gl/C8AwBiLr3xCwp6Lp9"
+             style="color: #FF813D; text-decoration: none;">
+            41 West 24th Street, New York, NY 10010<br>
+            (between 5th and 6th Ave)
+          </a>
+        </p>
+        <p style="color: #666; font-size: 14px; margin-top: 8px;">
+          Phone: <a href="tel:6465598858" style="color: #FF813D; text-decoration: none;">(646) 559-8858</a>
+        </p>
+      </div>
+
+      <p style="margin-top: 20px;">Best regards,<br/>Mista Oh Team</p>
     </div>
   `
 
@@ -128,10 +176,24 @@ export async function sendOrderStatusEmail(to: string, customerName: string, ord
       </div>
 
       <p>You can view your order status in your dashboard.</p>
-      
-      <p>If you have any questions, please contact us at (646) 559-8858.</p>
-      
-      <p>Best regards,<br/>Mista Oh Team</p>
+
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #666; font-size: 14px; margin-bottom: 8px;">
+          <strong>Pickup Location:</strong>
+        </p>
+        <p style="color: #666; font-size: 14px; margin: 0;">
+          <a href="https://maps.app.goo.gl/C8AwBiLr3xCwp6Lp9"
+             style="color: #FF813D; text-decoration: none;">
+            41 West 24th Street, New York, NY 10010<br>
+            (between 5th and 6th Ave)
+          </a>
+        </p>
+        <p style="color: #666; font-size: 14px; margin-top: 8px;">
+          Phone: <a href="tel:6465598858" style="color: #FF813D; text-decoration: none;">(646) 559-8858</a>
+        </p>
+      </div>
+
+      <p style="margin-top: 20px;">Best regards,<br/>Mista Oh Team</p>
     </div>
   `
 
@@ -150,7 +212,9 @@ export async function sendAdminNewOrderEmail(
   orderId: string,
   items: MailItem[],
   total: number,
-  specialInstructions?: string
+  specialInstructions?: string,
+  subtotal?: number,
+  taxAmount?: number
 ) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.MAIL_USER
   const subject = `[NEW ORDER] #${orderId.slice(-8)} - ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(total)}`
@@ -184,6 +248,20 @@ export async function sendAdminNewOrderEmail(
       <h3 style="color: #333;">Order Items</h3>
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
         ${itemsList}
+        ${subtotal !== undefined && taxAmount !== undefined ? `
+        <tr>
+          <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">Subtotal</td>
+          <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">
+            ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">Tax (8.75%)</td>
+          <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">
+            ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(taxAmount)}
+          </td>
+        </tr>
+        ` : ''}
         <tr>
           <td style="padding: 10px; text-align: right; font-weight: bold; border-top: 2px solid #333;">Total Amount</td>
           <td style="padding: 10px; text-align: right; font-weight: bold; border-top: 2px solid #333;">
@@ -386,7 +464,11 @@ export async function sendContactAcknowledgementEmail(data: {
           </div>
         </div>
         <div class="footer">
-          41 W 24 St, New York, NY 10010<br>
+          <a href="https://maps.app.goo.gl/C8AwBiLr3xCwp6Lp9"
+             style="color: #0066cc; text-decoration: none;">
+            41 West 24th Street, New York, NY 10010<br>
+            (between 5th and 6th Ave)
+          </a><br>
           <a href="tel:6465598858">(646) 559-8858</a> &nbsp;•&nbsp; <a href="https://mistaoh.com">mistaoh.com</a>
         </div>
       </div>
@@ -613,7 +695,11 @@ export async function sendCateringAcknowledgementEmail(data: {
           </div>
         </div>
         <div class="footer">
-          41 W 24 St, New York, NY 10010<br>
+          <a href="https://maps.app.goo.gl/C8AwBiLr3xCwp6Lp9"
+             style="color: #0066cc; text-decoration: none;">
+            41 West 24th Street, New York, NY 10010<br>
+            (between 5th and 6th Ave)
+          </a><br>
           <a href="tel:6465598858">(646) 559-8858</a> &nbsp;•&nbsp; <a href="https://mistaoh.com/catering">mistaoh.com/catering</a>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
 import { verifyJWT } from "@/lib/auth"
 import { CheckoutClient } from "./checkout-client"
+import { GuestCheckoutClient } from "./guest-checkout-client"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 
@@ -20,15 +20,11 @@ export default async function CheckoutPage() {
         }
     }
 
-    if (!isAuthenticated) {
-        redirect("/login?redirect=/checkout")
-    }
-
     return (
-        <main className="min-h-screen bg-gray-50 pb-20">
+        <main id="main-content" className="min-h-screen bg-gray-50 pb-20">
             <Navigation />
             <div className="pt-20">
-                <CheckoutClient />
+                {isAuthenticated ? <CheckoutClient /> : <GuestCheckoutClient />}
             </div>
             <Footer />
         </main>

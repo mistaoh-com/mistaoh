@@ -21,7 +21,8 @@
   /* Deep charcoal */
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(0.55 0.01 260);
-  --muted-foreground: oklch(0.45 0.01 260);
+  --muted-foreground: oklch(0.35 0.01 260);
+  /* Darker gray for better contrast - 7:1 ratio (WCAG AAA) */
   --accent: oklch(0.96 0.015 75);
   /* Light cream for alternating sections */
   --accent-foreground: oklch(0.25 0.01 260);
@@ -91,7 +92,7 @@
 
 @theme inline {
   --font-sans: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-crimson), Georgia, 'Times New Roman', serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -119,7 +120,15 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  /* Larger radius values for modern look */
+  /* Border Radius Scale - Use these consistent values across all components
+   * --radius-sm (12px):  Small elements like badges, tags
+   * --radius-md (16px):  Default - buttons, inputs, cards
+   * --radius-lg (20px):  Large cards, modals
+   * --radius-xl (24px):  Hero sections, feature cards
+   * --radius-2xl (32px): Large images, hero content
+   * --radius-3xl (40px): Extra large rounded corners
+   * --radius-pill: Full rounded (buttons, badges)
+   */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 4px);
@@ -182,5 +191,34 @@
   [role="button"] {
     @apply font-sans;
     font-weight: 600;
+  }
+
+  /* Focus-visible styles for keyboard navigation accessibility */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
+  }
+
+  /* Ensure focus outline is visible on all interactive elements */
+  *:focus-visible {
+    outline: 2px solid oklch(0.65 0.2 35);
+    outline-offset: 2px;
+  }
+
+  /* Respect user's motion preferences for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

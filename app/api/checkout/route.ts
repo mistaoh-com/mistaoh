@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
+import crypto from "crypto"
 import dbConnect from "@/lib/db"
 import Order, { IOrder } from "@/models/Order"
 import Log from "@/models/Log"
@@ -7,6 +8,8 @@ import User from "@/models/User"
 import { verifyJWT } from "@/lib/auth"
 import { cookies } from "next/headers"
 import { CartItem, GuestInfo } from "@/lib/types"
+import { validateEmail, validatePhone } from "@/lib/validation"
+import { ErrorCode, createErrorResponse } from "@/lib/errors"
 
 export const dynamic = 'force-dynamic'
 
@@ -57,15 +60,14 @@ export async function POST(req: NextRequest) {
       if (hour >= 11 && hour < 22) isOpen = true
     }
 
-    // Bypass check for admin testing if needed, or strictly enforce. strictly enforcing for now.
-    // Comment out the next line to enable strict hours in Dev
-    isOpen = true
+    // Use environment variable for bypass (dev/testing only)
+    const bypassHours = process.env.BYPASS_HOURS === 'true'
+    if (bypassHours && process.env.NODE_ENV !== 'production') {
+      isOpen = true
+    }
 
-    if (!isOpen) {
-      return NextResponse.json({
-        error: "Restaurant is closed. Hours: Mon-Thu 11am-11pm, Fri-Sat 11am-10pm EST.",
-        code: "RESTAURANT_CLOSED"
-      }, { status: 400 })
+    if (!isOpen && !bypassHours) {
+      return createErrorResponse(ErrorCode.RESTAURANT_CLOSED, 400)
     }
 
     const { items, guestInfo }: { items: CartItem[], guestInfo?: GuestInfo } = await req.json()
@@ -74,11 +76,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No items in cart" }, { status: 400 })
     }
 
-    // Check Authentication
+    // Check Authentication OR Guest Info
     const cookieStore = cookies()
     const token = cookieStore.get("token")?.value
     let userId: string | undefined = undefined
     let userEmail: string | undefined = undefined
+    let isGuest = false
 
     if (token) {
       const payload = await verifyJWT(token)
@@ -89,11 +92,34 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // If no authenticated user, require guest info
     if (!userId) {
-      return NextResponse.json({ error: "Authentication required" }, { status: 401 })
+      if (!guestInfo || !guestInfo.name || !guestInfo.email || !guestInfo.phone) {
+        return NextResponse.json(
+          { error: "Guest information required" },
+          { status: 400 }
+        )
+      }
+
+      // Validate guest email
+      if (!validateEmail(guestInfo.email)) {
+        return createErrorResponse(ErrorCode.INVALID_EMAIL, 400)
+      }
+
+      // Validate guest phone
+      if (!validatePhone(guestInfo.phone)) {
+        return createErrorResponse(ErrorCode.INVALID_PHONE, 400)
+      }
+
+      isGuest = true
+      userEmail = guestInfo.email
     }
 
-
+    // Get tax rate ID (optional for testing)
+    const taxRateId = process.env.STRIPE_TAX_RATE_ID
+    if (!taxRateId) {
+      console.warn("STRIPE_TAX_RATE_ID is not configured - checkout will proceed without tax")
+    }
 
     const subscriptionItems = items.filter((item: CartItem) => item.isSubscription)
     const oneTimeItems = items.filter((item: CartItem) => !item.isSubscription)
@@ -105,16 +131,26 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const totalAmount = items.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0)
+    // Calculate total including add-ons
+    const totalAmount = items.reduce((sum: number, item: CartItem) => {
+      const addOnsPrice = item.selectedAddOns?.reduce((addonSum, addon) =>
+        addonSum + addon.price, 0) || 0
+      return sum + ((item.price + addOnsPrice) * item.quantity)
+    }, 0)
+
+    // Generate guest token for non-authenticated users
+    const guestToken = !userId ? crypto.randomBytes(32).toString("hex") : undefined
 
     const newOrder = await Order.create({
       user: userId, // Mongoose accepts string ID here if defined, or undefined
       guestInfo: userId ? undefined : guestInfo,
+      guestToken: guestToken,
       items: items.map((i: CartItem) => ({
         title: i.title,
         quantity: i.quantity,
         price: i.price,
-        id: i.id
+        id: i.id,
+        selectedAddOns: i.selectedAddOns
       })),
       totalAmount,
       status: "PENDING",
@@ -123,13 +159,15 @@ export async function POST(req: NextRequest) {
 
     const ip = req.headers.get("x-forwarded-for") || "unknown"
     await Log.create({
-      action: "ORDER_CREATED",
+      action: isGuest ? "GUEST_ORDER_CREATED" : "ORDER_CREATED",
       userId: userId,
       metadata: {
         orderId: newOrder._id,
         amount: totalAmount,
         itemCount: items.length,
-        isSubscription: subscriptionItems.length > 0
+        isSubscription: subscriptionItems.length > 0,
+        isGuest,
+        guestEmail: isGuest ? guestInfo?.email : undefined
       },
       ip,
       userAgent: req.headers.get("user-agent") || "unknown"
@@ -140,9 +178,20 @@ export async function POST(req: NextRequest) {
         subscriptionItems.map(async (item: CartItem) => {
           if (!item.subscriptionPlan) throw new Error("Subscription plan required")
 
+          // Calculate price including add-ons
+          const addOnsPrice = item.selectedAddOns?.reduce((sum, addon) => sum + addon.price, 0) || 0
+          const priceWithAddOns = item.price + addOnsPrice
+
+          // Build description including add-ons
+          let description = `${item.korean} - ${item.mealsPerWeek} meals per delivery`
+          if (item.selectedAddOns && item.selectedAddOns.length > 0) {
+            const addOnsText = item.selectedAddOns.map(addon => addon.name).join(", ")
+            description += ` (Add-ons: ${addOnsText})`
+          }
+
           const price = await stripe.prices.create({
             currency: "usd",
-            unit_amount: Math.round(item.price * 100),
+            unit_amount: Math.round(priceWithAddOns * 100),
             recurring: {
               interval: getSubscriptionInterval(item.subscriptionPlan),
               interval_count: getIntervalCount(item.subscriptionPlan),
@@ -150,7 +199,7 @@ export async function POST(req: NextRequest) {
             product_data: {
               name: item.title,
               metadata: {
-                description: `${item.korean} - ${item.mealsPerWeek} meals per delivery`,
+                description: description,
               },
             },
           })
@@ -158,6 +207,7 @@ export async function POST(req: NextRequest) {
           return {
             price: price.id,
             quantity: 1,
+            ...(taxRateId && { tax_rates: [taxRateId] }),
           }
         }),
       )
@@ -200,18 +250,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ sessionId: session.id, url: session.url })
     }
 
-    const lineItems = oneTimeItems.map((item: CartItem) => ({
-      price_data: {
-        currency: "usd",
-        product_data: {
-          name: item.title,
-          description: item.korean,
-          images: item.image?.startsWith("http") ? [item.image] : [],
+    const lineItems = oneTimeItems.map((item: CartItem) => {
+      // Calculate unit price including add-ons
+      const addOnsPrice = item.selectedAddOns?.reduce((sum, addon) => sum + addon.price, 0) || 0
+      const unitPriceWithAddOns = item.price + addOnsPrice
+
+      // Build description including add-ons
+      let description = item.korean
+      if (item.selectedAddOns && item.selectedAddOns.length > 0) {
+        const addOnsText = item.selectedAddOns.map(addon => addon.name).join(", ")
+        description += ` (Add-ons: ${addOnsText})`
+      }
+
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.title,
+            description: description,
+            images: item.image?.startsWith("http") ? [item.image] : [],
+          },
+          unit_amount: Math.round(unitPriceWithAddOns * 100),
         },
-        unit_amount: Math.round(item.price * 100),
-      },
-      quantity: item.quantity,
-    }))
+        quantity: item.quantity,
+        ...(taxRateId && { tax_rates: [taxRateId] }),
+      }
+    })
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

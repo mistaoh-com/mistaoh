@@ -1,17 +1,27 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { DM_Sans } from "next/font/google"
+import { DM_Sans, Crimson_Text } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/contexts/theme-context"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
   weight: ["400", "500", "700"],
   display: "swap",
+})
+
+const crimsonText = Crimson_Text({
+  subsets: ["latin"],
+  variable: "--font-crimson",
+  weight: ["400", "600", "700"],
+  display: "swap",
+  style: ["normal", "italic"],
 })
 
 export const metadata: Metadata = {
@@ -27,15 +37,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={dmSans.variable}>
+    <html lang="en" className={`${dmSans.variable} ${crimsonText.variable}`}>
       <body>
-        <AuthProvider>
-          <CartProvider>
-            <ScrollToTop />
-            {children}
-            <CartSidebar />
-          </CartProvider>
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <CartProvider>
+              <ScrollToTop />
+              {children}
+              <CartSidebar />
+              <Toaster />
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

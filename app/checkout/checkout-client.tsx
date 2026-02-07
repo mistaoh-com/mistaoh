@@ -3,11 +3,12 @@
 import { useCart } from "@/contexts/cart-context"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { Loader2, ShoppingBag, Package, Calendar, Minus, Plus, ArrowLeft } from "lucide-react"
+import { Loader2, ShoppingBag, Package, Calendar, Minus, Plus, ArrowLeft, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
+import { getPickupTimeMessage, getPickupAddress } from "@/lib/delivery-time"
 
 export function CheckoutClient() {
     const { cart, removeFromCart, updateQuantity, getTotalPrice } = useCart()
@@ -216,6 +217,15 @@ export function CheckoutClient() {
                                 <span>Total</span>
                                 <span>${getTotalPrice().toFixed(2)}</span>
                             </div>
+                        </div>
+
+                        {/* Estimated Pickup Time */}
+                        <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 mb-4 space-y-2">
+                            <div className="flex items-center gap-2 text-sm">
+                                <Clock className="w-4 h-4 text-green-600" />
+                                <span className="font-medium text-green-800">{getPickupTimeMessage()}</span>
+                            </div>
+                            <p className="text-xs text-green-700 pl-6">Pickup at: {getPickupAddress()}</p>
                         </div>
 
                         <Button

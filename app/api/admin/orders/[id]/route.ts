@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import dbConnect from "@/lib/db"
 import Order from "@/models/Order"
 import { sendOrderStatusEmail } from "@/lib/email"
+import { verifyAdminToken } from "@/lib/auth"
 
 export async function PATCH(
     req: Request,
@@ -12,8 +13,13 @@ export async function PATCH(
         const cookieStore = cookies()
         const adminToken = cookieStore.get("admin_token")
 
-        if (!adminToken || adminToken.value !== "true") {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+        if (!adminToken) {
+            return NextResponse.json({ message: "Unauthorized - No token provided" }, { status: 401 })
+        }
+
+        const isAdmin = await verifyAdminToken(adminToken.value)
+        if (!isAdmin) {
+            return NextResponse.json({ message: "Unauthorized - Invalid or expired token" }, { status: 401 })
         }
 
         const { id } = params

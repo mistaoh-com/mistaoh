@@ -2,13 +2,17 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Leaf, WheatOff, Plus, Minus } from "lucide-react"
+import { Leaf, WheatOff, Plus, Minus, ShoppingCart, Flame } from "lucide-react"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { useCart } from "@/contexts/cart-context"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { AddOnSelector } from "@/components/add-on-selector"
 import type { MenuItem, AddOnOption } from "@/lib/menu-data"
+import { useToast } from "@/components/ui/use-toast"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { BLUR_DATA_URL, getImageSizes } from "@/lib/image-utils"
 
 interface MenuItemCardProps {
     item: MenuItem
@@ -28,6 +32,8 @@ export function MenuItemCard({
     const { addToCart, cart, updateQuantity } = useCart()
     const [isAdding, setIsAdding] = useState(false)
     const [isAddOnSelectorOpen, setIsAddOnSelectorOpen] = useState(false)
+    const { toast } = useToast()
+    const router = useRouter()
 
     // Helper to generate a consistent ID for checking quantity of specific item configuration
     // For the card display, we primarily check the base item quantity if no add-ons are involved
@@ -66,6 +72,24 @@ export function MenuItemCard({
             image: item.image || "/placeholder.svg",
             category,
         })
+
+        // Show toast notification
+        toast({
+            title: "Item added to cart",
+            description: `${item.title} has been added to your cart.`,
+            action: (
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push("/cart")}
+                    className="shrink-0"
+                >
+                    <ShoppingCart className="w-3 h-3 mr-1" />
+                    View Cart
+                </Button>
+            ),
+        })
+
         setTimeout(() => setIsAdding(false), 300)
     }
 
@@ -87,6 +111,24 @@ export function MenuItemCard({
             category,
             selectedAddOns
         })
+
+        // Show toast notification
+        toast({
+            title: "Item added to cart",
+            description: `${item.title} with ${selectedAddOns.length} add-on(s) has been added to your cart.`,
+            action: (
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push("/cart")}
+                    className="shrink-0"
+                >
+                    <ShoppingCart className="w-3 h-3 mr-1" />
+                    View Cart
+                </Button>
+            ),
+        })
+
         setTimeout(() => setIsAdding(false), 300)
     }
 
@@ -117,6 +159,9 @@ export function MenuItemCard({
                             alt={item.title}
                             fill
                             className="object-cover"
+                            sizes={getImageSizes('thumbnail')}
+                            placeholder="blur"
+                            blurDataURL={BLUR_DATA_URL}
                         />
                     </div>
                 )}
@@ -125,7 +170,12 @@ export function MenuItemCard({
                         <h4 className="font-sans font-bold text-base truncate text-foreground">{item.title}</h4>
                         {item.glutenFree && <WheatOff className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />}
                         {item.vegetarian && <Leaf className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />}
-                        {item.spicyLevel && <span className="text-sm flex-shrink-0">{item.spicyLevel === 'medium' ? '🌶️🌶️' : '🌶️'}</span>}
+                        {item.spicyLevel && (
+                            <div className="flex gap-0.5 shrink-0" aria-label={`Spice level: ${item.spicyLevel}`}>
+                                <Flame className="w-3.5 h-3.5 text-red-600 fill-red-600" />
+                                {item.spicyLevel === 'medium' && <Flame className="w-3.5 h-3.5 text-red-600 fill-red-600" />}
+                            </div>
+                        )}
                     </div>
                     <p className="text-xs text-muted-foreground">{item.korean}</p>
                 </div>
@@ -157,6 +207,9 @@ export function MenuItemCard({
                                 alt={item.title}
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                sizes={getImageSizes('card')}
+                                placeholder="blur"
+                                blurDataURL={BLUR_DATA_URL}
                             />
                         </div>
                     </DialogTrigger>
@@ -167,6 +220,10 @@ export function MenuItemCard({
                                 alt={item.title}
                                 fill
                                 className="object-contain"
+                                sizes={getImageSizes('full')}
+                                placeholder="blur"
+                                blurDataURL={BLUR_DATA_URL}
+                                priority
                             />
                         </div>
                         <div className="text-center mt-4">
@@ -196,7 +253,10 @@ export function MenuItemCard({
                             )}
                             {item.spicyLevel && (
                                 <span className={`text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-medium ${item.spicyLevel === 'medium' ? 'bg-orange-100 text-orange-700' : 'bg-red-50 text-red-600'}`}>
-                                    {item.spicyLevel === 'medium' ? '🌶️🌶️' : '🌶️'}
+                                    <div className="flex gap-0.5" aria-label={`Spice level: ${item.spicyLevel}`}>
+                                        <Flame className={`w-3 h-3 ${item.spicyLevel === 'medium' ? 'fill-orange-700' : 'fill-red-600'}`} />
+                                        {item.spicyLevel === 'medium' && <Flame className="w-3 h-3 fill-orange-700" />}
+                                    </div>
                                     <span className="capitalize">{item.spicyLevel === 'medium' ? 'Medium' : 'Mild'}</span>
                                 </span>
                             )}
@@ -243,7 +303,7 @@ export function MenuItemCard({
                                     )}
                                 >
                                     <Plus className="w-5 h-5" />
-                                    Add
+                                    {hasAddOns ? "Customize & Add" : "Add"}
                                 </button>
                             )
                         ) : item.notOrderable ? (

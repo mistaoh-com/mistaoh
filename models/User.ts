@@ -9,6 +9,9 @@ export interface IUser extends Document {
     verificationToken?: string
     verificationTokenExpiry?: Date
     createdAt: Date
+    provider: "email" | "google"
+    googleId?: string
+    phoneVerified: boolean
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -28,18 +31,37 @@ const UserSchema: Schema<IUser> = new Schema(
         },
         password: {
             type: String,
-            required: [true, "Please provide a password"],
+            required: function (this: IUser) {
+                return this.provider === "email"
+            },
         },
         phone: {
             type: String,
-            required: [true, "Please provide a phone number"],
+            required: function (this: IUser) {
+                return this.provider === "email"
+            },
         },
         isVerified: {
             type: Boolean,
-            default: false,
+            default: function (this: IUser) {
+                return this.provider === "google"
+            },
         },
         verificationToken: String,
         verificationTokenExpiry: Date,
+        provider: {
+            type: String,
+            enum: ["email", "google"],
+            default: "email",
+        },
+        googleId: {
+            type: String,
+            index: true,
+        },
+        phoneVerified: {
+            type: Boolean,
+            default: false,
+        },
         createdAt: {
             type: Date,
             default: Date.now,

@@ -707,7 +707,7 @@ export const menuData: MenuData = {
                 {
                     title: "Japchae",
                     korean: "잡채",
-                    price: 15.99,
+                    price: 13.99,
                     vegetarian: true,
                     glutenFree: true,
                     description: "Stir-fried sweet potato glass noodles with vegetables",

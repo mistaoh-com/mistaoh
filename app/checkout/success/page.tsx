@@ -12,6 +12,7 @@ export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id")
   const [isSubscription, setIsSubscription] = useState(false)
+  const [verificationStatus, setVerificationStatus] = useState<"pending" | "success" | "error">("pending")
   const hasVerified = useRef(false)
 
   useEffect(() => {
@@ -42,47 +43,51 @@ export default function CheckoutSuccessPage() {
         .then(data => {
           if (data.error) {
             console.error("Verification failed:", data.error)
-          }
-          // success silently
-        })
-        .catch(err => console.error("Verification error:", err))
+            setVerificationStatus("error")
+          } else {
+            setVerificationStatus("success")
 
-      // Update local storage orders
-      // Note: In a real app, orders should be fetched from backend
-      if (cart) {
-        try {
-          const items: CartItem[] = JSON.parse(cart)
-          const hasSubscription = items.some((item) => item.isSubscription)
-          const orders = JSON.parse(localStorage.getItem("mistaoh-orders") || "[]")
+            // Update local storage orders
+            // Note: In a real app, orders should be fetched from backend
+            if (cart) {
+              try {
+                const items: CartItem[] = JSON.parse(cart)
+                const hasSubscription = items.some((item) => item.isSubscription)
+                const orders = JSON.parse(localStorage.getItem("mistaoh-orders") || "[]")
 
-          // Check if order already added to avoid duplicates on refresh
-          const exists = orders.some((o: any) => o.id === sessionId)
-          if (!exists) {
-            const newOrder = {
-              id: sessionId,
-              date: new Date().toLocaleDateString(),
-              status: hasSubscription ? "Active" : "Processing",
-              total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
-              items: items.map((item) => ({
-                title: item.title,
-                quantity: item.quantity,
-                price: item.price,
-              })),
-              isSubscription: hasSubscription,
-              subscriptionPlan: hasSubscription ? items[0].subscriptionPlan : undefined,
-              nextDelivery: hasSubscription ? getNextDeliveryDate(items[0].subscriptionPlan || "weekly") : undefined,
+                // Check if order already added to avoid duplicates on refresh
+                const exists = orders.some((o: any) => o.id === sessionId)
+                if (!exists) {
+                  const newOrder = {
+                    id: sessionId,
+                    date: new Date().toLocaleDateString(),
+                    status: hasSubscription ? "Active" : "Processing",
+                    total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+                    items: items.map((item) => ({
+                      title: item.title,
+                      quantity: item.quantity,
+                      price: item.price,
+                    })),
+                    isSubscription: hasSubscription,
+                    subscriptionPlan: hasSubscription ? items[0].subscriptionPlan : undefined,
+                    nextDelivery: hasSubscription ? getNextDeliveryDate(items[0].subscriptionPlan || "weekly") : undefined,
+                  }
+                  orders.unshift(newOrder)
+                  localStorage.setItem("mistaoh-orders", JSON.stringify(orders))
 
+                  // Clear cart ONLY after successful verification
+                  localStorage.removeItem("mistaoh-cart")
+                }
+              } catch (e) {
+                console.error("Error updating local orders", e)
+              }
             }
-            orders.unshift(newOrder)
-            localStorage.setItem("mistaoh-orders", JSON.stringify(orders))
-
-            // Clear cart ONLY if order processed successfully
-            localStorage.removeItem("mistaoh-cart")
           }
-        } catch (e) {
-          console.error("Error updating local orders", e)
-        }
-      }
+        })
+        .catch(err => {
+          console.error("Verification error:", err)
+          setVerificationStatus("error")
+        })
     }
   }, [sessionId])
 
@@ -100,11 +105,50 @@ export default function CheckoutSuccessPage() {
     return nextDate.toLocaleDateString()
   }
 
+  // Show error UI if verification failed
+  if (verificationStatus === "error") {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navigation />
+        <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-20 mt-20">
+          <div className="max-w-2xl w-full text-center">
+            <div className="mb-8 flex justify-center">
+              <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-16 h-16 text-red-600" />
+              </div>
+            </div>
+            <h1 className="font-serif text-4xl md:text-5xl mb-6 text-balance">
+              Payment Verification Failed
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              We encountered an issue verifying your payment. Your cart has been preserved. Please contact support or try again.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/cart"
+                className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-colors"
+              >
+                Return to Cart
+              </Link>
+              <a
+                href="tel:6465598858"
+                className="bg-surface hover:bg-gray-100 text-foreground px-8 py-4 rounded-lg font-semibold transition-colors border border-border"
+              >
+                Call Support: (646) 559-8858
+              </a>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-20 mt-20">
+      <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-20 mt-20">
         <div className="max-w-2xl w-full text-center">
           <div className="mb-8 flex justify-center">
             <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center">

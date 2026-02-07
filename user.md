@@ -56,3 +56,95 @@ SS
     *   The system automatically sends the "Order Complete" email to the customer.
     *   The order status changes from "Pending" to "Completed" in the dashboard.
     *   (Optional) The order moves to a "Past Orders" tab.
+
+
+
+
+
+
+
+
+Google SSO Implementation Plan
+Goal Description
+Implement "Login with Google" for mistaoh.com. This will allow users to sign in using their Google accounts, improving the user experience by reducing friction. The implementation will integrate with the existing custom JWT authentication system.
+
+User Review Required
+IMPORTANT
+
+Google Cloud Console Setup Required You must set up a project in Google Cloud Console.
+
+Go to Google Cloud Console.
+Create a new project or select an existing one.
+Navigate to APIs & Services > Credentials.
+Click Create Credentials > OAuth client ID.
+Application type: Web application.
+Authorized JavaScript origins:
+http://localhost:3000
+https://www.mistaoh.com
+Authorized redirect URIs:
+http://localhost:3000/api/auth/google/callback
+https://www.mistaoh.com/api/auth/google/callback
+Copy the Client ID and Client Secret.
+WARNING
+
+Database Schema Change The 
+User
+ model currently requires a password and phone.
+
+Google users won't have a password initially.
+Google users might not provide a phone number.
+Change: I will make password and phone optional in the Mongoose schema. Existing users are unaffected, but new Google users can be created without them.
+Proposed Changes
+Configuration
+[MODIFY] 
+.env
+Add GOOGLE_CLIENT_ID
+Add GOOGLE_CLIENT_SECRET
+Add NEXT_PUBLIC_APP_URL (if not present, for redirect logic)
+Database
+[MODIFY] 
+User.ts
+Update UserSchema:
+password: required: false (or conditional based on googleId)
+phone: required: false (since Google might not return it)
+Add googleId: String, unique, sparse
+Add image: String (for profile picture)
+API Routes
+[NEW] 
+route.ts
+Handles the redirect to Google's OAuth 2.0 endpoint.
+[NEW] 
+route.ts
+Exchanges authorization code for tokens.
+Retrieves user profile from Google.
+Finds or creates user in MongoDB.
+Generates JWT (reusing signJWT from lib/auth).
+Sets the auth cookie.
+Redirects user to homepage.
+Frontend
+[MODIFY] 
+page.tsx
+Add a separator and "Sign in with Google" button.
+[MODIFY] 
+page.tsx
+Add "Sign up with Google" button.
+Verification Plan
+Automated Tests
+None existing for auth flow that I can run easily without mocking Google.
+Manual Verification
+Setup:
+User adds GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to 
+.env
+.
+Login Flow:
+Go to /login.
+Click "Sign in with Google".
+Complete Google login.
+Verify redirect to /.
+Verify user session is active (name appears in menu).
+Check MongoDB to confirm user creation (if new) or linking (if email matches).
+Edge Cases:
+Try logging in with a Google email that already exists as a password-user (should link or log in).
+
+
+
