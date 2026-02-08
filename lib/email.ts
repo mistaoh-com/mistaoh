@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer"
 import { MailItem } from "./types"
+import { escapeHtml, sanitizeName, sanitizeEmail, sanitizePhone, sanitizeMessage, sanitizeSubject } from "./sanitize"
 
 let transporter: any = null
 
@@ -314,13 +315,13 @@ export async function sendContactEmail(data: {
   const html = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px;">
       <h2 style="color: #FF813D; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Contact Message</h2>
-      <p><strong>Name:</strong> ${data.name}</p>
-      <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
-      <p><strong>Phone:</strong> ${data.phone || "Not provided"}</p>
-      <p><strong>Subject:</strong> ${subjectLabels[data.subject] || data.subject}</p>
+      <p><strong>Name:</strong> ${sanitizeName(data.name)}</p>
+      <p><strong>Email:</strong> <a href="mailto:${sanitizeEmail(data.email)}">${sanitizeEmail(data.email)}</a></p>
+      <p><strong>Phone:</strong> ${sanitizePhone(data.phone || "Not provided")}</p>
+      <p><strong>Subject:</strong> ${escapeHtml(subjectLabels[data.subject] || data.subject)}</p>
       <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 20px;">
         <p style="margin-top: 0; font-weight: bold;">Message:</p>
-        <p style="white-space: pre-wrap;">${data.message}</p>
+        <p style="white-space: pre-wrap;">${sanitizeMessage(data.message)}</p>
       </div>
     </div>
   `
@@ -329,7 +330,7 @@ export async function sendContactEmail(data: {
     from: `"Mista Oh Website" <${process.env.MAIL_USER}>`,
     to: adminEmail,
     replyTo: data.email,
-    subject: `[Contact Form] ${subjectLabels[data.subject] || data.subject} - ${data.name}`,
+    subject: `[Contact Form] ${escapeHtml(subjectLabels[data.subject] || data.subject)} - ${sanitizeName(data.name)}`,
     html,
   })
 }
@@ -449,17 +450,17 @@ export async function sendContactAcknowledgementEmail(data: {
             <span class="logo">Mista Oh</span>
           </div>
           <h1>Thank you for reaching out.</h1>
-          <p>Hi ${data.name},</p>
+          <p>Hi ${sanitizeName(data.name)},</p>
           <p>We've received your message and will get back to you as soon as possible. Our team usually responds within 24 hours.</p>
-          
+
           <div class="details-box">
             <div class="details-title">Your Inquiry Details</div>
             <div class="detail-item">
               <span class="detail-label">Subject:</span>
-              <span class="detail-value">${subjectLabels[data.subject] || data.subject}</span>
+              <span class="detail-value">${escapeHtml(subjectLabels[data.subject] || data.subject)}</span>
             </div>
             <div class="message-content">
-              "${data.message}"
+              "${sanitizeMessage(data.message)}"
             </div>
           </div>
         </div>
@@ -516,19 +517,19 @@ export async function sendCateringEmail(data: {
       <h2 style="color: #FF813D; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Catering Inquiry</h2>
       <div style="margin-bottom: 20px;">
         <h3 style="color: #333;">Contact Info</h3>
-        <p><strong>Name:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
-        <p><strong>Phone:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>
+        <p><strong>Name:</strong> ${sanitizeName(data.name)}</p>
+        <p><strong>Email:</strong> <a href="mailto:${sanitizeEmail(data.email)}">${sanitizeEmail(data.email)}</a></p>
+        <p><strong>Phone:</strong> <a href="tel:${sanitizePhone(data.phone)}">${sanitizePhone(data.phone)}</a></p>
       </div>
       <div style="margin-bottom: 20px;">
         <h3 style="color: #333;">Event Details</h3>
-        <p><strong>Type:</strong> ${eventTypeLabels[data.eventType] || data.eventType}</p>
-        <p><strong>Date:</strong> ${formattedDate}</p>
-        <p><strong>Guests:</strong> ${data.guestCount}</p>
+        <p><strong>Type:</strong> ${escapeHtml(eventTypeLabels[data.eventType] || data.eventType)}</p>
+        <p><strong>Date:</strong> ${escapeHtml(formattedDate)}</p>
+        <p><strong>Guests:</strong> ${escapeHtml(String(data.guestCount))}</p>
       </div>
       <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
         <p style="margin-top: 0; font-weight: bold;">Additional Details:</p>
-        <p style="white-space: pre-wrap;">${data.message || "No additional details provided."}</p>
+        <p style="white-space: pre-wrap;">${sanitizeMessage(data.message || "No additional details provided.")}</p>
       </div>
     </div>
   `
@@ -537,7 +538,7 @@ export async function sendCateringEmail(data: {
     from: `"Mista Oh Website" <${process.env.MAIL_USER}>`,
     to: adminEmail,
     replyTo: data.email,
-    subject: `[Catering Inquiry] ${eventTypeLabels[data.eventType] || data.eventType} - ${data.name}`,
+    subject: `[Catering Inquiry] ${escapeHtml(eventTypeLabels[data.eventType] || data.eventType)} - ${sanitizeName(data.name)}`,
     html,
   })
 }

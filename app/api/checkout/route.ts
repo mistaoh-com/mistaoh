@@ -10,6 +10,7 @@ import { cookies } from "next/headers"
 import { CartItem, GuestInfo } from "@/lib/types"
 import { validateEmail, validatePhone } from "@/lib/validation"
 import { ErrorCode, createErrorResponse } from "@/lib/errors"
+import { calculateOrderTotal } from "@/lib/price-service"
 
 export const dynamic = 'force-dynamic'
 
@@ -164,12 +165,22 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Calculate total including add-ons
-    const totalAmount = items.reduce((sum: number, item: CartItem) => {
-      const addOnsPrice = item.selectedAddOns?.reduce((addonSum, addon) =>
-        addonSum + addon.price, 0) || 0
-      return sum + ((item.price + addOnsPrice) * item.quantity)
-    }, 0)
+    // SECURITY: Validate prices server-side - NEVER trust client prices
+    const priceValidation = calculateOrderTotal(items)
+
+    if (!priceValidation.isValid) {
+      console.error("Price validation failed:", priceValidation.errors)
+      return NextResponse.json({
+        error: "Price validation failed. Please refresh your cart and try again.",
+        code: "PRICE_VALIDATION_FAILED",
+        details: priceValidation.errors
+      }, { status: 400 })
+    }
+
+    const totalAmount = priceValidation.totalAmount
+
+    // Log price validation success
+    console.log(`✅ Price validation passed for ${items.length} items. Total: $${totalAmount.toFixed(2)}`)
 
     // Generate guest token for non-authenticated users
     const guestToken = !userId ? crypto.randomBytes(32).toString("hex") : undefined
