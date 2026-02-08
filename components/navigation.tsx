@@ -58,8 +58,8 @@ export function Navigation() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) =>
               link.external ? (
                 <a
@@ -81,7 +81,10 @@ export function Navigation() {
                 </Link>
               )
             )}
+          </div>
 
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-3">
             <UserSidebar />
             <Link
               href="/checkout"

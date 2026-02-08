@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useMemo } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import Image from "next/image"
-import { Leaf, WheatOff } from "lucide-react"
+import { Leaf, WheatOff, Clock } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useCart } from "@/contexts/cart-context"
 import { MenuSidebar } from "@/components/menu-sidebar"
@@ -14,8 +14,52 @@ import { MenuItemCard } from "@/components/menu-item-card"
 import { MobileCategoryChips } from "@/components/mobile-category-chips"
 import { FloatingCart } from "@/components/floating-cart"
 import { menuData } from "@/lib/menu-data"
+import {
+  isLunchHoursActive,
+  getLunchAvailabilityMessage,
+  isDinnerHoursActive,
+  getDinnerAvailabilityMessage,
+  isDrinksHoursActive,
+  getDrinksAvailabilityMessage
+} from "@/lib/delivery-time"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function MenuPage() {
+  const [showLunchAlert, setShowLunchAlert] = useState(false)
+  const [showDinnerAlert, setShowDinnerAlert] = useState(false)
+  const [showDrinksAlert, setShowDrinksAlert] = useState(false)
+  const [currentTab, setCurrentTab] = useState("lunch")
+
+  // Check hours on mount
+  useEffect(() => {
+    if (currentTab === "lunch" && !isLunchHoursActive()) {
+      setShowLunchAlert(true)
+    } else if (currentTab === "dinner" && !isDinnerHoursActive()) {
+      setShowDinnerAlert(true)
+    } else if (currentTab === "drinks" && !isDrinksHoursActive()) {
+      setShowDrinksAlert(true)
+    }
+  }, [])
+
+  const handleTabChange = (value: string) => {
+    setCurrentTab(value)
+    if (value === "lunch" && !isLunchHoursActive()) {
+      setShowLunchAlert(true)
+    } else if (value === "dinner" && !isDinnerHoursActive()) {
+      setShowDinnerAlert(true)
+    } else if (value === "drinks" && !isDrinksHoursActive()) {
+      setShowDrinksAlert(true)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Navigation />
@@ -30,10 +74,70 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Lunch Hours Alert Dialog */}
+      <AlertDialog open={showLunchAlert} onOpenChange={setShowLunchAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-primary" />
+              Lunch Menu Not Available
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              {getLunchAvailabilityMessage()}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowLunchAlert(false)}>
+              Got it, thanks!
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Dinner Hours Alert Dialog */}
+      <AlertDialog open={showDinnerAlert} onOpenChange={setShowDinnerAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-secondary" />
+              Dinner Menu Not Available
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              {getDinnerAvailabilityMessage()}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowDinnerAlert(false)}>
+              Got it, thanks!
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Drinks Hours Alert Dialog */}
+      <AlertDialog open={showDrinksAlert} onOpenChange={setShowDrinksAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-cyan-600" />
+              Drinks Menu Not Available
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              {getDrinksAvailabilityMessage()}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowDrinksAlert(false)}>
+              Got it, thanks!
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Category Tabs - Pill style like reference */}
       <section className="pb-8 sm:pb-10 md:pb-12 px-3 sm:px-4 bg-[#FAF9F6]">
         <div className="max-w-6xl mx-auto w-full">
-          <Tabs defaultValue="lunch" className="w-full">
+          <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
             <div className="flex justify-center mb-8 sm:mb-10 md:mb-12">
               <TabsList className="inline-flex gap-2 sm:gap-3 p-0 bg-transparent h-auto flex-wrap justify-center">
                 <TabsTrigger
