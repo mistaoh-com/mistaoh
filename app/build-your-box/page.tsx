@@ -14,53 +14,49 @@ const boxOptions = {
       title: "Cheese Seafood Tteokbokki",
       korean: "치즈해물떡볶음",
       price: 25.99,
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cheese_Seafood_Tteokbokki-VM2aVjnsEOF5nLoGw1TA5bnqS0WKhO.jpg",
+      image: "/cheese-seafood-tteokbokki-korean-food.jpg",
     },
     {
       title: "Tteokbokki",
       korean: "떡볶이",
       price: 18.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tteokbokki-4e2ZohrfDz1z2rrUe5ZnzUGe2TbCM8.jpg",
+      image: "/tteokbokki-rice-cakes.jpg",
     },
     {
       title: "Mukeunji Samgyupsal Jjim",
       korean: "묵은지삼겹살찜",
       price: 28.99,
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mukeunji%20Samgyupsal%20Jjim-5NnZuBtcQN4paiMbgfQevPfXzeVJoK.avif",
+      image: "/braised-pork-belly-kimchi.jpg",
     },
     {
       title: "Samgyupsal",
       korean: "삼겹살",
       price: 25.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Samgyupsal-44zmOCoRWIrYI8MTybS4VsqUG5BxzB.avif",
+      image: "/samgyupsal-pork-belly.jpg",
     },
     {
       title: "Ribeye Steak",
       korean: "꽃등심스테이크",
       price: 38.99,
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ribeye%20Steak-8WGNp9hAY0NcKlhtrdrOzWvqPSNlUu.avif",
+      image: "/korean-ribeye-steak.jpg",
     },
     {
       title: "Spicy Pork",
       korean: "제육불고기",
       price: 25.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spicy%20Pork-lbwDgkFJmoBmWIYbZm7DAqPKT4XhRY.avif",
+      image: "/spicy-pork-bulgogi.jpg",
     },
     {
       title: "Mista Ramen",
       korean: "미스타라면",
       price: 12.0,
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mista%20Ramen.JPG-Toi1pQC16zAFyBFnQt9fXMp90tcaiN.jpeg",
+      image: "/mista-ramen-korean-food.jpg",
     },
     {
       title: "Miso Ramen",
       korean: "미소라면",
       price: 12.0,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Miso%20Ramen-h9JrAPQZ6ZkUBMJBibkA5Os0Sykhoh.jpg",
+      image: "/miso-ramen-korean-food.jpg",
     },
   ],
   sides: [
@@ -81,32 +77,28 @@ const readyToOrderBoxes = [
     title: "Grilled Mackerel Box",
     korean: "고등어구이 도시락",
     price: 24.99,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Grilled%20Mackerel%20Box-mT9nKd96DMNhx7e9C6ir4poSG1zOzq.jpg",
+    image: "/grilled-mackerel-dosirak.jpg",
     description: "Grilled mackerel with kimchi, dumplings, salad, and seaweed",
   },
   {
     title: "Teriyaki Chicken Box",
     korean: "데리야끼 치킨 도시락",
     price: 22.99,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Teriyaki%20Chicken%20Box-0mhqgSA8DuKnqyTX0XmQigI6r6MH0u.jpeg",
+    image: "/teriyaki-chicken-korean-food.jpg",
     description: "Teriyaki chicken with rice, soup, salad, dumplings, and sides",
   },
   {
     title: "Spicy Pork Lunch Box",
     korean: "제육볶음 도시락",
     price: 22.99,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spicy%20Pork%20Lunch%20Box-V1p0JeVzO7ydHnO3vlwxH50YTg5e1p.jpeg",
+    image: "/spicy-pork-lunch-box.jpg",
     description: "Spicy pork with rice, soup, salad, dumplings, and sides",
   },
   {
     title: "Bulgogi Lunch Box",
     korean: "불고기 도시락",
     price: 24.99,
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bulgogi%20Lunch%20Box-bo6A5bboLA1JNZY5YsIjjoMy1OWSGa.jpeg",
+    image: "/korean-food-spread-with-various-dishes.jpg",
     description: "Marinated beef bulgogi with rice, soup, salad, dumplings, and sides",
   },
 ]
@@ -164,10 +156,12 @@ export default function BuildYourBoxPage() {
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/buildyourbox-9yWtutmj19xw1s6GCQ5Zjow9FLF8Ey.jpg"
+            src="/korean-bbq-horizontal.jpg"
             alt="Build Your Custom Box"
             fill
             className="object-cover"
+            sizes="100vw"
+            quality={70}
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>
@@ -201,6 +195,8 @@ export default function BuildYourBoxPage() {
                     alt={box.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    quality={65}
                   />
                 </div>
                 <div className="p-5">
@@ -253,6 +249,8 @@ export default function BuildYourBoxPage() {
                       alt={protein.title}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      quality={65}
                     />
                     {selectedProtein?.title === protein.title && (
                       <div className="absolute top-2 right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center">
@@ -383,11 +381,13 @@ export default function BuildYourBoxPage() {
       <section className="relative h-[400px] overflow-hidden">
         <div className="absolute inset-0" style={{ transform: "translateZ(0)" }}>
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/20201214_151021~2-17NcHYKQEJZKIbayvPHzZzpA4X4y9x.jpg"
+            src="/korean-bbq-catering.jpg"
             alt="Korean Food Spread"
             fill
             className="object-cover"
             style={{ objectPosition: "center 30%" }}
+            sizes="100vw"
+            quality={65}
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>

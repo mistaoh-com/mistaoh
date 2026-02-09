@@ -152,6 +152,13 @@
 }
 
 @layer base {
+  /* Disable browser hyphenation across all content (Safari/WebKit included). */
+  html {
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-weight: 400;

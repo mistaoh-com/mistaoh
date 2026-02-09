@@ -11,7 +11,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <Link href="/" className="inline-block mb-4">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mista%20Oh%20Logo-kzYDNLOL5Vvtlm7x9WGJDW2qXzlOOh.png"
+                src="/mista-oh-logo.png"
                 alt="Mista Oh Logo"
                 width={160}
                 height={54}
@@ -101,4 +101,3 @@ export function Footer() {
     </footer>
   )
 }
-

@@ -46,6 +46,7 @@ export function UserSidebar() {
     const { user, orders, isLoading, refreshUser, logout, updateOrder, cancelOrder } = useAuth()
     const router = useRouter()
     const { toast } = useToast()
+    const [hasLoadedOrders, setHasLoadedOrders] = useState(false)
 
     // Edit order state
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -61,6 +62,32 @@ export function UserSidebar() {
     // Resume checkout state
     const [isResuming, setIsResuming] = useState(false)
     const [resumingOrderId, setResumingOrderId] = useState<string | null>(null)
+
+    useEffect(() => {
+        setHasLoadedOrders(false)
+    }, [user?.email])
+
+    useEffect(() => {
+        if (!open || !user || hasLoadedOrders) return
+
+        let isCancelled = false
+
+        const loadOrders = async () => {
+            try {
+                await refreshUser()
+            } finally {
+                if (!isCancelled) {
+                    setHasLoadedOrders(true)
+                }
+            }
+        }
+
+        void loadOrders()
+
+        return () => {
+            isCancelled = true
+        }
+    }, [open, user, hasLoadedOrders, refreshUser])
 
     const handleLogout = async () => {
         await logout()

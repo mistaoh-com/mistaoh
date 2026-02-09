@@ -47,7 +47,7 @@ export const menuData: MenuData = {
                     vegetarian: true,
                     glutenFree: false,
                     description: "Stir-fried sweet potato glass noodles with vegetables",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg",
+                    image: "/menu-images/japchae.jpg",
                 },
                 {
                     title: "Mandoo",
@@ -57,7 +57,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Pork or Kimchi dumplings (6 pcs). Vegetarian $9.99. Fried or Steamed",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pork%20Dumplings-JWxg0E8xFaVt6TmlhtZamWC1O3PYt4.jpg",
+                        "/menu-images/pork-dumplings.jpg",
                     addOns: [
                         {
                             title: "Filling",
@@ -86,7 +86,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Crispy fried squid rings with dipping sauce",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fried%20calamari-IefJteE5ehZDTnuaknZqCx2sxdpXOb.jpg",
+                        "/menu-images/fried-calamari.jpg",
                 },
                 {
                     title: "Fluffy Steamed Egg",
@@ -106,7 +106,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "6 pieces of crispy battered shrimp served with dipping sauce",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shrimp%20tempura-RBhJNZZw1V3tIi8Vn8L2YQiJ3CTN2T.jpg",
+                        "/menu-images/shrimp-tempura.jpg",
                 },
                 {
                     title: "Chicken Wings",
@@ -116,7 +116,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Soy-garlic / sweet and spicy / BBQ / Buffalo (7pcs)",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chickenwings-Jriq5QpQlTIRJ0bgC2Yo3Kz7cH0Als.jpg",
+                        "/menu-images/chickenwings.jpg",
                     addOns: [
                         {
                             title: "Flavor",
@@ -139,7 +139,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Crispy fries topped with bulgogi beef, kimchi and cheese curd with spicy mayo",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi%20kimchi%20fries%201-KPsj5xIRmzQORZPrfFhmN9PqiE8cFi.jpg",
+                        "/menu-images/bulgogi-kimchi-fries-1.jpg",
                 },
                 {
                     title: "Veggie Pancake",
@@ -149,7 +149,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Savory Korean pancake filled with fresh vegetables",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Vegetarian%20Pancakes-zoMiswKLJT1W5mm4VLazB13hxZHTwt.png",
+                        "/menu-images/vegetarian-pancakes.png",
                 },
                 {
                     title: "Kimchi Pancake",
@@ -160,7 +160,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Crispy pancake made with spicy fermented kimchi",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kimchi%20pancakes-obLeYgTLbFXkTTOmAanu99JEPzzHtK.jpeg",
+                        "/menu-images/kimchi-pancakes.jpeg",
                 },
                 {
                     title: "Seafood Pancake",
@@ -170,7 +170,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Crispy Korean pancake loaded with seafood and scallions",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dd_seafood%20pancake-8VZVqcmQ7k7Cw5fXFwcKeueOJJwSKj.jpg",
+                        "/menu-images/dd-seafood-pancake.jpg",
                 },
                 {
                     title: "Brisket Salad",
@@ -180,7 +180,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Mixed greens with tender beef brisket with spicy dressing",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brisket%20salad-VwvV128ve0BtugZWN1IpamLuati5Fy.jpg",
+                        "/menu-images/brisket-salad.jpg",
                 },
                 {
                     title: "Teriyaki Chicken Salad",
@@ -190,7 +190,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Grilled chicken with teriyaki glaze over fresh greens",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Teriyaki%20chicken%20salad-2taJe0YTlfPMBZUkTJ8jQn3ALCG1DW.png",
+                        "/menu-images/teriyaki-chicken-salad.png",
                 },
                 {
                     title: "House Salad",
@@ -253,7 +253,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Grilled chicken glazed with sweet teriyaki sauce, served with rice and salad",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/teriyaki%20chicken-EcVhieclUrFrsrwg8T5ajngJCXX8My.jpg",
+                        "/menu-images/teriyaki-chicken.jpg",
                 },
                 {
                     title: "Vegetable Fried Rice",
@@ -263,7 +263,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Fried rice with assorted vegetables",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vegetarian%20fried%20rice-cM6Og0OgyD39c3nGIA39bXElxehwEi.png",
+                        "/menu-images/vegetarian-fried-rice.png",
                 },
                 {
                     title: "Chicken Katsu",
@@ -316,7 +316,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy soft tofu stew with vegetables in a rich broth. Add Beef (+$3), Seafood (+$3), or Vegetarian",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Soondubu%20Jjigae-lHpXMHh9g0E6yJYiTWvLEE27U8GzFB.jpg",
+                        "/menu-images/soondubu-jjigae.jpg",
                     addOns: [
                         {
                             title: "Options",
@@ -337,7 +337,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Spicy kimchi stew with tofu. Add Pork (+$3)",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kimchi%20Jjigae-BohyNJaFOnDK3AWb89Kme58cibnpTD.jpg",
+                        "/menu-images/kimchi-jjigae.jpg",
                     addOns: [
                         {
                             title: "Add-ons",
@@ -356,7 +356,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Korean fermented soybean paste stew with vegetables and tofu. Add Beef (+$3), Seafood (+$3), or Vegetarian",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/deonjang%20jjigae-f0SEaORNpmSdF01SfOkess6gUerkXE.jpg",
+                        "/menu-images/deonjang-jjigae.jpg",
                     addOns: [
                         {
                             title: "Options",
@@ -376,7 +376,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     spicyLevel: "mild",
                     description: "Spicy stew with sausage, spam, bean, cream cheese, ramen noodles, and vegetables in spicy broth",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/budae-H1m9fKidjppIPNiMMfi9vZvbLG61MV.jpg",
+                    image: "/menu-images/budae.jpg",
                 },
                 {
                     title: "Yukgaejang",
@@ -387,7 +387,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Spicy beef soup with vegetables and glass noodles",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yukgaejang-WV5pLfJhDfwBnvvHheB3m87P0FtC0x.jpg",
+                        "/menu-images/yukgaejang.jpg",
                 },
                 {
                     title: "Galbitang",
@@ -396,7 +396,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Beef short rib soup in clear with glass noodles, savory broth",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbitang-ul3c8wXqHR0ovCFkCb84BtWAckTZz5.jpg",
+                    image: "/menu-images/galbitang.jpg",
                 },
                 {
                     title: "Maeun Tang",
@@ -407,7 +407,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy Korean fish (salmon) stew with vegetables in chili broth",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Maeun%20Tang-fmQulVK71wui2XCpMD4jhf8q0Iy2uj.jpg",
+                        "/menu-images/maeun-tang.jpg",
                 },
                 {
                     title: "Korean Kalguksu",
@@ -484,7 +484,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Chewy rice cakes in sweet and spicy gochujang sauce with melted cheese. Seafood (+$6) Ramen noodles (+$5)",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tteokbokki-pzokp2Uzds3o7nH8UgGa1o1E6tUuwE.jpg",
+                        "/menu-images/tteokbokki.jpg",
                     addOns: [
                         {
                             title: "Extras",
@@ -514,7 +514,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Braised pork belly with aged kimchi",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mukeunji%20Samgyupsal%20Jjim-9IIYFLzTtXqw3VH9R2w6e9om5lgw80.jpg",
+                        "/menu-images/mukeunji-samgyupsal-jjim.jpg",
                 },
             ],
         },
@@ -528,7 +528,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Thinly sliced ribeye marinated in sweet soy sauce",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi-2-PjvUbvKALCkjnx9fEPzce6WQrYKkNq.jpg",
+                    image: "/menu-images/bulgogi-2.jpg",
                 },
                 {
                     title: "Samgyupsal",
@@ -538,7 +538,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Grilled pork belly slices, served with lettuce",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Samgyupsal-e2FbCHZ5myEMtNE0cLYNCW2Yz8fJFn.jpg",
+                        "/menu-images/samgyupsal.jpg",
                 },
                 {
                     title: "Daeji Galbi",
@@ -548,7 +548,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Marinated pork shoulders",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Daeji%20Galbi-JbqCvnKsaIrtNuofI4p74UeVTvuYTA.jpg",
+                        "/menu-images/daeji-galbi.jpg",
                 },
                 {
                     title: "Spicy Pork",
@@ -559,7 +559,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy marinated pork shoulders with vegetables",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spicy%20Pork-634sw7W0NEXwkn7JJuLoASzHoEuh26.jpg",
+                        "/menu-images/spicy-pork.jpg",
                 },
                 {
                     title: "Dakgui",
@@ -577,7 +577,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Korean marinated beef short ribs grilled",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbi-SxWHpzARBRTDdGD4mcBfY9QHzlb2Di.jpg",
+                    image: "/menu-images/galbi.jpg",
                 },
                 {
                     title: "LA Galbi",
@@ -596,7 +596,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Premium Korean ribeye steak grilled to order",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ribeye%20Steak-VYX5Ouo7LG7OzDjFJUsdOrSETMUr6Z.jpg",
+                        "/menu-images/ribeye-steak.jpg",
                 },
             ],
         },
@@ -611,7 +611,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Whole mackerel grilled with sea salt and lemon",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DD_mackerel-TBCI17lH6xu23GkicSlrtzA2EqTtPO.jpg",
+                        "/menu-images/dd-mackerel.jpg",
                 },
                 {
                     title: "Grilled Salmon",
@@ -621,7 +621,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Fresh salmon fillet grilled with sea salt and lemon",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Grilled%20Salmon-UVycvhKeBF7shIC8fyiicGlZht4t1g.jpg",
+                        "/menu-images/grilled-salmon.jpg",
                 },
             ],
         },
@@ -637,7 +637,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy stir-fried squid with vegetables. Lunch Box Set includes Vegetable Dumpling, Salad & Miso Soup",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spicy%20Squid%20Set-PkR1LX7SVjJW9Rh31LRSNY6bIBPDey.jpeg",
+                        "/menu-images/spicy-squid-set.jpeg",
                 },
                 {
                     title: "Daeji Galbi Set",
@@ -657,7 +657,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Thinly sliced pork stir-fried in a spicy gochujang-based sauce. Lunch Box Set includes Vegetable Dumpling, Salad & Miso Soup",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spicy%20Pork%20Set-adGWiVlzUIYENaHJuIWUC2GFuMAROk.jpeg",
+                        "/menu-images/spicy-pork-set.jpeg",
                 },
                 {
                     title: "Bulgogi Set",
@@ -667,7 +667,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Thin sliced marinated ribeye. Lunch Box Set includes Vegetable Dumpling, Salad & Miso Soup",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bulgogi%20Set-wHjsZQDdhLjzMURWgFuly4oRzJZ119.jpeg",
+                        "/menu-images/bulgogi-set.jpeg",
                 },
                 {
                     title: "Gochujang Samgyupsal Set",
@@ -711,7 +711,7 @@ export const menuData: MenuData = {
                     vegetarian: true,
                     glutenFree: true,
                     description: "Stir-fried sweet potato glass noodles with vegetables",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg",
+                    image: "/menu-images/japchae.jpg",
                 },
                 {
                     title: "Mandoo",
@@ -721,7 +721,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Pork or Kimchi dumplings (6 pcs). Vegetarian $9.99. Fried or Steamed",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pork%20Dumplings-JWxg0E8xFaVt6TmlhtZamWC1O3PYt4.jpg",
+                        "/menu-images/pork-dumplings.jpg",
                     addOns: [
                         {
                             title: "Filling",
@@ -750,7 +750,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Crispy fried squid rings with dipping sauce",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fried%20calamari-IefJteE5ehZDTnuaknZqCx2sxdpXOb.jpg",
+                        "/menu-images/fried-calamari.jpg",
                 },
                 {
                     title: "Fluffy Steamed Egg",
@@ -770,7 +770,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "6 pieces of crispy battered shrimp served with dipping sauce",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shrimp%20tempura-RBhJNZZw1V3tIi8Vn8L2YQiJ3CTN2T.jpg",
+                        "/menu-images/shrimp-tempura.jpg",
                 },
                 {
                     title: "Fried Chicken Wings",
@@ -780,7 +780,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Soy-garlic / sweet and spicy / BBQ / Buffalo (7pcs)",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chickenwings-Jriq5QpQlTIRJ0bgC2Yo3Kz7cH0Als.jpg",
+                        "/menu-images/chickenwings.jpg",
                     addOns: [
                         {
                             title: "Flavor",
@@ -803,7 +803,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Crispy fries topped with bulgogi beef, kimchi and cheese curd with spicy mayo",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi%20kimchi%20fries%201-KPsj5xIRmzQORZPrfFhmN9PqiE8cFi.jpg",
+                        "/menu-images/bulgogi-kimchi-fries-1.jpg",
                 },
                 {
                     title: "Veggie Pancake",
@@ -813,7 +813,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Savory Korean pancake filled with fresh vegetables",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Vegetarian%20Pancakes-zoMiswKLJT1W5mm4VLazB13hxZHTwt.png",
+                        "/menu-images/vegetarian-pancakes.png",
                 },
                 {
                     title: "Kimchi Pancake",
@@ -824,7 +824,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Crispy pancake made with spicy fermented kimchi",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kimchi%20pancakes-obLeYgTLbFXkTTOmAanu99JEPzzHtK.jpeg",
+                        "/menu-images/kimchi-pancakes.jpeg",
                 },
                 {
                     title: "Seafood Pancake",
@@ -834,7 +834,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Crispy Korean pancake loaded with seafood and scallions",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dd_seafood%20pancake-8VZVqcmQ7k7Cw5fXFwcKeueOJJwSKj.jpg",
+                        "/menu-images/dd-seafood-pancake.jpg",
                 },
                 {
                     title: "Brisket Salad",
@@ -844,7 +844,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Mixed greens with tender beef brisket with spicy dressing",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brisket%20salad-VwvV128ve0BtugZWN1IpamLuati5Fy.jpg",
+                        "/menu-images/brisket-salad.jpg",
                 },
                 {
                     title: "Teriyaki Chicken Salad",
@@ -854,7 +854,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Grilled chicken with teriyaki glaze over fresh greens",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Teriyaki%20chicken%20salad-2taJe0YTlfPMBZUkTJ8jQn3ALCG1DW.png",
+                        "/menu-images/teriyaki-chicken-salad.png",
                 },
                 {
                     title: "House Salad",
@@ -917,7 +917,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Fried rice with assorted vegetables",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vegetarian%20fried%20rice-cM6Og0OgyD39c3nGIA39bXElxehwEi.png",
+                        "/menu-images/vegetarian-fried-rice.png",
                 },
                 {
                     title: "Teriyaki Chicken",
@@ -927,7 +927,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Grilled chicken glazed with sweet teriyaki sauce, served with rice and salad",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/teriyaki%20chicken-EcVhieclUrFrsrwg8T5ajngJCXX8My.jpg",
+                        "/menu-images/teriyaki-chicken.jpg",
                 },
                 {
                     title: "Chicken Katsu",
@@ -980,7 +980,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy soft tofu stew with vegetables in a rich broth. Add Beef (+$3), Seafood (+$3), or Vegetarian",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Soondubu%20Jjigae-lHpXMHh9g0E6yJYiTWvLEE27U8GzFB.jpg",
+                        "/menu-images/soondubu-jjigae.jpg",
                     addOns: [
                         {
                             title: "Options",
@@ -1001,7 +1001,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Spicy kimchi stew with tofu. Add Pork (+$3)",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kimchi%20Jjigae-BohyNJaFOnDK3AWb89Kme58cibnpTD.jpg",
+                        "/menu-images/kimchi-jjigae.jpg",
                     addOns: [
                         {
                             title: "Add-ons",
@@ -1020,7 +1020,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Korean fermented soybean paste stew with vegetables and tofu. Add Beef (+$3), Seafood (+$3), or Vegetarian",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/deonjang%20jjigae-f0SEaORNpmSdF01SfOkess6gUerkXE.jpg",
+                        "/menu-images/deonjang-jjigae.jpg",
                     addOns: [
                         {
                             title: "Options",
@@ -1040,7 +1040,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     spicyLevel: "mild",
                     description: "Spicy stew with sausage, spam, bean, cream cheese, ramen noodles, and vegetables in spicy broth",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/budae-H1m9fKidjppIPNiMMfi9vZvbLG61MV.jpg",
+                    image: "/menu-images/budae.jpg",
                 },
                 {
                     title: "Yukgaejang",
@@ -1051,7 +1051,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Spicy beef soup with vegetables and glass noodles",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yukgaejang-WV5pLfJhDfwBnvvHheB3m87P0FtC0x.jpg",
+                        "/menu-images/yukgaejang.jpg",
                 },
                 {
                     title: "Galbitang",
@@ -1060,7 +1060,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Beef short rib soup in clear with glass noodles, savory broth",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbitang-ul3c8wXqHR0ovCFkCb84BtWAckTZz5.jpg",
+                    image: "/menu-images/galbitang.jpg",
                 },
                 {
                     title: "Maeun Tang",
@@ -1071,7 +1071,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy Korean fish (salmon) stew with vegetables in chili broth",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Maeun%20Tang-fmQulVK71wui2XCpMD4jhf8q0Iy2uj.jpg",
+                        "/menu-images/maeun-tang.jpg",
                 },
                 {
                     title: "Korean Kalguksu",
@@ -1098,7 +1098,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Ramen in savory miso broth. Add Bulgogi, boiled egg, chicken, or tofu (+$2.50)",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/miso-ramen-VwvV128ve0BtugZWN1IpamLuati5Fy.jpg",
+                    image: "/miso-ramen-korean-food.jpg",
                     addOns: [
                         {
                             title: "Add-ons",
@@ -1148,7 +1148,7 @@ export const menuData: MenuData = {
                     spicyLevel: "medium",
                     description: "Chewy rice cakes in sweet and spicy gochujang sauce with melted cheese. Seafood (+$6) Ramen noodles (+$5)",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Tteokbokki-pzokp2Uzds3o7nH8UgGa1o1E6tUuwE.jpg",
+                        "/menu-images/tteokbokki.jpg",
                     addOns: [
                         {
                             title: "Extras",
@@ -1178,7 +1178,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Braised pork belly with aged kimchi",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mukeunji%20Samgyupsal%20Jjim-9IIYFLzTtXqw3VH9R2w6e9om5lgw80.jpg",
+                        "/menu-images/mukeunji-samgyupsal-jjim.jpg",
                 },
             ],
         },
@@ -1192,7 +1192,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Thinly sliced ribeye marinated in sweet soy sauce",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi-2-PjvUbvKALCkjnx9fEPzce6WQrYKkNq.jpg",
+                    image: "/menu-images/bulgogi-2.jpg",
                 },
                 {
                     title: "Samgyupsal",
@@ -1202,7 +1202,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Grilled pork belly slices, served with lettuce",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Samgyupsal-e2FbCHZ5myEMtNE0cLYNCW2Yz8fJFn.jpg",
+                        "/menu-images/samgyupsal.jpg",
                 },
                 {
                     title: "Daeji Galbi",
@@ -1212,7 +1212,7 @@ export const menuData: MenuData = {
                     glutenFree: false,
                     description: "Marinated pork shoulders",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Daeji%20Galbi-JbqCvnKsaIrtNuofI4p74UeVTvuYTA.jpg",
+                        "/menu-images/daeji-galbi.jpg",
                 },
                 {
                     title: "Spicy Pork",
@@ -1223,7 +1223,7 @@ export const menuData: MenuData = {
                     spicyLevel: "mild",
                     description: "Spicy marinated pork shoulders with vegetables",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spicy%20Pork-634sw7W0NEXwkn7JJuLoASzHoEuh26.jpg",
+                        "/menu-images/spicy-pork.jpg",
                 },
                 {
                     title: "Dakgui",
@@ -1241,7 +1241,7 @@ export const menuData: MenuData = {
                     vegetarian: false,
                     glutenFree: false,
                     description: "Korean marinated beef short ribs grilled",
-                    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbi-SxWHpzARBRTDdGD4mcBfY9QHzlb2Di.jpg",
+                    image: "/menu-images/galbi.jpg",
                 },
                 {
                     title: "LA Galbi",
@@ -1260,7 +1260,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Premium Korean ribeye steak grilled to order",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ribeye%20Steak-VYX5Ouo7LG7OzDjFJUsdOrSETMUr6Z.jpg",
+                        "/menu-images/ribeye-steak.jpg",
                 },
             ],
         },
@@ -1275,7 +1275,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Whole mackerel grilled with sea salt and lemon",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DD_mackerel-TBCI17lH6xu23GkicSlrtzA2EqTtPO.jpg",
+                        "/menu-images/dd-mackerel.jpg",
                 },
                 {
                     title: "Grilled Salmon",
@@ -1285,7 +1285,7 @@ export const menuData: MenuData = {
                     glutenFree: true,
                     description: "Fresh salmon fillet grilled with sea salt and lemon",
                     image:
-                        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Grilled%20Salmon-UVycvhKeBF7shIC8fyiicGlZht4t1g.jpg",
+                        "/menu-images/grilled-salmon.jpg",
                 },
             ],
         },

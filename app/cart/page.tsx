@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { Navigation } from "@/components/navigation"
@@ -12,8 +13,21 @@ import { useRouter } from "next/navigation"
 
 export default function CartPage() {
   const { cart } = useCart()
-  const { orders, isLoading } = useAuth()
+  const { user, orders, isLoading, refreshUser } = useAuth()
   const router = useRouter()
+  const hasFetchedOrdersRef = useRef(false)
+
+  useEffect(() => {
+    if (!user) {
+      hasFetchedOrdersRef.current = false
+      return
+    }
+
+    if (isLoading || hasFetchedOrdersRef.current) return
+
+    hasFetchedOrdersRef.current = true
+    void refreshUser()
+  }, [user, isLoading, refreshUser])
 
   const pendingOrders = orders.filter(order => order.status === "PENDING")
 

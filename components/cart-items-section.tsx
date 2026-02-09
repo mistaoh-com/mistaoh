@@ -47,6 +47,7 @@ export function CartItemsSection() {
                       fill
                       className="object-cover rounded"
                       sizes={getImageSizes('thumbnail')}
+                      quality={55}
                       placeholder="blur"
                       blurDataURL={BLUR_DATA_URL}
                     />

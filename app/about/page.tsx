@@ -23,11 +23,13 @@ export default function AboutPage() {
           </div>
           <div className="relative h-[600px] w-full rounded-[32px] overflow-hidden">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/family-msXrKaIcg3q09vxpPGfw3nBHFSsoiB.jpeg"
+              src="/mista-oh-family.jpeg"
               alt="Mista Oh Family"
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={75}
             />
           </div>
         </div>
@@ -38,10 +40,12 @@ export default function AboutPage() {
         <div className="max-w-[1400px] mx-auto grid md:grid-cols-2 gap-12 lg:gap-24 items-center">
           <div className="relative h-[550px] w-full rounded-[32px] overflow-hidden order-2 md:order-1">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.51.13%20PM%20%281%29-VN6o0kqxjUYVnEkUQSzaNbvFVbzbJm.jpeg"
+              src="/mista-oh-outside.jpeg"
               alt="Mista Oh outside"
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={70}
             />
           </div>
           <div className="space-y-6 order-1 md:order-2">
@@ -74,10 +78,12 @@ export default function AboutPage() {
           </div>
           <div className="relative h-[550px] w-full rounded-[32px] overflow-hidden">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM%20%283%29-ubNJtkaxZ5ncOXNI86x1uQbgIiwjfn.jpeg"
+              src="/mista-oh-inside.jpeg"
               alt="Inside Mista Oh"
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={70}
             />
           </div>
         </div>
@@ -174,6 +180,8 @@ export default function AboutPage() {
                 alt="Instagram post"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                quality={65}
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <Instagram className="w-8 h-8 text-white" />

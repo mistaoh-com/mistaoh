@@ -41,9 +41,9 @@ export function getImageSizes(usage: 'hero' | 'card' | 'thumbnail' | 'full'): st
     case 'hero':
       return '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw'
     case 'card':
-      return '(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw'
+      return '(max-width: 640px) 64px, (max-width: 768px) 96px, (max-width: 1024px) 112px, (max-width: 1280px) 128px, 160px'
     case 'thumbnail':
-      return '(max-width: 768px) 100px, 150px'
+      return '(max-width: 640px) 48px, (max-width: 768px) 56px, 80px'
     case 'full':
       return '100vw'
     default:

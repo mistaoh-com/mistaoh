@@ -1,4 +1,18 @@
 {
+  "routes": [
+    {
+      "src": "/(wp-admin|wp-login\\.php|xmlrpc\\.php|phpmyadmin|\\.env|\\.git|HNAP1)(.*)",
+      "mitigate": {
+        "action": "deny"
+      }
+    },
+    {
+      "src": "/(boaform|cgi-bin|\\.aws)(.*)",
+      "mitigate": {
+        "action": "deny"
+      }
+    }
+  ],
   "crons": [
     {
       "path": "/api/cron/cleanup-orders",

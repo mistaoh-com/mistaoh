@@ -157,7 +157,14 @@ export function CheckoutClient() {
                                     ) : (
                                         <>
                                             <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                                                <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
+                                                <Image
+                                                    src={item.image || "/placeholder.svg"}
+                                                    alt={item.title}
+                                                    fill
+                                                    className="object-cover"
+                                                    sizes="96px"
+                                                    quality={55}
+                                                />
                                             </div>
 
                                             <div className="flex-1 min-w-0 flex flex-col justify-between">

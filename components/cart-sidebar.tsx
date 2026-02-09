@@ -107,7 +107,14 @@ export function CartSidebar() {
                   ) : (
                     <div className="flex gap-4">
                       <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
-                        <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
+                        <Image
+                          src={item.image || "/placeholder.svg"}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                          sizes="80px"
+                          quality={55}
+                        />
                       </div>
 
                       <div className="flex-1 min-w-0">

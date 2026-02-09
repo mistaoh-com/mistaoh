@@ -18,7 +18,7 @@ const lunchBoxes = [
     korean: "불고기 도시락",
     price: 20.99,
     description: "Bulgogi with salad, 2 fried dumplings, and soup of the day",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi-2-PjvUbvKALCkjnx9fEPzce6WQrYKkNq.jpg",
+    image: "/menu-images/bulgogi-2.jpg",
     items: ["Bulgogi", "Fresh Salad", "2 Fried Dumplings", "Soup of the Day"],
   },
   {
@@ -37,7 +37,7 @@ const lunchBoxes = [
     price: 22.99,
     description: "Teriyaki chicken with salad, 2 fried dumplings, and soup of the day",
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/teriyaki%20chicken-EcVhieclUrFrsrwg8T5ajngJCXX8My.jpg",
+      "/menu-images/teriyaki-chicken.jpg",
     items: ["Teriyaki Chicken", "Fresh Salad", "2 Fried Dumplings", "Soup of the Day"],
   },
   {
@@ -46,7 +46,7 @@ const lunchBoxes = [
     korean: "고등어 도시락",
     price: 17.99,
     description: "Grilled mackerel with salad, 2 fried dumplings, and soup of the day",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DD_mackerel-TBCI17lH6xu23GkicSlrtzA2EqTtPO.jpg",
+    image: "/menu-images/dd-mackerel.jpg",
     items: ["Grilled Mackerel", "Fresh Salad", "2 Fried Dumplings", "Soup of the Day"],
   },
 ]
@@ -58,7 +58,7 @@ const popularItems = [
     name: "Bulgogi",
     korean: "불고기",
     price: 25.99,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi-2-PjvUbvKALCkjnx9fEPzce6WQrYKkNq.jpg",
+    image: "/menu-images/bulgogi-2.jpg",
   },
   {
     id: "teriyaki-chicken",
@@ -66,14 +66,14 @@ const popularItems = [
     korean: "데리야끼치킨",
     price: 23.99,
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/teriyaki%20chicken-EcVhieclUrFrsrwg8T5ajngJCXX8My.jpg",
+      "/menu-images/teriyaki-chicken.jpg",
   },
   {
     id: "chicken-katsu",
     name: "Chicken Katsu",
     korean: "치킨까스",
     price: 24.99,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chicken%20katsu-QBf9XCewKqGTuuEjuZUtZWt62RVCrQ.png",
+    image: "/menu-images/chicken-katsu.png",
   },
   {
     id: "kimchi-fried-rice",
@@ -81,7 +81,7 @@ const popularItems = [
     korean: "김치볶음밥",
     price: 17.99,
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kimchi%20fried%20rice-8XVmSM2fcc4MZY71V04jwVjMwqmhDj.png",
+      "/menu-images/kimchi-fried-rice.png",
   },
   {
     id: "bibimbap",
@@ -89,21 +89,21 @@ const popularItems = [
     korean: "돌솥비빔밥",
     price: 16.99,
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dolsot%20bibimbap-iX2AsxTuIvspzBGhx6n6x5yJOKa8tH.png",
+      "/menu-images/dolsot-bibimbap.png",
   },
   {
     id: "galbi-rice",
     name: "Galbi Rice",
     korean: "갈비덮밥",
     price: 29.99,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/galbi%20rice-SRGGS2r77NOIAktINn7FYWJCaKwN8q.png",
+    image: "/menu-images/galbi-rice.png",
   },
   {
     id: "japchae",
     name: "Japchae",
     korean: "잡채",
     price: 13.99,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg",
+    image: "/menu-images/japchae.jpg",
   },
   {
     id: "dumplings",
@@ -111,7 +111,7 @@ const popularItems = [
     korean: "돼지만두",
     price: 10.99,
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pork%20Dumplings-JWxg0E8xFaVt6TmlhtZamWC1O3PYt4.jpg",
+      "/menu-images/pork-dumplings.jpg",
   },
 ]
 
@@ -128,7 +128,7 @@ const menuCategories = {
       name: "Japchae",
       korean: "잡채",
       price: 13.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg",
+      image: "/menu-images/japchae.jpg",
     },
     {
       id: "pork-dumplings",
@@ -136,7 +136,7 @@ const menuCategories = {
       korean: "돼지만두",
       price: 10.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pork%20Dumplings-JWxg0E8xFaVt6TmlhtZamWC1O3PYt4.jpg",
+        "/menu-images/pork-dumplings.jpg",
     },
     {
       id: "kimchi-dumplings",
@@ -144,7 +144,7 @@ const menuCategories = {
       korean: "김치만두",
       price: 10.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kimchi%20dumplings-SxlYaOnOVZuFInXaz0h61JQ2gPZ9yL.jpg",
+        "/menu-images/kimchi-dumplings.jpg",
     },
     {
       id: "vegetable-dumplings",
@@ -152,7 +152,7 @@ const menuCategories = {
       korean: "야채만두",
       price: 9.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Vegetarian%20dumplings-x7E91pzNc5BZXLTwKKl6TeithTY6Dm.jpg",
+        "/menu-images/vegetarian-dumplings.jpg",
     },
     {
       id: "shrimp-tempura",
@@ -160,7 +160,7 @@ const menuCategories = {
       korean: "새우튀김",
       price: 11.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shrimp%20tempura-RBhJNZZw1V3tIi8Vn8L2YQiJ3CTN2T.jpg",
+        "/menu-images/shrimp-tempura.jpg",
     },
     {
       id: "fried-calamari",
@@ -168,14 +168,14 @@ const menuCategories = {
       korean: "칼라마리튀김",
       price: 16.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fried%20calamari-IefJteE5ehZDTnuaknZqCx2sxdpXOb.jpg",
+        "/menu-images/fried-calamari.jpg",
     },
     {
       id: "chicken-wings",
       name: "Fried Chicken Wings",
       korean: "치킨윙",
       price: 15.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chickenwings-Jriq5QpQlTIRJ0bgC2Yo3Kz7cH0Als.jpg",
+      image: "/menu-images/chickenwings.jpg",
     },
     {
       id: "bulgogi-kimchi-fries",
@@ -183,7 +183,7 @@ const menuCategories = {
       korean: "불고기감자튀김",
       price: 15.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi%20kimchi%20fries%201-KPsj5xIRmzQORZPrfFhmN9PqiE8cFi.jpg",
+        "/menu-images/bulgogi-kimchi-fries-1.jpg",
     },
     {
       id: "brisket-salad",
@@ -191,7 +191,7 @@ const menuCategories = {
       korean: "차돌샐러드",
       price: 18.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brisket%20salad-VwvV128ve0BtugZWN1IpamLuati5Fy.jpg",
+        "/menu-images/brisket-salad.jpg",
     },
     {
       id: "teriyaki-chicken-salad",
@@ -199,7 +199,7 @@ const menuCategories = {
       korean: "치킨샐러드",
       price: 15.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Teriyaki%20chicken%20salad-2taJe0YTlfPMBZUkTJ8jQn3ALCG1DW.png",
+        "/menu-images/teriyaki-chicken-salad.png",
     },
     {
       id: "seafood-pancake",
@@ -207,7 +207,7 @@ const menuCategories = {
       korean: "해물파전",
       price: 15.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dd_seafood%20pancake-8VZVqcmQ7k7Cw5fXFwcKeueOJJwSKj.jpg",
+        "/menu-images/dd-seafood-pancake.jpg",
     },
     {
       id: "vegetarian-pancake",
@@ -215,7 +215,7 @@ const menuCategories = {
       korean: "야채파전",
       price: 13.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Vegetarian%20Pancakes-zoMiswKLJT1W5mm4VLazB13hxZHTwt.png",
+        "/menu-images/vegetarian-pancakes.png",
     },
     {
       id: "kimchi-pancake",
@@ -223,7 +223,7 @@ const menuCategories = {
       korean: "김치파전",
       price: 15.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kimchi%20pancakes-obLeYgTLbFXkTTOmAanu99JEPzzHtK.jpeg",
+        "/menu-images/kimchi-pancakes.jpeg",
     },
   ],
   riceDishes: [
@@ -233,7 +233,7 @@ const menuCategories = {
       korean: "돌솥비빔밥",
       price: 16.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dolsot%20bibimbap-iX2AsxTuIvspzBGhx6n6x5yJOKa8tH.png",
+        "/menu-images/dolsot-bibimbap.png",
     },
     {
       id: "kimchi-fried-rice",
@@ -241,7 +241,7 @@ const menuCategories = {
       korean: "김치볶음밥",
       price: 17.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kimchi%20fried%20rice-8XVmSM2fcc4MZY71V04jwVjMwqmhDj.png",
+        "/menu-images/kimchi-fried-rice.png",
     },
     {
       id: "vegetarian-fried-rice",
@@ -249,7 +249,7 @@ const menuCategories = {
       korean: "야채볶음밥",
       price: 17.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vegetarian%20fried%20rice-cM6Og0OgyD39c3nGIA39bXElxehwEi.png",
+        "/menu-images/vegetarian-fried-rice.png",
     },
     {
       id: "teriyaki-chicken",
@@ -257,7 +257,7 @@ const menuCategories = {
       korean: "데리야끼치킨",
       price: 23.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/teriyaki%20chicken-EcVhieclUrFrsrwg8T5ajngJCXX8My.jpg",
+        "/menu-images/teriyaki-chicken.jpg",
     },
     {
       id: "chicken-katsu",
@@ -265,7 +265,7 @@ const menuCategories = {
       korean: "치킨까스",
       price: 24.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chicken%20katsu-QBf9XCewKqGTuuEjuZUtZWt62RVCrQ.png",
+        "/menu-images/chicken-katsu.png",
     },
     {
       id: "truffle-bulgogi-rice",
@@ -273,7 +273,7 @@ const menuCategories = {
       korean: "트러플불고기덮밥",
       price: 26.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/truffle%20bulgogi%20rice-pxH3HxQ8HWZXao6vTvBqXVJwImfave.png",
+        "/menu-images/truffle-bulgogi-rice.png",
     },
     {
       id: "spicy-squid-rice",
@@ -281,14 +281,14 @@ const menuCategories = {
       korean: "매운오징어덮밥",
       price: 25.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/spicy%20squid%20rice-CdfqLwrUvA3F0lWE6WKZwFW6Wk3zAC.png",
+        "/menu-images/spicy-squid-rice.png",
     },
     {
       id: "galbi-rice",
       name: "Galbi Rice",
       korean: "갈비덮밥",
       price: 29.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/galbi%20rice-SRGGS2r77NOIAktINn7FYWJCaKwN8q.png",
+      image: "/menu-images/galbi-rice.png",
     },
   ],
   soupsStews: [
@@ -297,7 +297,7 @@ const menuCategories = {
       name: "Budae Jjigae",
       korean: "부대찌개",
       price: 21.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/budae-H1m9fKidjppIPNiMMfi9vZvbLG61MV.jpg",
+      image: "/menu-images/budae.jpg",
     },
     {
       id: "kimchi-jjigae",
@@ -305,7 +305,7 @@ const menuCategories = {
       korean: "김치찌개",
       price: 15.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kimchi%20Jjigae-BohyNJaFOnDK3AWb89Kme58cibnpTD.jpg",
+        "/menu-images/kimchi-jjigae.jpg",
     },
     {
       id: "doenjang-jjigae",
@@ -313,14 +313,14 @@ const menuCategories = {
       korean: "된장찌개",
       price: 15.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/deonjang%20jjigae-f0SEaORNpmSdF01SfOkess6gUerkXE.jpg",
+        "/menu-images/deonjang-jjigae.jpg",
     },
     {
       id: "yukgaejang",
       name: "Yukgaejang",
       korean: "육개장",
       price: 18.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yukgaejang-WV5pLfJhDfwBnvvHheB3m87P0FtC0x.jpg",
+      image: "/menu-images/yukgaejang.jpg",
     },
     {
       id: "soondubu-jjigae",
@@ -328,14 +328,14 @@ const menuCategories = {
       korean: "순두부",
       price: 16.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Soondubu%20Jjigae-lHpXMHh9g0E6yJYiTWvLEE27U8GzFB.jpg",
+        "/menu-images/soondubu-jjigae.jpg",
     },
     {
       id: "galbitang",
       name: "Galbitang",
       korean: "갈비탕",
       price: 20.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbitang-ul3c8wXqHR0ovCFkCb84BtWAckTZz5.jpg",
+      image: "/menu-images/galbitang.jpg",
     },
   ],
   braisedDishes: [
@@ -358,7 +358,7 @@ const menuCategories = {
       name: "Galbi Jjim",
       korean: "갈비찜",
       price: 35.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbi%20Jjim-RRSBc34DRqRaQ7vZepjo9FwbcS0J2g.jpg",
+      image: "/menu-images/galbi-jjim.jpg",
     },
     {
       id: "mukeunji-samgyupsal-jjim",
@@ -381,7 +381,7 @@ const menuCategories = {
       name: "Daeji Galbi",
       korean: "돼지갈비",
       price: 29.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Daeji%20Galbi-JbqCvnKsaIrtNuofI4p74UeVTvuYTA.jpg",
+      image: "/menu-images/daeji-galbi.jpg",
     },
     {
       id: "spicy-pork",
@@ -395,21 +395,21 @@ const menuCategories = {
       name: "Bulgogi",
       korean: "불고기",
       price: 25.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi-2-PjvUbvKALCkjnx9fEPzce6WQrYKkNq.jpg",
+      image: "/menu-images/bulgogi-2.jpg",
     },
     {
       id: "dakgui",
       name: "Dakgui",
       korean: "닭구이",
       price: 23.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Dakgui-W2aRs6LF7CC2LC45lvADkvNt4yaY7q.jpg",
+      image: "/menu-images/dakgui.jpg",
     },
     {
       id: "galbi",
       name: "Galbi",
       korean: "양념갈비",
       price: 35.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Galbi-SxWHpzARBRTDdGD4mcBfY9QHzlb2Di.jpg",
+      image: "/menu-images/galbi.jpg",
     },
     {
       id: "ribeye-steak",
@@ -423,7 +423,7 @@ const menuCategories = {
       name: "LA Galbi",
       korean: "LA갈비",
       price: 33.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LA%20Galbi-g5iIZcKWizf7IlPYA9gp9ObWllQMQu.jpg",
+      image: "/menu-images/la-galbi.jpg",
     },
   ],
   fish: [
@@ -432,7 +432,7 @@ const menuCategories = {
       name: "Grilled Mackerel",
       korean: "고등어구이",
       price: 18.99,
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DD_mackerel-TBCI17lH6xu23GkicSlrtzA2EqTtPO.jpg",
+      image: "/menu-images/dd-mackerel.jpg",
     },
     {
       id: "grilled-salmon",
@@ -440,7 +440,7 @@ const menuCategories = {
       korean: "연어구이",
       price: 19.99,
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Grilled%20Salmon-UVycvhKeBF7shIC8fyiicGlZht4t1g.jpg",
+        "/menu-images/grilled-salmon.jpg",
     },
   ],
   ramen: [
@@ -572,7 +572,14 @@ export default function BuildBoxPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden mt-20">
         <div className="absolute inset-0 z-0">
-          <Image src="/korean-food-spread-with-various-dishes.jpg" alt="Build Your Box" fill className="object-cover" />
+          <Image
+            src="/korean-food-spread-with-various-dishes.jpg"
+            alt="Build Your Box"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            quality={70}
+          />
           <div className="absolute inset-0 bg-black/60" />
         </div>
 
@@ -614,7 +621,14 @@ export default function BuildBoxPage() {
                 {lunchBoxes.map((box) => (
                   <Card key={box.id} className="overflow-hidden hover:shadow-xl transition-shadow">
                     <div className="relative h-64">
-                      <Image src={box.image || "/placeholder.svg"} alt={box.name} fill className="object-cover" />
+                      <Image
+                        src={box.image || "/placeholder.svg"}
+                        alt={box.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        quality={65}
+                      />
                     </div>
                     <div className="p-6">
                       <h3 className="font-serif text-2xl mb-2">{box.name}</h3>
@@ -748,6 +762,8 @@ export default function BuildBoxPage() {
                                   alt={item.name}
                                   fill
                                   className="object-cover"
+                                  sizes="128px"
+                                  quality={65}
                                 />
                               </div>
 

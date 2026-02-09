@@ -37,41 +37,92 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+function normalizeUser(rawUser: any): User | null {
+    if (!rawUser || typeof rawUser !== "object") return null
+    if (typeof rawUser.name !== "string" || typeof rawUser.email !== "string") return null
+
+    const provider =
+        rawUser.provider === "google" || rawUser.provider === "email"
+            ? rawUser.provider
+            : undefined
+
+    return {
+        name: rawUser.name,
+        email: rawUser.email,
+        phone: typeof rawUser.phone === "string" ? rawUser.phone : "",
+        provider,
+    }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
     const [orders, setOrders] = useState<Order[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const fetchUserData = useCallback(async () => {
+    const clearAuthState = useCallback(() => {
+        setUser(null)
+        setOrders([])
+    }, [])
+
+    const fetchSession = useCallback(async () => {
         setIsLoading(true)
         try {
-            const res = await fetch("/api/user/me")
-            if (res.ok) {
-                const data = await res.json()
-                setUser(data.user)
-                setOrders(data.orders)
-            } else {
-                setUser(null)
+            const res = await fetch("/api/auth/session", { cache: "no-store" })
+            const data = await res.json()
+            const nextUser = normalizeUser(data?.user)
+
+            if (data?.authenticated && nextUser) {
+                setUser(nextUser)
                 setOrders([])
+            } else {
+                clearAuthState()
             }
         } catch (error) {
-            console.error("Failed to fetch user data")
-            setUser(null)
-            setOrders([])
+            console.error("Failed to fetch auth session")
+            clearAuthState()
         } finally {
             setIsLoading(false)
         }
-    }, [])
+    }, [clearAuthState])
+
+    const fetchUserData = useCallback(async () => {
+        const shouldShowLoadingState = !user
+        if (shouldShowLoadingState) {
+            setIsLoading(true)
+        }
+
+        try {
+            const res = await fetch("/api/user/me", { cache: "no-store" })
+            if (res.ok) {
+                const data = await res.json()
+                const nextUser = normalizeUser(data?.user)
+                if (nextUser) {
+                    setUser(nextUser)
+                    setOrders(Array.isArray(data?.orders) ? data.orders : [])
+                } else {
+                    clearAuthState()
+                }
+            } else {
+                clearAuthState()
+            }
+        } catch (error) {
+            console.error("Failed to fetch user data")
+            clearAuthState()
+        } finally {
+            if (shouldShowLoadingState) {
+                setIsLoading(false)
+            }
+        }
+    }, [clearAuthState, user])
 
     useEffect(() => {
-        fetchUserData()
-    }, [fetchUserData])
+        void fetchSession()
+    }, [fetchSession])
 
     const logout = async () => {
         try {
             await fetch("/api/auth/logout", { method: "POST" })
-            setUser(null)
-            setOrders([])
+            clearAuthState()
         } catch (error) {
             console.error("Logout failed")
         }
@@ -89,7 +140,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             throw new Error(data.error || "Failed to update order")
         }
 
-        await fetchUserData() // Reload orders
+        await fetchUserData()
     }
 
     const cancelOrder = async (orderId: string) => {
@@ -102,7 +153,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             throw new Error(data.error || "Failed to cancel order")
         }
 
-        await fetchUserData() // Reload orders
+        await fetchUserData()
     }
 
     return (

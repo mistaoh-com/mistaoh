@@ -50,7 +50,7 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mista%20Oh%20Logo-kzYDNLOL5Vvtlm7x9WGJDW2qXzlOOh.png"
+              src="/mista-oh-logo.png"
               alt="Mista Oh Logo"
               width={180}
               height={60}
@@ -158,4 +158,3 @@ export function Navigation() {
     </nav>
   )
 }
-

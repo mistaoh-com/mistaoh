@@ -23,7 +23,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center min-h-[70vh]">
             {/* Left Column - Text Content */}
             <div className="max-w-full md:max-w-[520px] w-full">
-              <h1 className="text-[32px] sm:text-[36px] md:text-[46px] lg:text-[54px] font-bold leading-[1.15] sm:leading-[1.12] md:leading-[1.1] text-[#161412] mb-5 sm:mb-6 break-words hyphens-none">
+              <h1 className="text-[32px] sm:text-[36px] md:text-[46px] lg:text-[54px] font-bold leading-[1.15] sm:leading-[1.12] md:leading-[1.1] text-[#161412] mb-5 sm:mb-6 break-normal">
                 One of the Best Korean Restaurants in{" "}
                 <span className="text-[#FF813D]">NYC.</span>
               </h1>
@@ -58,6 +58,7 @@ export default function HomePage() {
                   className="object-cover object-center"
                   priority
                   sizes="(max-width: 640px) 90vw, (max-width: 768px) 75vw, 50vw"
+                  quality={70}
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />
@@ -82,11 +83,12 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-10 sm:gap-12 md:gap-14 items-center">
             <div className="relative h-[360px] sm:h-[420px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-xl">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.51.13%20PM%20%281%29-VN6o0kqxjUYVnEkUQSzaNbvFVbzbJm.jpeg"
+                src="/mista-oh-outside.jpeg"
                 alt="Mista Oh and his wife outside their restaurant"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                quality={70}
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
               />
@@ -177,11 +179,12 @@ export default function HomePage() {
             <div className="text-center">
               <div className="relative h-56 sm:h-60 md:h-64 mb-4 sm:mb-5 rounded-[2rem] overflow-hidden shadow-lg">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM%20%283%29-ubNJtkaxZ5ncOXNI86x1uQbgIiwjfn.jpeg"
+                  src="/mista-oh-inside.jpeg"
                   alt="Mista Oh and his wife in their restaurant"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />
@@ -193,11 +196,12 @@ export default function HomePage() {
             <div className="text-center">
               <div className="relative h-56 sm:h-60 md:h-64 mb-4 sm:mb-5 rounded-[2rem] overflow-hidden shadow-lg">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.44%20PM%20%281%29-VLTe43Oi4XBF5LXSZ3k1LF8fHXOWsM.jpeg"
+                  src="/mista-oh-dining.jpeg"
                   alt="Dining at Mista Oh restaurant"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />
@@ -209,11 +213,12 @@ export default function HomePage() {
             <div className="text-center">
               <div className="relative h-56 sm:h-60 md:h-64 mb-4 sm:mb-5 rounded-[2rem] overflow-hidden shadow-lg">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-10-02%20at%201.55.43%20PM-I2eRSekz4BiORzEyZhVTZMT0QUn7TH.jpeg"
+                  src="/mista-oh-entrance.jpeg"
                   alt="Beautiful entrance of Mista Oh"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                   placeholder="blur"
                   blurDataURL={BLUR_DATA_URL}
                 />

@@ -314,10 +314,12 @@ export default function CateringPage() {
             <div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bulgogi-2-PjvUbvKALCkjnx9fEPzce6WQrYKkNq.jpg"
+                  src="/menu-images/bulgogi-2.jpg"
                   alt="Bulgogi"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                 />
               </div>
               <div className="p-6">
@@ -329,10 +331,12 @@ export default function CateringPage() {
             <div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/japchae-f8yb9hFK9UmTaANkh2I3L991tDRlJc.jpg"
+                  src="/menu-images/japchae.jpg"
                   alt="Japchae"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                 />
               </div>
               <div className="p-6">
@@ -344,10 +348,12 @@ export default function CateringPage() {
             <div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chickenwings-Jriq5QpQlTIRJ0bgC2Yo3Kz7cH0Als.jpg"
+                  src="/menu-images/chickenwings.jpg"
                   alt="Korean Fried Chicken"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                 />
               </div>
               <div className="p-6">
@@ -358,7 +364,14 @@ export default function CateringPage() {
 
             <div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               <div className="relative h-48">
-                <Image src="/dolsot-bibimbap-korean-food.jpg" alt="Bibimbap" fill className="object-cover" />
+                <Image
+                  src="/dolsot-bibimbap-korean-food.jpg"
+                  alt="Bibimbap"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
+                />
               </div>
               <div className="p-6">
                 <h4 className="font-serif text-xl mb-2">Bibimbap</h4>
@@ -369,10 +382,12 @@ export default function CateringPage() {
             <div className="bg-background rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pork%20Dumplings-JWxg0E8xFaVt6TmlhtZamWC1O3PYt4.jpg"
+                  src="/menu-images/pork-dumplings.jpg"
                   alt="Dumplings"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                 />
               </div>
               <div className="p-6">
@@ -388,6 +403,8 @@ export default function CateringPage() {
                   alt="Korean BBQ"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={65}
                 />
               </div>
               <div className="p-6">

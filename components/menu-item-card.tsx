@@ -160,6 +160,7 @@ export function MenuItemCard({
                             fill
                             className="object-cover"
                             sizes={getImageSizes('thumbnail')}
+                            quality={55}
                             placeholder="blur"
                             blurDataURL={BLUR_DATA_URL}
                         />
@@ -208,6 +209,7 @@ export function MenuItemCard({
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                                 sizes={getImageSizes('card')}
+                                quality={65}
                                 placeholder="blur"
                                 blurDataURL={BLUR_DATA_URL}
                             />
@@ -221,9 +223,9 @@ export function MenuItemCard({
                                 fill
                                 className="object-contain"
                                 sizes={getImageSizes('full')}
+                                quality={75}
                                 placeholder="blur"
                                 blurDataURL={BLUR_DATA_URL}
-                                priority
                             />
                         </div>
                         <div className="text-center mt-4">
