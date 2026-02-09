@@ -9,7 +9,8 @@ import { CartSidebar } from "@/components/cart-sidebar"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/contexts/theme-context"
-import { Analytics } from "@/components/analytics"
+import { Analytics as GoogleAnalytics } from "@/components/analytics"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -67,7 +68,7 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-NEP3K80RQZ');
+              gtag('config', 'G-NEP3K80RQZ', { send_page_view: false });
             `,
           }}
         />
@@ -75,11 +76,12 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <CartProvider>
-              <Analytics />
+              <GoogleAnalytics />
               <ScrollToTop />
               {children}
               <CartSidebar />
               <Toaster />
+              <VercelAnalytics />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>
