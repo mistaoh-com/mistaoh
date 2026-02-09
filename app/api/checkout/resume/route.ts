@@ -134,11 +134,12 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        // 9. Create Stripe checkout session
+        // 9. Create Stripe checkout session with BNPL support
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ["card"],
+            payment_method_configuration: "pmc_1SyiSIEElRlbgqgdrP38OJdM", // Use your BNPL-enabled config
             line_items: lineItems,
             mode: "payment",
+            currency: "usd", // Required for BNPL methods
             success_url: `${req.nextUrl.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&order_id=${order._id}`,
             cancel_url: `${req.nextUrl.origin}/checkout/cancel`,
             customer_email: userEmail || undefined,
