@@ -69,7 +69,7 @@ export default function MenuPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-5 md:mb-6 text-[#161412]">Our Menu</h1>
           <p className="text-base sm:text-lg text-[#696969] leading-relaxed max-w-xl mx-auto px-2">
-            Authentic Korean flavors crafted with love and tradition. Fresh ingredients, time-honored recipes.
+            Order Korean food online for pickup in Flatiron, NYC. Enjoy authentic lunch, dinner, and drinks crafted with fresh ingredients and time-honored recipes.
           </p>
         </div>
       </section>

@@ -82,7 +82,7 @@ export default function CateringPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#161412]">Catering</h1>
           <p className="text-lg text-[#696969] mb-10">
-            Authentic Korean cuisine for your next event
+            Authentic Korean catering for corporate events and private parties in NYC
           </p>
           <a
             href="#request-form"
