@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { DM_Sans, Crimson_Text } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
@@ -8,6 +9,7 @@ import { CartSidebar } from "@/components/cart-sidebar"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/contexts/theme-context"
+import { Analytics } from "@/components/analytics"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -52,9 +54,28 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${crimsonText.variable}`}>
       <body>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-NEP3K80RQZ"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-NEP3K80RQZ');
+            `,
+          }}
+        />
+
         <ThemeProvider>
           <AuthProvider>
             <CartProvider>
+              <Analytics />
               <ScrollToTop />
               {children}
               <CartSidebar />
