@@ -23,7 +23,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center min-h-[70vh]">
             {/* Left Column - Text Content */}
             <div className="max-w-full md:max-w-[520px] w-full">
-              <h1 className="text-[32px] sm:text-[36px] md:text-[46px] lg:text-[54px] font-bold leading-[1.15] sm:leading-[1.12] md:leading-[1.1] text-[#161412] mb-5 sm:mb-6 break-words hyphens-auto">
+              <h1 className="text-[32px] sm:text-[36px] md:text-[46px] lg:text-[54px] font-bold leading-[1.15] sm:leading-[1.12] md:leading-[1.1] text-[#161412] mb-5 sm:mb-6 break-words hyphens-none">
                 One of the Best Korean Restaurants in{" "}
                 <span className="text-[#FF813D]">NYC.</span>
               </h1>
