@@ -7,9 +7,11 @@ import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { GlobalStructuredData } from "@/components/seo/global-structured-data"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/contexts/theme-context"
 import { Analytics as GoogleAnalytics } from "@/components/analytics"
+import { seoKeywords, siteConfig } from "@/lib/seo"
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next"
 
 const dmSans = DM_Sans({
@@ -28,22 +30,63 @@ const crimsonText = Crimson_Text({
 })
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: '#FF813D',
+  themeColor: "#FF813D",
 }
 
 export const metadata: Metadata = {
-  title: "Mista Oh - Authentic Korean Restaurant in Flatiron, NYC",
-  description:
-    "Experience authentic Korean cuisine at Mista Oh in Flatiron, New York. Family-owned restaurant serving traditional Korean dishes with love.",
-  generator: 'v0.app',
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "Order Korean Food Pickup in Flatiron NYC",
+    template: "%s | Mista Oh NYC",
+  },
+  description: siteConfig.description,
+  keywords: [...seoKeywords.primary, ...seoKeywords.home],
+  category: "restaurant",
+  generator: "v0.app",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: siteConfig.name,
+    title: "Order Korean Food Pickup in Flatiron NYC | Mista Oh",
+    description: siteConfig.description,
+    images: [
+      {
+        url: "/korean-food-spread-with-various-dishes.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Korean food at Mista Oh in Flatiron NYC",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Order Korean Food Pickup in Flatiron NYC | Mista Oh",
+    description: siteConfig.description,
+    images: ["/korean-food-spread-with-various-dishes.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
-    title: 'Mista Oh',
+    statusBarStyle: "default",
+    title: "Mista Oh",
   },
 }
 
@@ -77,6 +120,7 @@ export default function RootLayout({
           <AuthProvider>
             <CartProvider>
               <GoogleAnalytics />
+              <GlobalStructuredData />
               <ScrollToTop />
               {children}
               <CartSidebar />

@@ -28,7 +28,7 @@ export default function HomePage() {
                 <span className="text-[#FF813D]">NYC.</span>
               </h1>
               <p className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] text-[#696969] leading-[1.6] sm:leading-[1.65] md:leading-[1.75] mb-7 sm:mb-8">
-                From rich, comforting stews to grilled favorites and shareable classics, Mista Oh brings together the many flavors of Korean cuisine, prepared fresh and meant to be enjoyed any day of the week.
+                From rich, comforting stews to grilled favorites and shareable classics, Mista Oh serves authentic Korean cuisine in Flatiron. Order Korean food online for pickup in NYC or join us for dine-in.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-4">
                 <a
@@ -43,7 +43,7 @@ export default function HomePage() {
                   href="/menu"
                   className="bg-[#F0F0F0] text-[#161412] px-7 sm:px-8 py-4 rounded-full font-semibold hover:bg-[#e5e5e5] transition-colors text-base sm:text-base text-center shadow-md active:scale-95"
                 >
-                  Order online
+                  Order Pickup Online
                 </Link>
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="font-serif text-4xl md:text-5xl mb-6 text-secondary">Explore Our Menu</h2>
           <p className="text-xl text-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            From traditional stews to grilled specialties, discover the flavors of Korea
+            From traditional stews to grilled specialties, discover the flavors of Korea and order for pickup in Flatiron, NYC.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
