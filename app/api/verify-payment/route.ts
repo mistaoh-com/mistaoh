@@ -6,6 +6,7 @@ import Order from "@/models/Order"
 import Log from "@/models/Log"
 import { MailItem } from "@/lib/types"
 import { IOrder } from "@/models/Order"
+import { roundCurrency } from "@/lib/tip"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_API_KEY || process.env.STRIPE_SECRET_KEY!, {
     apiVersion: "2024-12-18.acacia" as any,
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
             expand: ['total_details']
         })
 
-        // Extract tax information from Stripe session
+        // Extract tax and totals from Stripe session
         const amountTotal = session.amount_total || 0       // in cents
         const amountTax = session.total_details?.amount_tax || 0  // in cents
         const amountSubtotal = amountTotal - amountTax
@@ -32,7 +33,33 @@ export async function POST(req: NextRequest) {
         // Convert to dollars
         const totalInDollars = amountTotal / 100
         const taxInDollars = amountTax / 100
-        const subtotalInDollars = amountSubtotal / 100
+        const subtotalWithTipInDollars = amountSubtotal / 100
+
+        const metadataSubtotal = Number(session.metadata?.foodSubtotal)
+        const metadataTipAmount = Number(session.metadata?.tipAmount)
+        const metadataTipPercentage = Number(session.metadata?.tipPercentage)
+        const tipTypeFromMetadata = session.metadata?.tipType === "percentage" ? "percentage" : "custom"
+
+        const tipInDollars =
+            Number.isFinite(metadataTipAmount) && metadataTipAmount >= 0
+                ? roundCurrency(metadataTipAmount)
+                : 0
+
+        const computedSubtotalInDollars = Math.max(roundCurrency(subtotalWithTipInDollars - tipInDollars), 0)
+        const roundedMetadataSubtotal = Number.isFinite(metadataSubtotal) && metadataSubtotal >= 0
+            ? roundCurrency(metadataSubtotal)
+            : undefined
+
+        // Prefer Stripe-derived math and only trust metadata when it matches closely.
+        const subtotalInDollars =
+            roundedMetadataSubtotal !== undefined && Math.abs(roundedMetadataSubtotal - computedSubtotalInDollars) <= 0.01
+                ? roundedMetadataSubtotal
+                : computedSubtotalInDollars
+
+        const tipPercentage =
+            tipTypeFromMetadata === "percentage" && Number.isFinite(metadataTipPercentage)
+                ? metadataTipPercentage
+                : undefined
 
         if (session.payment_status !== "paid") {
             return NextResponse.json({ error: "Payment not completed" }, { status: 400 })
@@ -58,8 +85,12 @@ export async function POST(req: NextRequest) {
                 dbOrder.paymentStatus = session.payment_status
                 // Store tax breakdown
                 dbOrder.subtotal = subtotalInDollars
+                dbOrder.tipAmount = tipInDollars
+                dbOrder.tipType = tipTypeFromMetadata
+                dbOrder.tipPercentage = tipPercentage
                 dbOrder.taxAmount = taxInDollars
                 dbOrder.taxRate = 8.75
+                dbOrder.totalAmount = totalInDollars
                 await dbOrder.save()
 
                 // Log Payment Success with tax details
@@ -70,6 +101,7 @@ export async function POST(req: NextRequest) {
                         orderId: dbOrder._id,
                         stripeSessionId: sessionId,
                         subtotal: subtotalInDollars,
+                        tip: tipInDollars,
                         tax: taxInDollars,
                         total: totalInDollars
                     },
@@ -117,7 +149,8 @@ export async function POST(req: NextRequest) {
             orderId || session.id, // Fallback to session ID for email display if orderId missing
             isSubscription,
             subtotalInDollars,
-            taxInDollars
+            taxInDollars,
+            tipInDollars
         )
 
         // 2. Send Admin Notification Email
@@ -132,7 +165,8 @@ export async function POST(req: NextRequest) {
                 totalInDollars,
                 undefined,
                 subtotalInDollars,
-                taxInDollars
+                taxInDollars,
+                tipInDollars
             )
         } else {
             // Fallback admin email even if DB order was missing but payment succeeded (Critical)
@@ -145,7 +179,8 @@ export async function POST(req: NextRequest) {
                 totalInDollars,
                 "WARNING: Database Order not found for this payment.",
                 subtotalInDollars,
-                taxInDollars
+                taxInDollars,
+                tipInDollars
             )
         }
 

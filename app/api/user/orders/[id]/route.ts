@@ -4,6 +4,7 @@ import dbConnect from "@/lib/db"
 import Order from "@/models/Order"
 import Log from "@/models/Log"
 import { verifyJWT } from "@/lib/auth"
+import { isValidTipPercentage, roundCurrency } from "@/lib/tip"
 
 export const dynamic = 'force-dynamic'
 
@@ -96,14 +97,27 @@ export async function PATCH(
         const previousItems = order.items
         const previousTotal = order.totalAmount
 
-        // 8. Recalculate total amount
-        const totalAmount = items.reduce(
-            (sum: number, item: any) => sum + item.price * item.quantity,
-            0
+        // 8. Recalculate subtotal and preserve tip strategy
+        const subtotalAmount = roundCurrency(
+            items.reduce((sum: number, item: any) => {
+                const addOnsPrice = item.selectedAddOns?.reduce((addOnSum: number, addon: any) => addOnSum + addon.price, 0) || 0
+                return sum + (item.price + addOnsPrice) * item.quantity
+            }, 0),
         )
+
+        let tipAmount = 0
+        if (order.tipType === "percentage" && isValidTipPercentage(order.tipPercentage)) {
+            tipAmount = roundCurrency((subtotalAmount * order.tipPercentage) / 100)
+        } else if (typeof order.tipAmount === "number" && Number.isFinite(order.tipAmount) && order.tipAmount >= 0) {
+            tipAmount = roundCurrency(order.tipAmount)
+        }
+
+        const totalAmount = roundCurrency(subtotalAmount + tipAmount)
 
         // 9. Update order
         order.items = items
+        order.subtotal = subtotalAmount
+        order.tipAmount = tipAmount
         order.totalAmount = totalAmount
         await order.save()
 
@@ -115,6 +129,8 @@ export async function PATCH(
                 orderId: order._id.toString(),
                 previousItems,
                 newItems: items,
+                subtotal: subtotalAmount,
+                tipAmount,
                 previousTotal,
                 newTotal: totalAmount,
             },

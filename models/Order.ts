@@ -20,6 +20,9 @@ export interface IOrder extends Document {
     }>
     totalAmount: number
     subtotal?: number
+    tipType?: "percentage" | "custom"
+    tipPercentage?: number
+    tipAmount?: number
     taxAmount?: number
     taxRate?: number
     status: "PENDING" | "PAID" | "PREPARING" | "READY" | "COMPLETED" | "CANCELLED"
@@ -61,6 +64,17 @@ const OrderSchema: Schema<IOrder> = new Schema(
         },
         subtotal: {
             type: Number,
+        },
+        tipType: {
+            type: String,
+            enum: ["percentage", "custom"],
+        },
+        tipPercentage: {
+            type: Number,
+        },
+        tipAmount: {
+            type: Number,
+            default: 0,
         },
         taxAmount: {
             type: Number,

@@ -36,6 +36,8 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { getPickupTimeMessage, getPickupAddress } from "@/lib/delivery-time"
+import { TipSelector } from "@/components/tip-selector"
+import { toCheckoutTipPayload } from "@/lib/tip"
 
 const guestSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -49,13 +51,18 @@ const guestSchema = z.object({
 })
 
 export function GuestCheckoutClient() {
-    const { cart, getTotalPrice } = useCart()
+    const { cart, getSubtotalPrice, getTipAmount, getTotalBeforeTax, tipSelection } = useCart()
     const [isCheckingOut, setIsCheckingOut] = useState(false)
     const [showGuestForm, setShowGuestForm] = useState(false)
     const [showClosedDialog, setShowClosedDialog] = useState(false)
     const [closedMessage, setClosedMessage] = useState("")
     const router = useRouter()
     const { toast } = useToast()
+    const hasSubscriptionItems = cart.some((item) => item.isSubscription)
+    const canAddTip = cart.length > 0 && !hasSubscriptionItems
+    const subtotal = getSubtotalPrice()
+    const tipAmount = canAddTip ? getTipAmount() : 0
+    const totalBeforeTax = canAddTip ? getTotalBeforeTax() : subtotal
 
     const form = useForm<z.infer<typeof guestSchema>>({
         resolver: zodResolver(guestSchema),
@@ -75,6 +82,7 @@ export function GuestCheckoutClient() {
                 body: JSON.stringify({
                     items: cart,
                     guestInfo: values,
+                    tip: canAddTip ? toCheckoutTipPayload(tipSelection) : { mode: "custom", amount: 0 },
                 }),
             })
 
@@ -221,17 +229,38 @@ export function GuestCheckoutClient() {
                     <h3 className="font-semibold text-lg mb-4">
                         Order Summary
                     </h3>
+                    {canAddTip ? (
+                        <div className="mb-4">
+                            <TipSelector />
+                        </div>
+                    ) : (
+                        <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 mb-4">
+                            <p className="text-xs text-gray-600">
+                                Tips are available for one-time food orders. Subscription checkout is tip-free in this flow.
+                            </p>
+                        </div>
+                    )}
                     <div className="space-y-2">
                         <div className="flex justify-between">
                             <span className="text-muted-foreground">
                                 Subtotal
                             </span>
-                            <span>${getTotalPrice().toFixed(2)}</span>
+                            <span>${subtotal.toFixed(2)}</span>
+                        </div>
+                        {canAddTip && (
+                            <div className="flex justify-between">
+                                <span className="text-muted-foreground">Tip</span>
+                                <span>${tipAmount.toFixed(2)}</span>
+                            </div>
+                        )}
+                        <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tax</span>
+                            <span className="text-xs text-muted-foreground">Calculated at payment on food only</span>
                         </div>
                         <div className="border-t pt-2 flex justify-between font-bold text-lg">
-                            <span>Total</span>
+                            <span>Total (before tax)</span>
                             <span className="text-[#FF813D]">
-                                ${getTotalPrice().toFixed(2)}
+                                ${totalBeforeTax.toFixed(2)}
                             </span>
                         </div>
                     </div>
@@ -319,19 +348,41 @@ export function GuestCheckoutClient() {
                             />
 
                             <div className="pt-4 border-t">
+                                {canAddTip ? (
+                                    <div className="mb-4">
+                                        <TipSelector />
+                                    </div>
+                                ) : (
+                                    <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 mb-4">
+                                        <p className="text-xs text-gray-600">
+                                            Tips are available for one-time food orders. Subscription checkout is tip-free in this flow.
+                                        </p>
+                                    </div>
+                                )}
+
                                 <div className="space-y-2 mb-6">
                                     <div className="flex justify-between text-sm">
                                         <span className="text-muted-foreground">
                                             Subtotal
                                         </span>
                                         <span>
-                                            ${getTotalPrice().toFixed(2)}
+                                            ${subtotal.toFixed(2)}
                                         </span>
                                     </div>
+                                    {canAddTip && (
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-muted-foreground">Tip</span>
+                                            <span>${tipAmount.toFixed(2)}</span>
+                                        </div>
+                                    )}
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-muted-foreground">Tax</span>
+                                        <span className="text-xs text-muted-foreground">Calculated at payment on food only</span>
+                                    </div>
                                     <div className="flex justify-between font-bold text-lg">
-                                        <span>Total</span>
+                                        <span>Total (before tax)</span>
                                         <span className="text-[#FF813D]">
-                                            ${getTotalPrice().toFixed(2)}
+                                            ${totalBeforeTax.toFixed(2)}
                                         </span>
                                     </div>
                                 </div>

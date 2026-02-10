@@ -11,6 +11,7 @@ import { CartItem, GuestInfo } from "@/lib/types"
 import { validateEmail, validatePhone } from "@/lib/validation"
 import { ErrorCode, createErrorResponse } from "@/lib/errors"
 import { calculateOrderTotal } from "@/lib/price-service"
+import { roundCurrency, validateAndCalculateTipFromPayload } from "@/lib/tip"
 
 export const dynamic = 'force-dynamic'
 
@@ -104,7 +105,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 })
     }
 
-    const { items, guestInfo }: { items: CartItem[], guestInfo?: GuestInfo } = await req.json()
+    const { items, guestInfo, tip }: { items: CartItem[]; guestInfo?: GuestInfo; tip?: unknown } = await req.json()
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No items in cart" }, { status: 400 })
@@ -177,10 +178,27 @@ export async function POST(req: NextRequest) {
       }, { status: 400 })
     }
 
-    const totalAmount = priceValidation.totalAmount
+    const subtotalAmount = priceValidation.totalAmount
 
     // Log price validation success
-    console.log(`✅ Price validation passed for ${items.length} items. Total: $${totalAmount.toFixed(2)}`)
+    console.log(`✅ Price validation passed for ${items.length} items. Subtotal: $${subtotalAmount.toFixed(2)}`)
+
+    const tipValidation = oneTimeItems.length > 0
+      ? validateAndCalculateTipFromPayload(subtotalAmount, tip)
+      : { isValid: true as const, mode: "custom" as const, tipAmount: 0 }
+
+    if (!tipValidation.isValid) {
+      return NextResponse.json(
+        {
+          error: tipValidation.error,
+          code: "INVALID_TIP",
+        },
+        { status: 400 },
+      )
+    }
+
+    const tipAmount = tipValidation.tipAmount
+    const totalBeforeTax = roundCurrency(subtotalAmount + tipAmount)
 
     // Generate guest token for non-authenticated users
     const guestToken = !userId ? crypto.randomBytes(32).toString("hex") : undefined
@@ -196,7 +214,11 @@ export async function POST(req: NextRequest) {
         id: i.id,
         selectedAddOns: i.selectedAddOns
       })),
-      totalAmount,
+      subtotal: subtotalAmount,
+      tipAmount,
+      tipType: tipValidation.mode,
+      tipPercentage: tipValidation.mode === "percentage" ? tipValidation.percentage : undefined,
+      totalAmount: totalBeforeTax,
       status: "PENDING",
       createdAt: new Date()
     }) as unknown as IOrder
@@ -207,7 +229,9 @@ export async function POST(req: NextRequest) {
       userId: userId,
       metadata: {
         orderId: newOrder._id,
-        amount: totalAmount,
+        amount: totalBeforeTax,
+        subtotal: subtotalAmount,
+        tipAmount,
         itemCount: items.length,
         isSubscription: subscriptionItems.length > 0,
         isGuest,
@@ -272,6 +296,9 @@ export async function POST(req: NextRequest) {
         subscription_data: {
           metadata: {
             orderId: newOrder._id.toString(),
+            foodSubtotal: subtotalAmount.toFixed(2),
+            tipAmount: "0.00",
+            tipType: "custom",
             items: JSON.stringify(
               subscriptionItems.map((item: CartItem) => ({
                 title: item.title,
@@ -284,7 +311,10 @@ export async function POST(req: NextRequest) {
           },
         },
         metadata: {
-          orderId: newOrder._id.toString()
+          orderId: newOrder._id.toString(),
+          foodSubtotal: subtotalAmount.toFixed(2),
+          tipAmount: "0.00",
+          tipType: "custom",
         }
       })
 
@@ -294,7 +324,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ sessionId: session.id, url: session.url })
     }
 
-    const lineItems = oneTimeItems.map((item: CartItem) => {
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = oneTimeItems.map((item: CartItem) => {
       // Calculate unit price including add-ons
       const addOnsPrice = item.selectedAddOns?.reduce((sum, addon) => sum + addon.price, 0) || 0
       const unitPriceWithAddOns = item.price + addOnsPrice
@@ -321,6 +351,20 @@ export async function POST(req: NextRequest) {
       }
     })
 
+    if (tipAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Tip",
+            description: "Customer tip for the team",
+          },
+          unit_amount: Math.round(tipAmount * 100),
+        },
+        quantity: 1,
+      })
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_configuration: "pmc_1SyiSIEElRlbgqgdrP38OJdM", // Use your BNPL-enabled config
       line_items: lineItems,
@@ -337,6 +381,12 @@ export async function POST(req: NextRequest) {
       },
       metadata: {
         orderId: newOrder._id.toString(),
+        foodSubtotal: subtotalAmount.toFixed(2),
+        tipAmount: tipAmount.toFixed(2),
+        tipType: tipValidation.mode,
+        ...(tipValidation.mode === "percentage" && tipValidation.percentage
+          ? { tipPercentage: String(tipValidation.percentage) }
+          : {}),
       },
     })
 

@@ -31,7 +31,8 @@ export async function sendOrderConfirmationEmail(
   orderId: string,
   isSubscription: boolean = false,
   subtotal?: number,
-  taxAmount?: number
+  taxAmount?: number,
+  tipAmount?: number
 ) {
   const subject = isSubscription
     ? `Subscription Confirmation - Order #${orderId.slice(-8)}`
@@ -70,6 +71,14 @@ export async function sendOrderConfirmationEmail(
               ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}
             </td>
           </tr>
+          ${tipAmount !== undefined && tipAmount > 0 ? `
+          <tr>
+            <td style="padding: 10px; text-align: right; color: #666;">Tip</td>
+            <td style="padding: 10px; text-align: right; color: #666;">
+              ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(tipAmount)}
+            </td>
+          </tr>
+          ` : ''}
           <tr>
             <td style="padding: 10px; text-align: right; color: #666;">Tax (8.75%)</td>
             <td style="padding: 10px; text-align: right; color: #666;">
@@ -215,7 +224,8 @@ export async function sendAdminNewOrderEmail(
   total: number,
   specialInstructions?: string,
   subtotal?: number,
-  taxAmount?: number
+  taxAmount?: number,
+  tipAmount?: number
 ) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.MAIL_USER
   const subject = `[NEW ORDER] #${orderId.slice(-8)} - ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(total)}`
@@ -256,6 +266,14 @@ export async function sendAdminNewOrderEmail(
             ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(subtotal)}
           </td>
         </tr>
+        ${tipAmount !== undefined && tipAmount > 0 ? `
+        <tr>
+          <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">Tip</td>
+          <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">
+            ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(tipAmount)}
+          </td>
+        </tr>
+        ` : ''}
         <tr>
           <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">Tax (8.75%)</td>
           <td style="padding: 10px; text-align: right; color: #666; border-bottom: 1px solid #eee;">
