@@ -77,6 +77,7 @@ export default function CheckoutSuccessPage() {
 
                   // Clear cart ONLY after successful verification
                   localStorage.removeItem("mistaoh-cart")
+                  localStorage.removeItem("mistaoh-tip")
                 }
               } catch (e) {
                 console.error("Error updating local orders", e)

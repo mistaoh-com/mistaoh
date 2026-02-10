@@ -1,6 +1,6 @@
 /**
  * Calculate estimated pickup time based on current time and day
- * Returns a string like "45-60 minutes" or "60-75 minutes"
+ * Returns a string like "25 - 30 minutes" or "40 - 50 minutes"
  */
 export function getEstimatedPickupTime(): string {
   const now = new Date()
@@ -13,8 +13,8 @@ export function getEstimatedPickupTime(): string {
   const isWeekend = day === 0 || day === 6
 
   // Base pickup time
-  let minTime = 40
-  let maxTime = 55
+  let minTime = 25
+  let maxTime = 30
 
   // Add time during rush hours
   if (isLunchRush || isDinnerRush) {
@@ -28,7 +28,7 @@ export function getEstimatedPickupTime(): string {
     maxTime += 15
   }
 
-  return `${minTime}-${maxTime} minutes`
+  return `${minTime} - ${maxTime} minutes`
 }
 
 /**

@@ -5,6 +5,7 @@ import dbConnect from "@/lib/db"
 import Order from "@/models/Order"
 import User from "@/models/User"
 import { verifyJWT } from "@/lib/auth"
+import { isValidTipPercentage, roundCurrency } from "@/lib/tip"
 
 export const dynamic = 'force-dynamic'
 
@@ -31,13 +32,6 @@ export async function POST(req: NextRequest) {
         }
 
         // 2. Validate order ID
-        if (!orderId) {
-            return NextResponse.json(
-                { error: "Order ID is required" },
-                { status: 400 }
-            )
-        }
-
         if (!orderId) {
             return NextResponse.json(
                 { error: "Order ID is required" },
@@ -106,8 +100,34 @@ export async function POST(req: NextRequest) {
             )
         }
 
+        const subtotalAmount = roundCurrency(
+            order.items.reduce((sum: number, item: any) => {
+                const addOnsPrice = item.selectedAddOns?.reduce((addOnSum: number, addon: any) => addOnSum + addon.price, 0) || 0
+                return sum + (item.price + addOnsPrice) * item.quantity
+            }, 0),
+        )
+
+        let tipAmount = 0
+        let tipType: "percentage" | "custom" = "custom"
+        let tipPercentage: number | undefined = undefined
+
+        if (order.tipType === "percentage" && isValidTipPercentage(order.tipPercentage)) {
+            tipType = "percentage"
+            tipPercentage = order.tipPercentage
+            tipAmount = roundCurrency((subtotalAmount * tipPercentage) / 100)
+        } else if (typeof order.tipAmount === "number" && Number.isFinite(order.tipAmount) && order.tipAmount >= 0) {
+            tipType = "custom"
+            tipAmount = roundCurrency(order.tipAmount)
+        }
+
+        order.subtotal = subtotalAmount
+        order.tipAmount = tipAmount
+        order.tipType = tipType
+        order.tipPercentage = tipType === "percentage" ? tipPercentage : undefined
+        order.totalAmount = roundCurrency(subtotalAmount + tipAmount)
+
         // 8. Create line items from order items (including add-ons)
-        const lineItems = order.items.map((item: any) => {
+        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = order.items.map((item: any) => {
             // Calculate unit price including add-ons
             const addOnsPrice = item.selectedAddOns?.reduce((sum: number, addon: any) =>
                 sum + addon.price, 0) || 0
@@ -134,6 +154,20 @@ export async function POST(req: NextRequest) {
             }
         })
 
+        if (tipAmount > 0) {
+            lineItems.push({
+                price_data: {
+                    currency: "usd",
+                    product_data: {
+                        name: "Tip",
+                        description: "Customer tip for the team",
+                    },
+                    unit_amount: Math.round(tipAmount * 100),
+                },
+                quantity: 1,
+            })
+        }
+
         // 9. Create Stripe checkout session with BNPL support
         const session = await stripe.checkout.sessions.create({
             payment_method_configuration: "pmc_1SyiSIEElRlbgqgdrP38OJdM", // Use your BNPL-enabled config
@@ -151,6 +185,10 @@ export async function POST(req: NextRequest) {
             },
             metadata: {
                 orderId: order._id.toString(),
+                foodSubtotal: subtotalAmount.toFixed(2),
+                tipAmount: tipAmount.toFixed(2),
+                tipType,
+                ...(tipType === "percentage" && tipPercentage ? { tipPercentage: String(tipPercentage) } : {}),
             },
         })
 

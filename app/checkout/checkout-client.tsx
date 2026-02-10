@@ -9,6 +9,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { getPickupTimeMessage, getPickupAddress } from "@/lib/delivery-time"
+import { TipSelector } from "@/components/tip-selector"
+import { toCheckoutTipPayload } from "@/lib/tip"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -20,12 +22,17 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export function CheckoutClient() {
-    const { cart, removeFromCart, updateQuantity, getTotalPrice } = useCart()
+    const { cart, removeFromCart, updateQuantity, getSubtotalPrice, getTipAmount, getTotalBeforeTax, tipSelection } = useCart()
     const [isCheckingOut, setIsCheckingOut] = useState(false)
     const [showClosedDialog, setShowClosedDialog] = useState(false)
     const [closedMessage, setClosedMessage] = useState("")
     const router = useRouter()
     const { toast } = useToast()
+    const hasSubscriptionItems = cart.some((item) => item.isSubscription)
+    const canAddTip = cart.length > 0 && !hasSubscriptionItems
+    const subtotal = getSubtotalPrice()
+    const tipAmount = canAddTip ? getTipAmount() : 0
+    const totalBeforeTax = canAddTip ? getTotalBeforeTax() : subtotal
 
     const handlePlaceOrder = async () => {
         setIsCheckingOut(true)
@@ -37,7 +44,10 @@ export function CheckoutClient() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ items: cart }),
+                body: JSON.stringify({
+                    items: cart,
+                    tip: canAddTip ? toCheckoutTipPayload(tipSelection) : { mode: "custom", amount: 0 },
+                }),
             })
 
             const data = await response.json()
@@ -224,18 +234,36 @@ export function CheckoutClient() {
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-24">
                         <h2 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h2>
 
+                        {canAddTip ? (
+                            <div className="mb-4">
+                                <TipSelector />
+                            </div>
+                        ) : (
+                            <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 mb-4">
+                                <p className="text-xs text-gray-600">
+                                    Tips are available for one-time food orders. Subscription checkout is tip-free in this flow.
+                                </p>
+                            </div>
+                        )}
+
                         <div className="space-y-4 mb-6">
                             <div className="flex justify-between text-gray-600">
                                 <span>Subtotal</span>
-                                <span>${getTotalPrice().toFixed(2)}</span>
+                                <span>${subtotal.toFixed(2)}</span>
                             </div>
+                            {canAddTip && (
+                                <div className="flex justify-between text-gray-600">
+                                    <span>Tip</span>
+                                    <span>${tipAmount.toFixed(2)}</span>
+                                </div>
+                            )}
                             <div className="flex justify-between text-gray-600">
-                                <span>Taxes</span>
-                                <span className="text-xs text-muted-foreground">(Calculated at next step)</span>
+                                <span>Tax</span>
+                                <span className="text-xs text-muted-foreground">Calculated at payment on food only</span>
                             </div>
                             <div className="border-t border-gray-100 pt-4 flex justify-between font-bold text-lg text-gray-900">
-                                <span>Total</span>
-                                <span>${getTotalPrice().toFixed(2)}</span>
+                                <span>Total (before tax)</span>
+                                <span>${totalBeforeTax.toFixed(2)}</span>
                             </div>
                         </div>
 

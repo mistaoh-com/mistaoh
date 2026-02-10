@@ -19,11 +19,17 @@ import {
 } from "@/components/ui/alert-dialog"
 import { getPickupTimeMessage, getPickupAddress } from "@/lib/delivery-time"
 import { BLUR_DATA_URL, getImageSizes } from "@/lib/image-utils"
+import { TipSelector } from "@/components/tip-selector"
 
 export function CartItemsSection() {
-  const { cart, removeFromCart, updateQuantity, getTotalPrice } = useCart()
+  const { cart, removeFromCart, updateQuantity, getSubtotalPrice, getTipAmount, getTotalBeforeTax } = useCart()
   const router = useRouter()
   const [itemToDelete, setItemToDelete] = useState<{ id: string; title: string } | null>(null)
+  const hasSubscriptionItems = cart.some((item) => item.isSubscription)
+  const canAddTip = cart.length > 0 && !hasSubscriptionItems
+  const subtotal = getSubtotalPrice()
+  const tipAmount = canAddTip ? getTipAmount() : 0
+  const totalBeforeTax = canAddTip ? getTotalBeforeTax() : subtotal
 
   return (
     <>
@@ -102,9 +108,35 @@ export function CartItemsSection() {
 
           {/* Checkout Button */}
           <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t space-y-3 sm:space-y-4">
-            <div className="flex justify-between text-base sm:text-lg font-bold">
-              <span>Total</span>
-              <span className="text-[#FF813D]">${getTotalPrice().toFixed(2)}</span>
+            {canAddTip ? (
+              <TipSelector />
+            ) : (
+              <div className="rounded-lg border border-gray-200 bg-gray-50 px-3 sm:px-4 py-3">
+                <p className="text-xs sm:text-sm text-gray-600">
+                  Tips are available for one-time food orders. Subscription checkout is tip-free in this flow.
+                </p>
+              </div>
+            )}
+
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between text-gray-600">
+                <span>Subtotal</span>
+                <span>${subtotal.toFixed(2)}</span>
+              </div>
+              {canAddTip && (
+                <div className="flex justify-between text-gray-600">
+                  <span>Tip</span>
+                  <span>${tipAmount.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="flex justify-between text-gray-600">
+                <span>Tax</span>
+                <span className="text-xs text-muted-foreground">Calculated at payment on food only</span>
+              </div>
+              <div className="pt-2 border-t flex justify-between text-base sm:text-lg font-bold">
+                <span>Total (before tax)</span>
+                <span className="text-[#FF813D]">${totalBeforeTax.toFixed(2)}</span>
+              </div>
             </div>
 
             {/* Estimated Pickup Time */}

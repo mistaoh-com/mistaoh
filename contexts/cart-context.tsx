@@ -4,6 +4,15 @@ import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 
 import { CartItem } from "@/lib/types"
+import {
+  calculateTipAmount,
+  DEFAULT_TIP_SELECTION,
+  roundCurrency,
+  sanitizeTipSelection,
+  TipMode,
+  TipPercentageOption,
+  TipSelection,
+} from "@/lib/tip"
 
 interface CartContextType {
   cart: CartItem[]
@@ -12,29 +21,72 @@ interface CartContextType {
   updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
   getTotalItems: () => number
+  getSubtotalPrice: () => number
   getTotalPrice: () => number
+  getTipAmount: () => number
+  getTotalBeforeTax: () => number
+  tipSelection: TipSelection
+  setTipPercentage: (percentage: TipPercentageOption) => void
+  setTipType: (mode: TipMode) => void
+  setCustomTipAmount: (amount: number) => void
+  resetTip: () => void
   isCartOpen: boolean
   setIsCartOpen: (open: boolean) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
+const CART_STORAGE_KEY = "mistaoh-cart"
+const TIP_STORAGE_KEY = "mistaoh-tip"
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
+  const [tipSelection, setTipSelection] = useState<TipSelection>(DEFAULT_TIP_SELECTION)
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [hasHydrated, setHasHydrated] = useState(false)
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem("mistaoh-cart")
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY)
     if (savedCart) {
-      setCart(JSON.parse(savedCart))
+      try {
+        setCart(JSON.parse(savedCart))
+      } catch {
+        setCart([])
+      }
     }
+
+    const savedTip = localStorage.getItem(TIP_STORAGE_KEY)
+    if (savedTip) {
+      try {
+        setTipSelection(sanitizeTipSelection(JSON.parse(savedTip)))
+      } catch {
+        setTipSelection(DEFAULT_TIP_SELECTION)
+      }
+    }
+
+    setHasHydrated(true)
   }, [])
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("mistaoh-cart", JSON.stringify(cart))
-  }, [cart])
+    if (!hasHydrated) return
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart))
+  }, [cart, hasHydrated])
+
+  // Save tip settings to localStorage whenever they change
+  useEffect(() => {
+    if (!hasHydrated) return
+    localStorage.setItem(TIP_STORAGE_KEY, JSON.stringify(tipSelection))
+  }, [tipSelection, hasHydrated])
+
+  // Reset tip defaults when cart is empty
+  useEffect(() => {
+    if (!hasHydrated) return
+    if (cart.length === 0) {
+      setTipSelection(DEFAULT_TIP_SELECTION)
+    }
+  }, [cart.length, hasHydrated])
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setCart((prevCart) => {
@@ -78,17 +130,57 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => {
     setCart([])
+    setTipSelection(DEFAULT_TIP_SELECTION)
   }
 
   const getTotalItems = () => {
     return cart.reduce((total, item) => total + item.quantity, 0)
   }
 
-  const getTotalPrice = () => {
+  const getSubtotalPrice = () => {
     return cart.reduce((total, item) => {
       const addOnsPrice = item.selectedAddOns?.reduce((sum, addon) => sum + addon.price, 0) || 0
       return total + (item.price + addOnsPrice) * item.quantity
     }, 0)
+  }
+
+  const getTotalPrice = () => {
+    return getSubtotalPrice()
+  }
+
+  const getTipAmount = () => {
+    return calculateTipAmount(getSubtotalPrice(), tipSelection)
+  }
+
+  const getTotalBeforeTax = () => {
+    return roundCurrency(getSubtotalPrice() + getTipAmount())
+  }
+
+  const setTipPercentage = (percentage: TipPercentageOption) => {
+    setTipSelection((previous) => ({
+      ...previous,
+      mode: "percentage",
+      percentage,
+    }))
+  }
+
+  const setTipType = (mode: TipMode) => {
+    setTipSelection((previous) => ({
+      ...previous,
+      mode,
+    }))
+  }
+
+  const setCustomTipAmount = (amount: number) => {
+    setTipSelection((previous) => ({
+      ...previous,
+      mode: "custom",
+      customAmount: Math.max(roundCurrency(amount), 0),
+    }))
+  }
+
+  const resetTip = () => {
+    setTipSelection(DEFAULT_TIP_SELECTION)
   }
 
   return (
@@ -100,7 +192,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updateQuantity,
         clearCart,
         getTotalItems,
+        getSubtotalPrice,
         getTotalPrice,
+        getTipAmount,
+        getTotalBeforeTax,
+        tipSelection,
+        setTipPercentage,
+        setTipType,
+        setCustomTipAmount,
+        resetTip,
         isCartOpen,
         setIsCartOpen,
       }}
